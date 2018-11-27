@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/21 14:23:01 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/21 14:24:59 by lbenard          ###   ########.fr       */
+/*   Created: 2018/11/07 14:10:03 by lbenard           #+#    #+#             */
+/*   Updated: 2018/11/07 14:10:30 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "libft.h"
 
-typedef struct	s_mlx_handles
+int	ft_isascii(int c)
 {
-	void	*mlx_handle;
-	void	*mlx_window_handle;
-}				t_mlx_handles;
-
-#endif
+	return (c >= 0 && c <= 127);
+}

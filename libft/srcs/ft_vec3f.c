@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pos.c                                              :+:      :+:    :+:   */
+/*   ft_vec3f.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/21 15:06:24 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/21 15:09:04 by lbenard          ###   ########.fr       */
+/*   Created: 2018/11/27 18:08:41 by lbenard           #+#    #+#             */
+/*   Updated: 2018/11/27 18:09:19 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pos.h"
+#include "libft.h"
 
-t_pos	pos(int x, int y)
+t_vec3f	ft_vec3f(float x, float y, float z)
 {
-	t_pos	retval;
+	t_vec3f	retval;
 
 	retval.x = x;
 	retval.y = y;
+	retval.z = z;
 	return (retval);
-}
-
-void	pos_add(t_pos *self, int x, int y)
-{
-	self->x += x;
-	self->y += y;
 }

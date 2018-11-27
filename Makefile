@@ -6,36 +6,37 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 19:33:38 by lbenard           #+#    #+#              #
-#    Updated: 2018/11/21 19:49:06 by lbenard          ###   ########.fr        #
+#    Updated: 2018/11/27 19:45:53 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	fdf
 
 # Sources
-SRC			=	main.c				\
-				srcs/instance.c		\
-				srcs/pos.c
-MLX_FOLDER	=	minilibx_macos
+SRC				=	main.c				\
+					srcs/instance.c
+MLX_FOLDER		=	minilibx_macos
+LIBFT_FOLDER	=	libft
 
 # Compilation
-CXX			=	cc
-CFLAGS		=	-Wall -Wextra -Werror
-INCLUDES	=	-I includes -I $(MLX_FOLDER)
+CXX				=	cc
+CFLAGS			=	-Wall -Wextra -Werror
+INCLUDES		=	-I includes -I $(MLX_FOLDER) -I $(LIBFT_FOLDER)/includes
 
 # Linking
-OBJ			=	$(SRC:.c=.o)
-MLX			=	$(MLX_FOLDER)/libmlx.a
-LDFLAGS		=	-framework OpenGL -framework AppKit
+OBJ				=	$(SRC:.c=.o)
+MLX				=	$(MLX_FOLDER)/libmlx.a
+LIBFT			=	$(LIBFT_FOLDER)/libft.a
+LDFLAGS			=	-framework OpenGL -framework AppKit
 
 # Norm
-NORM_FILES	=	$(shell find . -name "*.c" -o -name "*.h")
+NORM_FILES		=	$(shell find . -type f \( -path minilibx_macos \) -prune -o  -name "*.c" -o -name "*.h")
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "\033[32m  Creating: \033[0m$(NAME)"
-	@$(CXX) -o $(NAME) $(OBJ) $(MLX) $(LDFLAGS)
+	@$(CXX) -o $(NAME) $(OBJ) $(MLX) $(LIBFT) $(LDFLAGS)
 
 .c.o: $(SRC)
 	@printf "\033[32m Compiling: \033[0m$< -> $@\n"
