@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 14:43:39 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/28 16:55:18 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/11/28 17:02:06 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define LIBFT_H
 
 # include <string.h>
-# include <sys/types.h>
+# ifdef __linux__
+#  include <sys/types.h>
+# endif
 
 typedef unsigned char	t_u8;
 typedef char			t_i8;
