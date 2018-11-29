@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.h                                             :+:      :+:    :+:   */
+/*   camera.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/27 17:11:00 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/29 19:49:16 by lbenard          ###   ########.fr       */
+/*   Created: 2018/11/29 21:45:20 by lbenard           #+#    #+#             */
+/*   Updated: 2018/11/29 22:19:56 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DRAW_H
-# define DRAW_H
+#ifndef CAMERA_H
+# define CAMERA_H
 
 # include "libft.h"
-# include "instance.h"
 
-void	draw_line(t_instance *instance, t_vec2f x, t_vec2f y, int a_color,
-	int b_color);
+typedef struct	s_projection
+{
+	t_mat4	projection;
+}				t_projection;
+
+typedef struct	s_camera
+{
+	t_projection	projection;
+	t_vec3f			position;
+}				t_camera;
+
+t_camera	*new_camera(t_vec3f position, t_projection projection);
 
 #endif

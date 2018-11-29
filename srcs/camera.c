@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.h                                             :+:      :+:    :+:   */
+/*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/27 17:11:00 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/29 19:49:16 by lbenard          ###   ########.fr       */
+/*   Created: 2018/11/29 21:48:01 by lbenard           #+#    #+#             */
+/*   Updated: 2018/11/29 22:20:01 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DRAW_H
-# define DRAW_H
+#include "camera.h"
 
-# include "libft.h"
-# include "instance.h"
+t_camera	*new_camera(t_vec3f position, t_projection projection)
+{
+	t_camera	*ret;
 
-void	draw_line(t_instance *instance, t_vec2f x, t_vec2f y, int a_color,
-	int b_color);
-
-#endif
+	if (!(ret = (t_camera*)malloc(sizeof(t_camera))))
+		return (NULL);
+	ret->projection = projection;
+	ret->position = position;
+	return (ret);
+}

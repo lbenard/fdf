@@ -3,58 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/29 15:37:35 by freezee          ###   ########.fr       */
+/*   Updated: 2018/11/29 20:36:56 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
-#include <stdio.h>
 #include "instance.h"
-#include "libft.h"
-
-int	mouse_callback1(int button, int x, int y, void *param)
-{
-	t_instance	*handles;
-
-	(void)button;
-	handles = (t_instance*)param;
-	mlx_pixel_put(handles->mlx, handles->window, x, y,
-		16777215);
-	printf("x: \t%d\ny: \t%d\n\n", x, y);
-	return (0);
-}
-
-int	mouse_callback2(int button, int x, int y, void *param)
-{
-	t_instance	*handles;
-
-	(void)button;
-	handles = (t_instance*)param;
-	mlx_pixel_put(handles->mlx, handles->window, x, y + 10,
-		16711424);
-	printf("x: \t%d\ny: \t%d\n\n", x, y);
-	return (0);
-}
+#include "draw.h"
+#include "colors.h"
 
 int	main(int ac, char **av)
 {
 	t_instance	*instance;
-	t_mat3		test;
-	t_mat4		test2;
+	t_mat3		a;
+	t_mat3		b;
+	t_mat3		result;
 
 	(void)ac;
 	(void)av;
-	test = ft_mat3_identity();
-	test2 = ft_mat4_identity();
-	ft_print_mat3(&test);
-	ft_putchar('\n');
-	ft_print_mat4(&test2);
-	instance = new_instance(ft_usize(1280, 720), "Test de fenetre");
-	instance_add_mouse_callback(instance, mouse_callback1, instance);
-	//mlx_mouse_hook(instance->window, mouse_callback1, instance);
-	//mlx_mouse_hook(instance->window, mouse_callback2, instance);
+	if (!(instance = new_instance(ft_usize(1280, 720), "Test de fenetre")))
+		return (-1);
+	a.m[0][0] = 4;
+	a.m[0][1] = 5;
+	a.m[0][2] = 3;
+	a.m[1][0] = 1;
+	a.m[1][1] = 7;
+	a.m[1][2] = 2;
+	a.m[2][0] = 9;
+	a.m[2][1] = 8;
+	a.m[2][2] = 6;
+
+	b.m[0][0] = 4;
+	b.m[0][1] = 5;
+	b.m[0][2] = 6;
+	b.m[1][0] = 7;
+	b.m[1][1] = 8;
+	b.m[1][2] = 9;
+	b.m[2][0] = 2;
+	b.m[2][1] = 1;
+	b.m[2][2] = 3;
+
+	result = ft_mat3_x_mat3(a, b);
+	ft_print_mat3(&result);
+	draw_line(instance, ft_vec2f(0, 0), ft_vec2f(1280, 720), COLOR_WHITE,
+		COLOR_BLUE);
 	mlx_loop(instance->mlx);
 }

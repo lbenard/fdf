@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   instance.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:28:24 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/29 15:28:53 by freezee          ###   ########.fr       */
+/*   Updated: 2018/11/29 19:18:04 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,29 @@
 
 t_instance	*new_instance(t_usize size, char *window_title)
 {
-	t_instance	*instance;
+	t_instance	*ret;
 
-	if (!(instance = (t_instance*)malloc(sizeof(t_instance))))
+	if (!(ret = (t_instance*)malloc(sizeof(t_instance))))
 		return (NULL);
-	if (!(instance->mlx = mlx_init()))
+	ft_bzero(ret, sizeof(t_instance));
+	if (!(ret->mlx = mlx_init()))
+		return (NULL);
+	if (!(ret->window = mlx_new_window(ret->mlx, size.x, size.y, window_title)))
 	{
-		free(instance);
+		free(ret->mlx);
+		free(ret);
 		return (NULL);
 	}
-	if (!(instance->window = mlx_new_window(instance->mlx, size.x, size.y,
-		window_title)))
-	{
-		free(instance->mlx);
-		free(instance);
-		return (NULL);
-	}
-	mlx_key_hook(instance->window, key_callback_handler,
-		instance->key_callbacks);
-	mlx_mouse_hook(instance->window, mouse_callback_handler,
-		instance->mouse_callbacks);
-	mlx_expose_hook(instance->window, expose_callback_handler,
-		instance->expose_callbacks);
-	mlx_loop_hook(instance->window, loop_callback_handler,
-		instance->loop_callbacks);
-	return (instance);
+	mlx_key_hook(ret->window, key_callback_handler,
+		&ret->key_callbacks);
+	mlx_mouse_hook(ret->window, mouse_callback_handler,
+		&ret->mouse_callbacks);
+	mlx_expose_hook(ret->window, expose_callback_handler,
+		&ret->expose_callbacks);
+	mlx_loop_hook(ret->mlx, loop_callback_handler,
+		&ret->loop_callbacks);
+	return (ret);
 }
-
-#include <stdio.h>
 
 void		instance_add_key_callback(t_instance *self, int (*callback)(),
 	void *params)
@@ -52,7 +47,8 @@ void		instance_add_key_callback(t_instance *self, int (*callback)(),
 
 	new.callback = callback;
 	new.params = params;
-	ft_lstpushback(&self->key_callbacks, ft_lstnew(&new, sizeof(t_callback)));
+	ft_lstpushback(&self->key_callbacks,
+		ft_lstnew(&new, sizeof(t_callback)));
 }
 
 void		instance_add_mouse_callback(t_instance *self, int (*callback)(),
@@ -62,8 +58,8 @@ void		instance_add_mouse_callback(t_instance *self, int (*callback)(),
 
 	new.callback = callback;
 	new.params = params;
-	ft_lstpushback(&self->mouse_callbacks, ft_lstnew(&new, sizeof(t_callback)));
-	printf("added new callback\n");
+	ft_lstpushback(&self->mouse_callbacks,
+		ft_lstnew(&new, sizeof(t_callback)));
 }
 
 void		instance_add_expose_callback(t_instance *self, int (*callback)(),
@@ -83,5 +79,6 @@ void		instance_add_loop_callback(t_instance *self, int (*callback)(),
 
 	new.callback = callback;
 	new.params = params;
-	ft_lstpushback(&self->loop_callbacks, ft_lstnew(&new, sizeof(t_callback)));
+	ft_lstpushback(&self->loop_callbacks,
+		ft_lstnew(&new, sizeof(t_callback)));
 }

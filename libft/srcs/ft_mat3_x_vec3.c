@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.h                                             :+:      :+:    :+:   */
+/*   ft_mat3_x_vec3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/27 17:11:00 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/29 19:49:16 by lbenard          ###   ########.fr       */
+/*   Created: 2018/11/29 23:39:33 by lbenard           #+#    #+#             */
+/*   Updated: 2018/11/29 23:40:06 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DRAW_H
-# define DRAW_H
+#include "libft.h"
 
-# include "libft.h"
-# include "instance.h"
+t_vec3f	ft_mat3_x_vec3(t_mat3 a, t_vec3f b)
+{
+	t_vec3f	result;
 
-void	draw_line(t_instance *instance, t_vec2f x, t_vec2f y, int a_color,
-	int b_color);
-
-#endif
+	result.x = a.m[0][0] * b.x +
+		a.m[0][1] * b.y +
+		a.m[0][2] * b.z;
+	result.y = a.m[1][0] * b.x +
+		a.m[1][1] * b.y +
+		a.m[1][2] * b.z;
+	result.z = a.m[2][0] * b.x +
+		a.m[2][1] * b.y +
+		a.m[2][2] * b.z;
+	return (result);
+}

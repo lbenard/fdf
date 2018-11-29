@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 14:43:39 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/28 17:02:06 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/11/29 23:40:38 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,11 +191,17 @@ t_isize					ft_isize(ssize_t x, ssize_t y);
 t_vec2f					ft_vec2f(float x, float y);
 t_vec3f					ft_vec3f(float x, float y, float z);
 t_vec4f					ft_vec4f(float x, float y, float z, float w);
+
 t_mat3					ft_mat3(void);
 t_mat3					ft_mat3_identity(void);
 void					ft_print_mat3(t_mat3 *mat);
 t_mat4					ft_mat4(void);
 t_mat4					ft_mat4_identity(void);
 void					ft_print_mat4(t_mat4 *mat);
+
+t_mat3					ft_mat3_x_mat3(t_mat3 a, t_mat3 b);
+t_vec3f					ft_mat3_x_vec3(t_mat3 a, t_vec3f b);
+t_mat4					ft_mat4_x_mat4(t_mat4 a, t_mat4 b);
+t_vec4f					ft_mat4_x_vec4(t_mat4 a, t_vec4f b);
 
 #endif
