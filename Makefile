@@ -6,7 +6,7 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 19:33:38 by lbenard           #+#    #+#              #
-#    Updated: 2018/11/29 22:16:49 by lbenard          ###   ########.fr        #
+#    Updated: 2018/11/30 17:12:47 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,12 @@ NAME		=	fdf
 
 # Sources
 SRC				=	fdf.c						\
+					srcs/camera.c				\
 					srcs/draw.c					\
 					srcs/instance_handlers.c	\
-					srcs/instance.c
+					srcs/instance.c				\
+					srcs/mesh.c					\
+					srcs/renderer.c
 
 UNAME			=	$(shell uname)
 
@@ -36,7 +39,7 @@ endif
 
 # Compilation
 CXX				=	cc
-CFLAGS			=	-Wall -Wextra -Werror
+CFLAGS			=	-Wall -Wextra -Werror -O3
 INCLUDES		=	-I includes -I $(MLX_FOLDER) -I $(LIBFT_FOLDER)/includes
 
 # Linking
@@ -54,7 +57,7 @@ all: libft mlx $(NAME)
 
 $(NAME): $(OBJ)
 	@printf "$(GREEN)[ld]$(RESET): $(NAME)\n"
-	@$(CXX) -o $(NAME) $(OBJ) $(LIB_FOLDERS) $(LIBS) $(LDFLAGS)
+	$(CXX) -o $(NAME) $(OBJ) $(LIB_FOLDERS) $(LIBS) $(LDFLAGS) $(INCLUDES)
 
 .c.o: $(SRC)
 	@printf "$(GREEN)[cc]$(RESET): $< -> $@\n"

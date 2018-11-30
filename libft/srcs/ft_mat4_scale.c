@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera.c                                           :+:      :+:    :+:   */
+/*   ft_mat4_scale.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/29 21:48:01 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/30 16:47:32 by lbenard          ###   ########.fr       */
+/*   Created: 2018/11/30 16:38:06 by lbenard           #+#    #+#             */
+/*   Updated: 2018/11/30 16:40:11 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "camera.h"
-#include <stdlib.h>
+#include "libft.h"
 
-t_camera	new_camera(t_vec3f position, t_projection projection)
+t_mat4	ft_mat4_scale(t_vec3f scaling)
 {
-	t_camera	ret;
+	t_mat4	scaling_matrix;
 
-	ret.projection = projection;
-	ret.position = position;
-	return (ret);
+	scaling_matrix = ft_mat4_identity();
+	scaling_matrix.m[0][0] = scaling.x;
+	scaling_matrix.m[1][1] = scaling.y;
+	scaling_matrix.m[2][2] = scaling.z;
+	return (scaling_matrix);
 }

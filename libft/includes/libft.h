@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 14:43:39 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/29 23:40:38 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/11/30 18:36:13 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,8 +189,14 @@ void					ft_lstremove(t_list **list, t_list *to_remove);
 t_usize					ft_usize(size_t x, size_t y);
 t_isize					ft_isize(ssize_t x, ssize_t y);
 t_vec2f					ft_vec2f(float x, float y);
+float					ft_vec2f_dot(t_vec2f a, t_vec2f b);
 t_vec3f					ft_vec3f(float x, float y, float z);
+float					ft_vec3f_dot(t_vec3f a, t_vec3f b);
+t_vec4f					ft_vec3f_to_vec4f(t_vec3f src);
+t_vec2f					ft_vec3f_to_vec2f(t_vec3f src);
 t_vec4f					ft_vec4f(float x, float y, float z, float w);
+float					ft_vec4f_dot(t_vec4f a, t_vec4f b);
+t_vec3f					ft_vec4f_to_vec3f(t_vec4f src);
 
 t_mat3					ft_mat3(void);
 t_mat3					ft_mat3_identity(void);
@@ -203,5 +209,8 @@ t_mat3					ft_mat3_x_mat3(t_mat3 a, t_mat3 b);
 t_vec3f					ft_mat3_x_vec3(t_mat3 a, t_vec3f b);
 t_mat4					ft_mat4_x_mat4(t_mat4 a, t_mat4 b);
 t_vec4f					ft_mat4_x_vec4(t_mat4 a, t_vec4f b);
+
+t_mat4					ft_mat4_scale(t_vec3f scaling);
+t_mat4					ft_mat4_view(t_vec3f position, t_vec2f rotation);
 
 #endif

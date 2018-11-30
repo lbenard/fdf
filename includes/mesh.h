@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 20:40:13 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/29 22:43:38 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/11/30 16:59:45 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_mesh
 	t_face	*mesh;
 }				t_mesh;
 
-t_mesh	*new_mesh(char *mesh_path);
+t_mesh	new_mesh(char *mesh_path);
+t_mesh	new_mesh_copy(t_mesh src);
 
 #endif

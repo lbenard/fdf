@@ -6,7 +6,7 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 18:02:14 by lbenard           #+#    #+#              #
-#    Updated: 2018/11/29 23:41:17 by lbenard          ###   ########.fr        #
+#    Updated: 2018/11/30 17:51:30 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,10 @@ SRC			=	srcs/ft_memset.c			\
 				srcs/ft_isize.c				\
 				srcs/ft_vec2f.c				\
 				srcs/ft_vec3f.c				\
+				srcs/ft_vec3f_to_vec4f.c	\
+				srcs/ft_vec3f_to_vec2f.c	\
 				srcs/ft_vec4f.c				\
+				srcs/ft_vec4f_to_vec3f.c	\
 				srcs/ft_mat3.c				\
 				srcs/ft_mat3_identity.c		\
 				srcs/ft_print_mat3.c		\
@@ -99,7 +102,8 @@ SRC			=	srcs/ft_memset.c			\
 				srcs/ft_mat3_x_mat3.c		\
 				srcs/ft_mat3_x_vec3.c		\
 				srcs/ft_mat4_x_mat4.c		\
-				srcs/ft_mat4_x_vec4.c
+				srcs/ft_mat4_x_vec4.c		\
+				srcs/ft_mat4_scale.c
 OBJ			=	$(SRC:.c=.o)
 SRC_FOLDER	=	./srcs
 INCLUDES	=	./includes

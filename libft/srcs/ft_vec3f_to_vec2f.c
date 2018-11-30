@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera.c                                           :+:      :+:    :+:   */
+/*   ft_vec3f_to_vec2f.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/29 21:48:01 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/30 16:47:32 by lbenard          ###   ########.fr       */
+/*   Created: 2018/11/30 17:49:05 by lbenard           #+#    #+#             */
+/*   Updated: 2018/11/30 17:50:06 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "camera.h"
-#include <stdlib.h>
+#include "libft.h"
 
-t_camera	new_camera(t_vec3f position, t_projection projection)
+t_vec2f	ft_vec3f_to_vec2f(t_vec3f src)
 {
-	t_camera	ret;
+	t_vec2f	dst;
 
-	ret.projection = projection;
-	ret.position = position;
-	return (ret);
+	ft_memcpy(&dst, &src, sizeof(t_vec2f));
+	return (dst);
 }

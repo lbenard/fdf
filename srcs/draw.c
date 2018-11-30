@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/29 19:57:15 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/11/30 17:58:00 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,33 @@ void	draw_line(t_instance *instance, t_vec2f a, t_vec2f b, int a_color,
 		{
 			err -= d.y;
 			a.x += s.x;
-			a_color += 42;
+			//a_color += 42;
 		}
 		if (e < d.y)
 		{
 			err += d.x;
 			a.y += s.y;
-			a_color += 42;
+			//a_color += 42;
 		}
+	}
+}
+
+void	draw_mesh(t_instance *instance, t_mesh mesh)
+{
+	size_t	i;
+	t_vec2f	x;
+	t_vec2f	y;
+	t_vec2f	z;
+
+	i = 0;
+	while (i < mesh.mesh_size)
+	{
+		x = ft_vec3f_to_vec2f(mesh.mesh[i].v0);
+		y = ft_vec3f_to_vec2f(mesh.mesh[i].v1);
+		z = ft_vec3f_to_vec2f(mesh.mesh[i].v2);
+		draw_line(instance, x, y, COLOR_WHITE, COLOR_WHITE);
+		draw_line(instance, y, z, COLOR_WHITE, COLOR_WHITE);
+		draw_line(instance, z, x, COLOR_WHITE, COLOR_WHITE);
+		i++;
 	}
 }
