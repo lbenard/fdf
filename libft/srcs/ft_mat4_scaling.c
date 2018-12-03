@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_mat4_scale.c                                    :+:      :+:    :+:   */
+/*   ft_mat4_scaling.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:38:06 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/30 16:40:11 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/03 02:25:59 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_mat4	ft_mat4_scale(t_vec3f scaling)
+t_mat4	ft_mat4_scaling(t_vec3f scaling)
 {
 	t_mat4	scaling_matrix;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 14:43:39 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/30 18:36:13 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/03 02:24:24 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,9 @@ t_vec3f					ft_mat3_x_vec3(t_mat3 a, t_vec3f b);
 t_mat4					ft_mat4_x_mat4(t_mat4 a, t_mat4 b);
 t_vec4f					ft_mat4_x_vec4(t_mat4 a, t_vec4f b);
 
-t_mat4					ft_mat4_scale(t_vec3f scaling);
+t_mat4					ft_mat4_translation(t_vec3f translation);
+t_mat4					ft_mat4_scaling(t_vec3f scaling);
+t_mat4					ft_mat4_rotation(t_vec3f rotation);
 t_mat4					ft_mat4_view(t_vec3f position, t_vec2f rotation);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/30 17:58:00 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/03 03:32:34 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,38 @@
 #include "mlx.h"
 #include "colors.h"
 
-void	draw_line(t_instance *instance, t_vec2f a, t_vec2f b, int a_color,
+#include <stdio.h>
+
+typedef struct	s_vec2i
+{
+	int	x;
+	int	y;
+}				t_vec2i;
+
+void	draw_line(t_instance *instance, t_vec2f af, t_vec2f bf, int a_color,
 	int b_color)
 {
 	t_vec2f	d;
 	t_vec2f	s;
+	t_vec2i	a;
+	t_vec2i	b;
 	int		err;
 	int		e;
 
-	d = ft_vec2f(ft_abs((int)b.x - a.x), ft_abs((int)b.y - a.y));
+	a.x = (int)af.x;
+	a.y = (int)af.y;
+	b.x = (int)bf.x;
+	b.y = (int)bf.y;
+	d = ft_vec2f(ft_abs(b.x - a.x), ft_abs(b.y - a.y));
 	s = ft_vec2f(a.x < b.x ? 1 : -1, a.y < b.y ? 1 : -1);
 	err = (d.x > d.y ? d.x : -d.y) / 2;
+	//printf("draw_line: a: %f %f\ndraw_line: b: %f %f\n", a.x, a.y, b.x, b.y);
 	(void)b_color;
 	while (42)
 	{
-		mlx_pixel_put(instance->mlx, instance->window, (int)a.x, (int)a.y,
-			a_color);
+		//if (a.x > 0 && a.y > 0)
+			mlx_pixel_put(instance->mlx, instance->window, a.x, a.y,
+				a_color);
 		if (a.x == b.x && a.y == b.y)
 			break ;
 		e = err;

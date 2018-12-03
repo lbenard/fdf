@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera.c                                           :+:      :+:    :+:   */
+/*   ft_vec2f_dot.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/29 21:48:01 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/30 06:18:11 by freezee          ###   ########.fr       */
+/*   Created: 2018/12/02 01:00:06 by freezee           #+#    #+#             */
+/*   Updated: 2018/12/02 01:00:24 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "camera.h"
-#include <stdlib.h>
+#include "libft.h"
 
-t_camera	new_camera(t_vec3f position, t_vec2f rotation,
-	t_projection projection)
+float	ft_vec2f_dot(t_vec2f a, t_vec2f b)
 {
-	t_camera	ret;
-
-	ret.projection = projection;
-	ret.position = position;
-	ret.rotation = rotation;
-	return (ret);
+	return (a.x * b.x +
+		a.y * b.y);
 }

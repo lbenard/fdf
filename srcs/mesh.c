@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mesh.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:20:46 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/30 17:58:51 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/11/30 06:19:14 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ t_mesh	new_mesh(char *mesh_path)
 	if (!(ret.mesh = (t_face*)malloc(sizeof(t_face) * 3)))
 		return (ret);
 	ret.mesh[0].v0 = ft_vec3f(  0.0f,   0.0f, 0.0f);
-	ret.mesh[0].v1 = ft_vec3f(500.0f,   0.0f, 0.0f);
-	ret.mesh[0].v2 = ft_vec3f(  0.0f, 500.0f, 0.0f);
-	ret.mesh[1].v0 = ft_vec3f(500.0f, 500.0f, 0.0f);
-	ret.mesh[1].v1 = ft_vec3f(500.0f,   0.0f, 0.0f);
-	ret.mesh[1].v2 = ft_vec3f(  0.0f, 500.0f, 0.0f);
+	ret.mesh[0].v1 = ft_vec3f(100.0f,   0.0f, 0.0f);
+	ret.mesh[0].v2 = ft_vec3f(  0.0f, 100.0f, 0.0f);
+	ret.mesh[1].v0 = ft_vec3f(100.0f, 100.0f, 0.0f);
+	ret.mesh[1].v1 = ft_vec3f(100.0f,   0.0f, 0.0f);
+	ret.mesh[1].v2 = ft_vec3f(  0.0f, 100.0f, 0.0f);
 	ret.mesh_size = 2;
 	return (ret);
 }
