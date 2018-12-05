@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 15:22:55 by freezee           #+#    #+#             */
-/*   Updated: 2018/11/29 19:11:18 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/03 17:34:18 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@ int	key_callback_handler(int keycode, void *param)
 	while (list)
 	{
 		callback = (t_callback*)list->content;
-		callback->callback(keycode, *((void**)callback->params));
+		callback->callback(callback->instance, keycode,
+			*((void**)callback->params));
 		list = list->next;
 	}
 	return (0);
 }
-
-#include <stdio.h>
 
 int	mouse_callback_handler(int button, int x, int y, void *param)
 {
@@ -45,7 +44,8 @@ int	mouse_callback_handler(int button, int x, int y, void *param)
 	while (list)
 	{
 		callback = (t_callback*)list->content;
-		callback->callback(button, x, y, *((void**)callback->params));
+		callback->callback(callback->instance, button, x, y,
+			*((void**)callback->params));
 		list = list->next;
 	}
 	return (0);
@@ -62,7 +62,7 @@ int	expose_callback_handler(void *param)
 	while (list)
 	{
 		callback = (t_callback*)list->content;
-		callback->callback(callback->params);
+		callback->callback(callback->instance, *((void**)callback->params));
 		list = list->next;
 	}
 	return (0);
@@ -79,7 +79,7 @@ int	loop_callback_handler(void *param)
 	while (list)
 	{
 		callback = (t_callback*)list->content;
-		callback->callback(*((void**)callback->params));
+		callback->callback(callback->instance, *((void**)callback->params));
 		list = list->next;
 	}
 	return (0);

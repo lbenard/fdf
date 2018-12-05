@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/03 03:32:34 by freezee          ###   ########.fr       */
+/*   Updated: 2018/12/03 18:16:29 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	draw_line(t_instance *instance, t_vec2f af, t_vec2f bf, int a_color,
 	(void)b_color;
 	while (42)
 	{
-		//if (a.x > 0 && a.y > 0)
+		if (a.x > 0 && a.y > 0)
 			mlx_pixel_put(instance->mlx, instance->window, a.x, a.y,
 				a_color);
 		if (a.x == b.x && a.y == b.y)
@@ -62,6 +62,11 @@ void	draw_line(t_instance *instance, t_vec2f af, t_vec2f bf, int a_color,
 			//a_color += 42;
 		}
 	}
+}
+
+void	clear(t_instance *instance)
+{
+	mlx_clear_window(instance->mlx, instance->window);
 }
 
 void	draw_mesh(t_instance *instance, t_mesh mesh)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: freezee <freezee@student.42.fr>            +#+  +:+       +#+         #
+#    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 18:02:14 by lbenard           #+#    #+#              #
-#    Updated: 2018/12/03 02:48:23 by freezee          ###   ########.fr        #
+#    Updated: 2018/12/05 17:54:47 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,12 @@ SRC			=	srcs/ft_memset.c			\
 				srcs/ft_memmove.c			\
 				srcs/ft_memchr.c			\
 				srcs/ft_memcmp.c			\
+				srcs/ft_memalloc.c			\
+				srcs/ft_memdel.c			\
 				srcs/ft_strlen.c			\
+				srcs/ft_strnlen.c			\
 				srcs/ft_strdup.c			\
+				srcs/ft_strndup.c			\
 				srcs/ft_strcpy.c			\
 				srcs/ft_strncpy.c			\
 				srcs/ft_strcat.c			\
@@ -31,16 +35,6 @@ SRC			=	srcs/ft_memset.c			\
 				srcs/ft_strnstr.c			\
 				srcs/ft_strcmp.c			\
 				srcs/ft_strncmp.c			\
-				srcs/ft_atoi.c				\
-				srcs/ft_isalpha.c			\
-				srcs/ft_isdigit.c			\
-				srcs/ft_isalnum.c			\
-				srcs/ft_isascii.c			\
-				srcs/ft_isprint.c			\
-				srcs/ft_toupper.c			\
-				srcs/ft_tolower.c			\
-				srcs/ft_memalloc.c			\
-				srcs/ft_memdel.c			\
 				srcs/ft_strnew.c			\
 				srcs/ft_strdel.c			\
 				srcs/ft_strclr.c			\
@@ -54,7 +48,24 @@ SRC			=	srcs/ft_memset.c			\
 				srcs/ft_strjoin.c			\
 				srcs/ft_strtrim.c			\
 				srcs/ft_strsplit.c			\
+				srcs/ft_strcount.c			\
+				srcs/get_next_line.c		\
+				srcs/ft_isalpha.c			\
+				srcs/ft_isdigit.c			\
+				srcs/ft_isalnum.c			\
+				srcs/ft_isascii.c			\
+				srcs/ft_isprint.c			\
+				srcs/ft_isspace.c			\
+				srcs/ft_isupper.c			\
+				srcs/ft_islower.c			\
+				srcs/ft_toupper.c			\
+				srcs/ft_tolower.c			\
+				srcs/ft_atoi.c				\
 				srcs/ft_itoa.c				\
+				srcs/ft_abs.c				\
+				srcs/ft_min.c				\
+				srcs/ft_max.c				\
+				srcs/ft_nblen.c				\
 				srcs/ft_putchar.c			\
 				srcs/ft_putstr.c			\
 				srcs/ft_putendl.c			\
@@ -69,15 +80,6 @@ SRC			=	srcs/ft_memset.c			\
 				srcs/ft_lstadd.c			\
 				srcs/ft_lstiter.c			\
 				srcs/ft_lstmap.c			\
-				srcs/ft_strndup.c			\
-				srcs/ft_isspace.c			\
-				srcs/ft_isupper.c			\
-				srcs/ft_islower.c			\
-				srcs/ft_strnlen.c			\
-				srcs/ft_abs.c				\
-				srcs/ft_min.c				\
-				srcs/ft_max.c				\
-				srcs/ft_nblen.c				\
 				srcs/ft_lststrjoin.c		\
 				srcs/ft_lstfind.c			\
 				srcs/ft_lstcontentfind.c	\

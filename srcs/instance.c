@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:28:24 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/29 19:18:04 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/03 17:32:38 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void		instance_add_key_callback(t_instance *self, int (*callback)(),
 	t_callback	new;
 
 	new.callback = callback;
+	new.instance = self;
 	new.params = params;
 	ft_lstpushback(&self->key_callbacks,
 		ft_lstnew(&new, sizeof(t_callback)));
@@ -57,6 +58,7 @@ void		instance_add_mouse_callback(t_instance *self, int (*callback)(),
 	t_callback	new;
 
 	new.callback = callback;
+	new.instance = self;
 	new.params = params;
 	ft_lstpushback(&self->mouse_callbacks,
 		ft_lstnew(&new, sizeof(t_callback)));
@@ -68,6 +70,7 @@ void		instance_add_expose_callback(t_instance *self, int (*callback)(),
 	t_callback	new;
 
 	new.callback = callback;
+	new.instance = self;
 	new.params = params;
 	ft_lstpushback(&self->expose_callbacks,
 		ft_lstnew(&new, sizeof(t_callback)));
@@ -78,6 +81,7 @@ void		instance_add_loop_callback(t_instance *self, int (*callback)(),
 	t_callback	new;
 
 	new.callback = callback;
+	new.instance = self;
 	new.params = params;
 	ft_lstpushback(&self->loop_callbacks,
 		ft_lstnew(&new, sizeof(t_callback)));

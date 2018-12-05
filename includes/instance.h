@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 14:25:10 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/29 18:56:08 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/03 17:35:55 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,22 @@
 
 # include "libft.h"
 
-typedef struct	s_callback
-{
-	int		(*callback)();
-	void	*params;
-}				t_callback;
-
 typedef struct	s_instance
 {
-	void	*mlx;
-	void	*window;
-	t_list	*key_callbacks;
-	t_list	*mouse_callbacks;
-	t_list	*expose_callbacks;
-	t_list	*loop_callbacks;
+	void		*mlx;
+	void		*window;
+	t_list		*key_callbacks;
+	t_list		*mouse_callbacks;
+	t_list		*expose_callbacks;
+	t_list		*loop_callbacks;
 }				t_instance;
+
+typedef struct	s_callback
+{
+	int			(*callback)();
+	t_instance	*instance;
+	void		*params;
+}				t_callback;
 
 t_instance		*new_instance(t_usize size, char *window_title);
 void			instance_add_key_callback(t_instance *self,

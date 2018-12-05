@@ -3,23 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   mesh.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:20:46 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/30 06:19:14 by freezee          ###   ########.fr       */
+/*   Updated: 2018/12/05 18:56:06 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mesh.h"
 #include <stdlib.h>
 
-t_mesh	new_mesh(char *mesh_path)
+t_mesh	*new_mesh(t_mesh_type mesh_type, size_t vertices_count,
+	size_t indices_count)
 {
-	t_mesh	ret;
+	t_mesh	*mesh;
+
+	if (!(mesh = (t_mesh*)malloc(sizeof(t_mesh))))
+		return (NULL);
+	mesh->mesh_type = SQUARE;
+	mesh->vertices_count = vertices_count;
+	if (!(mesh->vertices = (t_vec3f*)malloc(sizeof(t_vec3f) * vertices_count)))
+	{
+		free(mesh);
+		return (NULL);
+	}
+	mesh->indices_count = indices_count;
+	if (!(mesh->indices = (size_t*)malloc(sizeof(size_t) * indices_count)))
+	{
+		free(mesh->vertices);
+		free(mesh);
+		return (NULL);
+	}
+	return (mesh);
+}
+
+/*t_mesh	*new_mesh(char *mesh_path)
+{
+	t_mesh	*ret;
 
 	(void)mesh_path;
-	if (!(ret.mesh = (t_face*)malloc(sizeof(t_face) * 3)))
-		return (ret);
+	if (!(ret = (t_mesh*)malloc(sizeof(t_mesh))))
+		return (NULL);
+	if (!(ret->mesh = (t_face*)malloc(sizeof(t_face) * 3)))
+		return (NULL);
 	ret.mesh[0].v0 = ft_vec3f(  0.0f,   0.0f, 0.0f);
 	ret.mesh[0].v1 = ft_vec3f(100.0f,   0.0f, 0.0f);
 	ret.mesh[0].v2 = ft_vec3f(  0.0f, 100.0f, 0.0f);
@@ -39,4 +65,4 @@ t_mesh	new_mesh_copy(t_mesh src)
 	ret.mesh_size = src.mesh_size;
 	ft_memcpy(ret.mesh, src.mesh, sizeof(t_face) * src.mesh_size);
 	return (ret);
-}
+}*/
