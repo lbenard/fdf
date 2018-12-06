@@ -6,7 +6,7 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 19:33:38 by lbenard           #+#    #+#              #
-#    Updated: 2018/11/30 17:12:47 by lbenard          ###   ########.fr        #
+#    Updated: 2018/12/06 17:15:50 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC				=	fdf.c						\
 					srcs/instance_handlers.c	\
 					srcs/instance.c				\
 					srcs/mesh.c					\
+					srcs/parser.c				\
 					srcs/renderer.c
 
 UNAME			=	$(shell uname)

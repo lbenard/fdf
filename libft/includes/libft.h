@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 14:43:39 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/05 17:51:24 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/06 16:02:48 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ typedef struct			s_list
 */
 
 # define BUFF_SIZE 2048
+# define READ_ERROR -1
+# define READ_FINISH 0
+# define LINE_READ 1
 
 typedef struct			s_fd
 {

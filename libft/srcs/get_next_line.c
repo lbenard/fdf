@@ -6,17 +6,13 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 09:36:43 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/03 20:10:47 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/06 17:37:56 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 #include <unistd.h>
-
-#define ERROR -1
-#define READ_FINISH 0
-#define LINE_READ 1
 
 static void	read_line(t_fd *fd, char (*buffer)[BUFF_SIZE + 1],
 	char **line, char **chr)
@@ -46,7 +42,7 @@ static int	get_line(t_fd *fd, char **line)
 	buffer[0] = 0;
 	read_line(fd, &buffer, line, &chr);
 	if (*line == NULL)
-		return (ERROR);
+		return (READ_ERROR);
 	if (ft_strlen(buffer) == 0 && ft_strlen(*line) == 0)
 	{
 		free(*line);
@@ -70,19 +66,19 @@ int			get_next_line(const int fd, char **line)
 	int				retval;
 
 	if (!line || fd < 0 || read(fd, NULL, 0) < 0)
-		return (ERROR);
+		return (READ_ERROR);
 	new_fd.fd = fd;
 	new_fd.buffer[0] = 0;
 	if (!fd_list)
 	{
 		if (!(fd_list = ft_lstnew(&new_fd, sizeof(t_fd))))
-			return (ERROR);
+			return (READ_ERROR);
 		find = fd_list;
 	}
 	else if (!(find = ft_lstcontentfind(fd_list, &fd, sizeof(int))))
 	{
 		if (!(find = ft_lstnew(&new_fd, sizeof(t_fd))))
-			return (ERROR);
+			return (READ_ERROR);
 		ft_lstadd(&fd_list, find);
 	}
 	if ((retval = get_line(find->content, line)) == 0)

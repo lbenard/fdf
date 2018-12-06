@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/03 18:13:06 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/06 18:55:54 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "renderer.h"
 #include "mesh.h"
 #include "keycodes.h"
+#include "parser.h"
 
 int	camera_control_callback(t_instance *instance, int keycode, void *param)
 {
@@ -50,10 +51,11 @@ int	camera_control_callback(t_instance *instance, int keycode, void *param)
 	return (1);
 }
 
+#include <stdio.h>
 
 int	main(int ac, char **av)
 {
-	t_instance		*instance;
+	/*t_instance		*instance;
 	t_renderer		*renderer;
 	t_projection	orthographic;
 
@@ -69,11 +71,36 @@ int	main(int ac, char **av)
 		orthographic))))
 		return (-1);
 	render(renderer);
-	instance_add_key_callback(instance, camera_control_callback, &renderer);
+	instance_add_key_callback(instance, camera_control_callback, &renderer);*/
+
+	t_mesh	*map;
+	size_t	vertices;
+	size_t	indices;
+
+	(void)ac;
+	(void)av;
+	if (!(map = parse_map("42.fdf")))
+		printf("caca\n");
+	vertices = 0;
+	indices = 0;
+	printf("vertices: %lu\n", map->vertices_count);
+	while (vertices < map->vertices_count)
+	{
+		printf("%f %f %f ", map->vertices[vertices].x,
+			map->vertices[vertices].y, map->vertices[vertices].z);
+			vertices++;
+	}
+	printf("\n");
+	while (indices < map->indices_count)
+	{
+		printf("%lu ", map->indices[indices]);
+		indices++;
+	}
+
 //	draw_mesh(instance, renderer->projection_mesh);
 	//draw_line(instance, ft_vec2f(1280, 0), ft_vec2f(0, 720), COLOR_WHITE,
 	//	COLOR_WHITE);
 	//draw_line(instance, ft_vec2f(100, 100), ft_vec2f(200, 100), COLOR_WHITE, COLOR_WHITE);
 	//draw_line(instance, ft_vec2f(200, 100), ft_vec2f(100, 199.500427f), COLOR_WHITE, COLOR_WHITE);
-	mlx_loop(instance->mlx);
+	//mlx_loop(instance->mlx);
 }

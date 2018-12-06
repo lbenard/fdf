@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:20:46 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/05 18:56:06 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/06 19:04:14 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_mesh	*new_mesh(t_mesh_type mesh_type, size_t vertices_count,
 
 	if (!(mesh = (t_mesh*)malloc(sizeof(t_mesh))))
 		return (NULL);
-	mesh->mesh_type = SQUARE;
+	mesh->mesh_type = mesh_type;
 	mesh->vertices_count = vertices_count;
 	if (!(mesh->vertices = (t_vec3f*)malloc(sizeof(t_vec3f) * vertices_count)))
 	{
@@ -35,6 +35,14 @@ t_mesh	*new_mesh(t_mesh_type mesh_type, size_t vertices_count,
 		return (NULL);
 	}
 	return (mesh);
+}
+
+void	free_mesh(t_mesh **mesh)
+{
+	free((*mesh)->vertices);
+	free((*mesh)->indices);
+	free(*mesh);
+	*mesh = NULL;
 }
 
 /*t_mesh	*new_mesh(char *mesh_path)

@@ -6,12 +6,13 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:35:03 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/03 21:21:25 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/06 17:15:33 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "renderer.h"
 #include "draw.h"
+#include "mesh.h"
 #include <stdlib.h>
 #include "libft.h"
 
@@ -19,7 +20,11 @@ t_renderer	*new_renderer(t_instance *instance, t_mesh mesh, t_camera camera)
 {
 	t_renderer	*ret;
 
-	if (!(ret = (t_renderer*)malloc(sizeof(t_renderer))))
+	(void)instance;
+	(void)mesh;
+	(void)camera;
+	ret = NULL;
+	/*if (!(ret = (t_renderer*)malloc(sizeof(t_renderer))))
 		return (NULL);
 	if (!(ret->raw_mesh = new_mesh_copy(mesh)).mesh ||
 		!(ret->model_mesh = new_mesh_copy(mesh)).mesh ||
@@ -31,7 +36,7 @@ t_renderer	*new_renderer(t_instance *instance, t_mesh mesh, t_camera camera)
 	ret->instance = instance;
 	update_model_mesh(ret);
 	update_view_mesh(ret);
-	update_projection_mesh(ret);
+	update_projection_mesh(ret);*/
 	return (ret);
 }
 
@@ -45,7 +50,7 @@ void			update_model_mesh(t_renderer *self)
 	model_matrix = ft_mat4_x_mat4(ft_mat4_rotation(ft_vec3f(0.0f, 0.0f, 0.7853981634f)), model_matrix);
 	model_matrix = ft_mat4_x_mat4(ft_mat4_translation(ft_vec3f(100.0f, 100.0f, 100.0f)), model_matrix);
 	//ft_print_mat4(&model_matrix);
-	while (i < self->raw_mesh.mesh_size)
+	/*while (i < self->raw_mesh.mesh_size)
 	{
 		self->model_mesh.mesh[i].v0 =
 			ft_vec4f_to_vec3f(ft_mat4_x_vec4(model_matrix,
@@ -57,7 +62,7 @@ void			update_model_mesh(t_renderer *self)
 			ft_vec4f_to_vec3f(ft_mat4_x_vec4(model_matrix,
 			ft_vec3f_to_vec4f(self->raw_mesh.mesh[i].v2)));
 		i++;
-	}
+	}*/
 }
 
 #include <stdio.h>
@@ -77,7 +82,7 @@ void			update_view_mesh(t_renderer *self)
 		view_matrix);
 	printf("camera: pos: x %f\ty %f\n        rot: x %f\t\ty %f\n", self->camera.position.x, self->camera.position.y, self->camera.rotation.x, self->camera.rotation.y);
 	ft_print_mat4(&view_matrix);
-	while (i < self->model_mesh.mesh_size)
+	/*while (i < self->model_mesh.mesh_size)
 	{
 		//printf("%f %f %f\n", self->view_mesh.mesh[i].v0.x, self->view_mesh.mesh[i].v0.y, self->view_mesh.mesh[i].v0.z);
 		self->view_mesh.mesh[i].v0 =
@@ -91,7 +96,7 @@ void			update_view_mesh(t_renderer *self)
 			ft_vec4f_to_vec3f(ft_mat4_x_vec4(view_matrix,
 			ft_vec3f_to_vec4f(self->model_mesh.mesh[i].v2)));
 		i++;
-	}
+	}*/
 }
 
 void			update_projection_mesh(t_renderer *self)
@@ -101,7 +106,7 @@ void			update_projection_mesh(t_renderer *self)
 
 	i = 0;
 	projection_matrix = self->camera.projection;
-	while (i < self->view_mesh.mesh_size)
+	/*while (i < self->view_mesh.mesh_size)
 	{
 		self->projection_mesh.mesh[i].v0 =
 			ft_vec4f_to_vec3f(ft_mat4_x_vec4(projection_matrix.projection,
@@ -113,7 +118,7 @@ void			update_projection_mesh(t_renderer *self)
 			ft_vec4f_to_vec3f(ft_mat4_x_vec4(projection_matrix.projection,
 			ft_vec3f_to_vec4f(self->view_mesh.mesh[i].v2)));
 		i++;
-	}
+	}*/
 }
 
 void			render(t_renderer *self)

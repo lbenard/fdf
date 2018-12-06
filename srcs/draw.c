@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/03 18:16:29 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/06 17:13:33 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ void	clear(t_instance *instance)
 
 void	draw_mesh(t_instance *instance, t_mesh mesh)
 {
-	size_t	i;
+	(void)instance;
+	(void)mesh;
+	/*size_t	i;
 	t_vec2f	x;
 	t_vec2f	y;
 	t_vec2f	z;
@@ -86,5 +88,5 @@ void	draw_mesh(t_instance *instance, t_mesh mesh)
 		draw_line(instance, y, z, COLOR_WHITE, COLOR_WHITE);
 		draw_line(instance, z, x, COLOR_WHITE, COLOR_WHITE);
 		i++;
-	}
+	}*/
 }

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:56:09 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/05 18:44:38 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/06 17:11:41 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 #include "mesh.h"
 
-t_mesh	*parse_map(char *path);
+t_mesh	*parse_map(const char *path);
 
 #endif
