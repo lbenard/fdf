@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/06 18:55:54 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/10 16:31:50 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "instance.h"
-#include "draw.h"
-#include "colors.h"
 #include "renderer.h"
 #include "mesh.h"
 #include "keycodes.h"
 #include "parser.h"
+#include "errors.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 int	camera_control_callback(t_instance *instance, int keycode, void *param)
 {
@@ -26,81 +27,91 @@ int	camera_control_callback(t_instance *instance, int keycode, void *param)
 	(void)instance;
 	renderer = (t_renderer*)param;
 	if (keycode == KEY_W)
-		renderer->camera.position.z += 10.0f;
+		renderer->model_mesh->position.z += 10.0f;
 	if (keycode == KEY_S)
-		renderer->camera.position.z -= 10.0f;
+		renderer->model_mesh->position.z -= 10.0f;
 	if (keycode == KEY_A)
-		renderer->camera.position.x -= 10.0f;
+		renderer->model_mesh->position.x -= 10.0f;
 	if (keycode == KEY_D)
-		renderer->camera.position.x += 10.0f;
+		renderer->model_mesh->position.x += 10.0f;
 	if (keycode == KEY_SPACEBAR)
-		renderer->camera.position.y -= 10.0f;
+		renderer->model_mesh->position.y -= 10.0f;
 	if (keycode == KEY_SHIFT_LEFT)
-		renderer->camera.position.y += 10.0f;
+		renderer->model_mesh->position.y += 10.0f;
 	if (keycode == KEY_PAD_4)
-		renderer->camera.rotation.y -= 0.1f;
+		renderer->model_mesh->rotation.y -= 0.1f;
 	if (keycode == KEY_PAD_6)
-		renderer->camera.rotation.y += 0.1f;
+		renderer->model_mesh->rotation.y += 0.1f;
 	if (keycode == KEY_PAD_8)
-		renderer->camera.rotation.x -= 0.1f;
+		renderer->model_mesh->rotation.x -= 0.1f;
 	if (keycode == KEY_PAD_5)
-		renderer->camera.rotation.x += 0.1f;
-	update_view_mesh(renderer);
+		renderer->model_mesh->rotation.x += 0.1f;
+	if (keycode == KEY_PAD_ADD)
+	{
+		renderer->model_mesh->scale.x *= 1.1f;
+		renderer->model_mesh->scale.y *= 1.1f;
+		renderer->model_mesh->scale.z *= 1.1f;
+	}
+	if (keycode == KEY_PAD_SUB)
+	{
+		renderer->model_mesh->scale.x /= 1.1f;
+		renderer->model_mesh->scale.y /= 1.1f;
+		renderer->model_mesh->scale.z /= 1.1f;
+	}
+	update_model_mesh(renderer);
 	update_projection_mesh(renderer);
 	render(renderer);
 	return (1);
 }
 
-#include <stdio.h>
+int	expose_callback(void *param)
+{
+	(void)param;
+	printf("Expose\n");
+	return (1);
+}
+
+#include <errno.h>
 
 int	main(int ac, char **av)
 {
-	/*t_instance		*instance;
+	t_instance		*instance;
 	t_renderer		*renderer;
-	t_projection	orthographic;
+	t_isize			map_size;
 
-	(void)ac;
-	(void)av;
-	if (!(instance = new_instance(ft_usize(1280, 720), "Test de fenetre")))
-		return (-1);
-	orthographic.projection = ft_mat4_identity();
-	orthographic.projection.m[2][2] = 0.0f;
-	if (!(renderer = new_renderer(instance,
-		new_mesh(av[1]),
-		new_camera(ft_vec3f(0.0f, 0.0f, 0.0f), ft_vec2f(0.0f, 0.0f),
-		orthographic))))
-		return (-1);
-	render(renderer);
-	instance_add_key_callback(instance, camera_control_callback, &renderer);*/
-
-	t_mesh	*map;
-	size_t	vertices;
-	size_t	indices;
-
-	(void)ac;
-	(void)av;
-	if (!(map = parse_map("42.fdf")))
-		printf("caca\n");
-	vertices = 0;
-	indices = 0;
-	printf("vertices: %lu\n", map->vertices_count);
-	while (vertices < map->vertices_count)
+	if (ac != 2)
 	{
-		printf("%f %f %f ", map->vertices[vertices].x,
-			map->vertices[vertices].y, map->vertices[vertices].z);
-			vertices++;
+		throw_error_str("missing file operand");
+		return (-1);
 	}
-	printf("\n");
-	while (indices < map->indices_count)
+	if (!(instance = new_instance(ft_usize(1280, 720), "fdf")))
 	{
-		printf("%lu ", map->indices[indices]);
-		indices++;
+		throw_error();
+		return (-1);
 	}
-
-//	draw_mesh(instance, renderer->projection_mesh);
-	//draw_line(instance, ft_vec2f(1280, 0), ft_vec2f(0, 720), COLOR_WHITE,
-	//	COLOR_WHITE);
-	//draw_line(instance, ft_vec2f(100, 100), ft_vec2f(200, 100), COLOR_WHITE, COLOR_WHITE);
-	//draw_line(instance, ft_vec2f(200, 100), ft_vec2f(100, 199.500427f), COLOR_WHITE, COLOR_WHITE);
-	//mlx_loop(instance->mlx);
+	if (!(renderer = new_renderer(instance, parse_map(av[1]))))
+	{
+		free(instance);
+		throw_error();
+		return (-1);
+	}
+	map_size = get_map_size(av[1]);
+	if (map_size.x == -1 || map_size.y == -1)
+	{
+		free(instance);
+		free(renderer);
+		throw_error_str("Invalid map size");
+		return (-1);
+	}
+	renderer->raw_mesh->position.x -= (map_size.x * 10 - 10) / 2.0f;
+	renderer->raw_mesh->position.z -= (map_size.y * 10 - 10) / 2.0f;
+	init_raw_mesh(renderer);
+	renderer->model_mesh->rotation.x = 0.5f;
+	renderer->model_mesh->rotation.y = -0.4f;
+	renderer->model_mesh->scale.x = 5.0f;
+	renderer->model_mesh->scale.y = 5.0f;
+	renderer->model_mesh->scale.z = 5.0f;
+	instance_add_key_callback(instance, camera_control_callback, &renderer);
+	//instance_add_expose_callback(instance, expose_callback, &instance);
+	mlx_loop(instance->mlx);
 }

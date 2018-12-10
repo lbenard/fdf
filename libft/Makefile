@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
+#    By: freezee <freezee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 18:02:14 by lbenard           #+#    #+#              #
-#    Updated: 2018/12/05 17:54:47 by lbenard          ###   ########.fr        #
+#    Updated: 2018/12/07 23:10:59 by freezee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,6 +89,7 @@ SRC			=	srcs/ft_memset.c			\
 				srcs/ft_lstremove.c			\
 				srcs/ft_usize.c				\
 				srcs/ft_isize.c				\
+				srcs/ft_vec2i.c				\
 				srcs/ft_vec2f.c				\
 				srcs/ft_vec2f_dot.c			\
 				srcs/ft_vec3f.c				\
@@ -115,33 +116,31 @@ SRC			=	srcs/ft_memset.c			\
 OBJ			=	$(SRC:.c=.o)
 SRC_FOLDER	=	./srcs
 INCLUDES	=	./includes
-FLAGS		=	-Wall -Wextra -Werror
-NORM_FILES	=	$(shell find . -name "*.c" -o -name "*.h")
+FLAGS		=	-Wall -Wextra -Werror -O3 -std=c99
+
+# Colors
+GREEN		=	\033[32m
+RESET		=	\033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "\033[32m  Creating: \033[0m$(NAME)"
+	@printf "$(GREEN)[cc]$(RESET): done\n"
+	@printf "$(GREEN)[ld]$(RESET): $(NAME)\n"
 	@ar rcs $(NAME) $(OBJ)
 
 .c.o: $(SRC)
-	@printf "\033[32m Compiling: \033[0m$< -> $@\n"
+	@printf "$(GREEN)[cc]$(RESET): $< -> $@\n"
+	@echo -en "\e[1A"
 	@gcc -c $< -o $@ -I $(INCLUDES) $(FLAGS)
-
-norm:
-	@printf "\033[32mNorminette:\033[0m "
-	@if ! norminette $(NORM_FILES) | grep -sB1 -E "Error|Warning";then echo "\033[0mEvery file is following the norm";fi
+	@echo -en "\e[0K"
 
 clean:
-	@printf "\033[32m  Cleaning: \033[0m"
-	@find . -name "*.o" -exec sh -c 'basename {}' \; | tr "\n" " "
-	@echo ""
+	@printf "$(GREEN)[rm]$(RESET): object files\n"
 	@rm -rf $(OBJ)
 
 fclean: clean
-	@printf "\033[32m  Removing: \033[0m"
-	@find . -name "libft.a" -exec sh -c 'basename {}' \; | tr "\n" " "
-	@echo ""
+	@printf "$(GREEN)[rm]$(RESET): library file\n"
 	@rm -rf $(NAME)
 
 re: fclean all

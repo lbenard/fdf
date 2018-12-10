@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   instance.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 14:25:10 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/03 17:35:55 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/09 23:59:05 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,17 @@
 
 # include "libft.h"
 
+typedef struct	s_window
+{
+	void	*handle;
+	t_usize	size;
+	char	*title;
+}				t_window;
+
 typedef struct	s_instance
 {
 	void		*mlx;
-	void		*window;
+	t_window	*window;
 	t_list		*key_callbacks;
 	t_list		*mouse_callbacks;
 	t_list		*expose_callbacks;

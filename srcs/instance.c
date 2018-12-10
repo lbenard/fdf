@@ -3,40 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   instance.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:28:24 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/03 17:32:38 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/10 16:26:04 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "instance.h"
 #include "mlx.h"
 #include <stdlib.h>
+#include "errors.h"
+
+static void	add_hooks(t_instance *instance)
+{
+	mlx_key_hook(instance->window->handle, key_callback_handler,
+		&instance->key_callbacks);
+	mlx_mouse_hook(instance->window->handle, mouse_callback_handler,
+		&instance->mouse_callbacks);
+	mlx_expose_hook(instance->window->handle, expose_callback_handler,
+		&instance->expose_callbacks);
+	mlx_loop_hook(instance->mlx, loop_callback_handler,
+		&instance->loop_callbacks);
+}
+
+#include <stdio.h>
+#include <errno.h>
 
 t_instance	*new_instance(t_usize size, char *window_title)
 {
 	t_instance	*ret;
 
 	if (!(ret = (t_instance*)malloc(sizeof(t_instance))))
-		return (NULL);
-	ft_bzero(ret, sizeof(t_instance));
+		return (throw_error());
 	if (!(ret->mlx = mlx_init()))
-		return (NULL);
-	if (!(ret->window = mlx_new_window(ret->mlx, size.x, size.y, window_title)))
+	{
+		free(ret);
+		return (throw_error());
+	}
+	if (!(ret->window = (t_window*)malloc(sizeof(t_window))))
 	{
 		free(ret->mlx);
 		free(ret);
-		return (NULL);
+		return (throw_error());
 	}
-	mlx_key_hook(ret->window, key_callback_handler,
-		&ret->key_callbacks);
-	mlx_mouse_hook(ret->window, mouse_callback_handler,
-		&ret->mouse_callbacks);
-	mlx_expose_hook(ret->window, expose_callback_handler,
-		&ret->expose_callbacks);
-	mlx_loop_hook(ret->mlx, loop_callback_handler,
-		&ret->loop_callbacks);
+	if (!(ret->window->handle = mlx_new_window(ret->mlx, size.x, size.y,
+		window_title)))
+	{
+		free(ret->mlx);
+		free(ret->window);
+		free(ret);
+		return (throw_error());
+	}
+	errno = 0;
+	ret->window->size = size;
+	ret->window->title = window_title;
+	add_hooks(ret);
 	return (ret);
 }
 

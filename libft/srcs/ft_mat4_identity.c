@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mat4_identity.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 18:22:53 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/27 18:23:54 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/07 20:54:41 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 t_mat4	ft_mat4_identity(void)
 {
-	t_mat4	retval;
-
-	ft_bzero(&retval, sizeof(t_mat4));
-	retval.m[0][0] = 1.0f;
-	retval.m[1][1] = 1.0f;
-	retval.m[2][2] = 1.0f;
-	retval.m[3][3] = 1.0f;
-	return (retval);
+	return ((t_mat4)(struct s_mat4_data) {
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1
+	});
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 14:43:39 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/06 16:02:48 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/07 20:25:55 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,12 @@ typedef struct			s_isize
 	ssize_t	y;
 }						t_isize;
 
+typedef struct			s_vec2i
+{
+	int	x;
+	int	y;
+}						t_vec2i;
+
 typedef struct			s_vec2f
 {
 	float	x;
@@ -84,13 +90,44 @@ typedef struct			s_vec4f
 	float	w;
 }						t_vec4f;
 
-typedef struct			s_mat3
+typedef union			u_mat3
 {
+	struct s_mat3_data
+	{
+		float	m00;
+		float	m01;
+		float	m02;
+		float	m10;
+		float	m11;
+		float	m12;
+		float	m20;
+		float	m21;
+		float	m22;
+	}		d;
 	float	m[3][3];
 }						t_mat3;
 
-typedef struct			s_mat4
+typedef union			u_mat4
 {
+	struct s_mat4_data
+	{
+		float	m00;
+		float	m01;
+		float	m02;
+		float	m03;
+		float	m10;
+		float	m11;
+		float	m12;
+		float	m13;
+		float	m20;
+		float	m21;
+		float	m22;
+		float	m23;
+		float	m30;
+		float	m31;
+		float	m32;
+		float	m33;
+	}		d;
 	float	m[4][4];
 }						t_mat4;
 
@@ -222,6 +259,8 @@ t_isize					ft_isize(ssize_t x, ssize_t y);
 /*
 ** Vectors
 */
+
+t_vec2i					ft_vec2i(int x, int y);
 
 t_vec2f					ft_vec2f(float x, float y);
 float					ft_vec2f_dot(t_vec2f a, t_vec2f b);
