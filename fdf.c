@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/10 16:31:50 by freezee          ###   ########.fr       */
+/*   Updated: 2018/12/11 15:18:52 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,23 +89,21 @@ int	main(int ac, char **av)
 		throw_error();
 		return (-1);
 	}
-	if (!(renderer = new_renderer(instance, parse_map(av[1]))))
+	map_size = get_map_size(av[1]);
+	if (map_size.x == -1 || map_size.y == -1)
+	{
+		free(instance);
+		throw_error_str("Invalid map size");
+		return (-1);
+	}
+	if (!(renderer = new_renderer(instance, parse_map(av[1]),
+		ft_vec3f(-(map_size.x * 10 - 10) / 2.0f, 0.0f,
+		-(map_size.y * 10 - 10) / 2.0f))))
 	{
 		free(instance);
 		throw_error();
 		return (-1);
 	}
-	map_size = get_map_size(av[1]);
-	if (map_size.x == -1 || map_size.y == -1)
-	{
-		free(instance);
-		free(renderer);
-		throw_error_str("Invalid map size");
-		return (-1);
-	}
-	renderer->raw_mesh->position.x -= (map_size.x * 10 - 10) / 2.0f;
-	renderer->raw_mesh->position.z -= (map_size.y * 10 - 10) / 2.0f;
-	init_raw_mesh(renderer);
 	renderer->model_mesh->rotation.x = 0.5f;
 	renderer->model_mesh->rotation.y = -0.4f;
 	renderer->model_mesh->scale.x = 5.0f;

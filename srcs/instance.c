@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   instance.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:28:24 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/10 16:26:04 by freezee          ###   ########.fr       */
+/*   Updated: 2018/12/11 15:05:24 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_instance	*new_instance(t_usize size, char *window_title)
 
 	if (!(ret = (t_instance*)malloc(sizeof(t_instance))))
 		return (throw_error());
+	ft_bzero(ret, sizeof(t_instance));
 	if (!(ret->mlx = mlx_init()))
 	{
 		free(ret);

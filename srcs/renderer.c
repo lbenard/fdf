@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:35:03 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/10 02:51:09 by freezee          ###   ########.fr       */
+/*   Updated: 2018/12/11 15:18:29 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@
 ** which represents the final mesh projection onto the screen.
 */
 
-t_renderer	*new_renderer(t_instance *instance, t_mesh *mesh)
+#include <stdio.h>
+
+t_renderer	*new_renderer(t_instance *instance, t_mesh *mesh, t_vec3f origin)
 {
 	t_renderer	*ret;
 
@@ -38,6 +40,9 @@ t_renderer	*new_renderer(t_instance *instance, t_mesh *mesh)
 		!(ret->projection_mesh = new_mesh_copy(mesh)))
 		return (throw_error());
 	ret->instance = instance;
+	ret->raw_mesh->position.x += origin.x;
+	ret->raw_mesh->position.y += origin.y;
+	ret->raw_mesh->position.z += origin.z;
 	init_raw_mesh(ret);
 	update_model_mesh(ret);
 	update_projection_mesh(ret);

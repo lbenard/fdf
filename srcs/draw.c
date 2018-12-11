@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/10 16:00:08 by freezee          ###   ########.fr       */
+/*   Updated: 2018/12/11 15:24:11 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 #include <stdio.h>
 
-void	draw_line(t_instance *instance, t_vec2f af, t_vec2f bf, int a_color,
-	int b_color)
+void	draw_line(t_instance *instance, t_vec2f af, t_vec2f bf, t_color a_color,
+	t_color b_color)
 {
 	t_vec2f	d;
 	t_vec2f	s;
@@ -76,10 +76,10 @@ void	draw_mesh(t_instance *instance, t_mesh *mesh)
 		x.y *= 10;
 		y.x *= 10;
 		y.y *= 10;*/
-		x.x += 640;
-		y.x += 640;
-		x.y += 360;
-		y.y += 360;
+		x.x += instance->window->size.x / 2;
+		y.x += instance->window->size.x / 2;
+		x.y += instance->window->size.y / 2;
+		y.y += instance->window->size.y / 2;
 		draw_line(instance, x, y, COLOR_WHITE, COLOR_WHITE);
 		/*printf("a: x %f y%f z%f\nb: x%f y%f z%f\n",
 			mesh->vertices[mesh->indices[i].x].x,
