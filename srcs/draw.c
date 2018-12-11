@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/11 15:24:11 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/11 15:25:00 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	draw_line(t_instance *instance, t_vec2f af, t_vec2f bf, t_color a_color,
 	d = ft_vec2f(ft_abs(b.x - a.x), ft_abs(b.y - a.y));
 	s = ft_vec2f(a.x < b.x ? 1 : -1, a.y < b.y ? 1 : -1);
 	err = (d.x > d.y ? d.x : -d.y) / 2;
-	//printf("draw_line: a: %f %f\ndraw_line: b: %f %f\n", a.x, a.y, b.x, b.y);
 	(void)b_color;
 	while (42)
 	{
@@ -72,22 +71,11 @@ void	draw_mesh(t_instance *instance, t_mesh *mesh)
 	{
 		x = ft_vec3f_to_vec2f(mesh->vertices[mesh->indices[i].x]);
 		y = ft_vec3f_to_vec2f(mesh->vertices[mesh->indices[i].y]);
-		/*x.x *= 10;
-		x.y *= 10;
-		y.x *= 10;
-		y.y *= 10;*/
 		x.x += instance->window->size.x / 2;
 		y.x += instance->window->size.x / 2;
 		x.y += instance->window->size.y / 2;
 		y.y += instance->window->size.y / 2;
 		draw_line(instance, x, y, COLOR_WHITE, COLOR_WHITE);
-		/*printf("a: x %f y%f z%f\nb: x%f y%f z%f\n",
-			mesh->vertices[mesh->indices[i].x].x,
-			mesh->vertices[mesh->indices[i].x].y,
-			mesh->vertices[mesh->indices[i].x].z,
-			mesh->vertices[mesh->indices[i].y].x,
-			mesh->vertices[mesh->indices[i].y].y,
-			mesh->vertices[mesh->indices[i].y].z);*/
 		i++;
 	}
 }
