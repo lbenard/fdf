@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:39:52 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/11 15:22:48 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/13 02:41:11 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,15 @@
 
 typedef struct	s_color
 {
-	char	padding;
-	char	r;
-	char	g;
-	char	b;
+	float	r;
+	float	g;
+	float	b;
 }				t_color;
+
+t_color			ft_color(float r, float g, float b);
+int				color_to_int(t_color color);
+t_color			int_to_color(int color);
+void			color_add(t_color *color, t_color add);
+void			color_multiply(t_color *color, t_color multiply);
 
 #endif

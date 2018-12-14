@@ -6,7 +6,7 @@
 #    By: freezee <freezee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 19:33:38 by lbenard           #+#    #+#              #
-#    Updated: 2018/12/07 23:09:03 by freezee          ###   ########.fr        #
+#    Updated: 2018/12/12 03:19:26 by freezee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME		=	fdf
 # Sources
 SRC				=	fdf.c						\
 					srcs/camera.c				\
+					srcs/colors.c				\
 					srcs/draw.c					\
 					srcs/errors.c				\
 					srcs/instance_handlers.c	\

@@ -6,7 +6,7 @@
 /*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:54:59 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/10 19:25:40 by freezee          ###   ########.fr       */
+/*   Updated: 2018/12/12 20:28:40 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ static ssize_t	numbers_count(const char *line)
 			line++;
 		count++;
 		while (*line && *line == ' ')
-			if (!*(++line))
-				return (-1);
+			line++;
 	}
 	return (count);
 }
@@ -118,16 +117,14 @@ static t_mesh	*fill_mesh(const int fd, t_mesh *mesh, const t_isize map_size)
 		if (get_next_line(fd, &line) == READ_ERROR)
 			return (throw_error_str("Read error"));
 		head = line;
-		while (*head == ' ')
-			head++;
 		while (i.x < map_size.x)
 		{
+			while (*head == ' ')
+				head++;
 			mesh->vertices[j] = ft_vec3f(i.x * 10, ft_atoi(head), i.y * 10);
 			if (i.x != map_size.x - 1)
 			{
 				while (*head != ' ')
-					head++;
-				while (!ft_isdigit(*head))
 					head++;
 				mesh->indices[k++] = ft_vec2i(j, j + 1);
 			}

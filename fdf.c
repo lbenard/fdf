@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/11 15:18:52 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/13 01:05:28 by freezee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ int	camera_control_callback(t_instance *instance, int keycode, void *param)
 		renderer->model_mesh->scale.y /= 1.1f;
 		renderer->model_mesh->scale.z /= 1.1f;
 	}
+	if (keycode == KEY_PAGE_UP)
+		renderer->model_mesh->scale.y *= 1.1f;
+	if (keycode == KEY_PAGE_DOWN)
+		renderer->model_mesh->scale.y /= 1.1f;
 	update_model_mesh(renderer);
 	update_projection_mesh(renderer);
 	render(renderer);
@@ -70,8 +74,6 @@ int	expose_callback(void *param)
 	printf("Expose\n");
 	return (1);
 }
-
-#include <errno.h>
 
 int	main(int ac, char **av)
 {
