@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/13 15:53:22 by freezee          ###   ########.fr       */
+/*   Updated: 2018/12/15 18:38:40 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ void	draw_mesh(t_instance *instance, t_mesh *mesh)
 	size_t	i;
 	t_vec2f	x;
 	t_vec2f	y;
-	t_color	x_color;
-	t_color	y_color;
 
 	i = 0;
 	while (i < mesh->indices_count)
@@ -78,15 +76,9 @@ void	draw_mesh(t_instance *instance, t_mesh *mesh)
 		y.x += instance->window->size.x / 2;
 		x.y += instance->window->size.y / 2;
 		y.y += instance->window->size.y / 2;
-		x_color = int_to_color(0xFFFFFF);
-		y_color = int_to_color(0xFFFFFF);
-		/*if (x.y > 10)
-			x_color = int_to_color(0x440000);
-		if (y.y > 10)
-			y_color = int_to_color(0x440000);*/
 		draw_line(instance, ft_vec2i((int)x.x, (int)x.y),
 			ft_vec2i((int)y.x, (int)y.y),
-			x_color, y_color);
+			int_to_color(0xFFFFFF), int_to_color(0xFFFFFF));
 		i++;
 	}
 }

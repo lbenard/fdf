@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/13 01:05:28 by freezee          ###   ########.fr       */
+/*   Updated: 2018/12/15 18:34:45 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,9 @@ int	main(int ac, char **av)
 		throw_error();
 		return (-1);
 	}
-	renderer->model_mesh->rotation.x = 0.5f;
-	renderer->model_mesh->rotation.y = -0.4f;
-	renderer->model_mesh->scale.x = 5.0f;
-	renderer->model_mesh->scale.y = 5.0f;
-	renderer->model_mesh->scale.z = 5.0f;
+	renderer->model_mesh->rotation = ft_vec3f(0.5f, -0.4f, 0.0f);
+	renderer->model_mesh->scale = ft_vec3f(5.0f, 5.0f, 5.0f);
 	instance_add_key_callback(instance, camera_control_callback, &renderer);
-	//instance_add_expose_callback(instance, expose_callback, &instance);
+	instance_add_expose_callback(instance, expose_callback, &instance);
 	mlx_loop(instance->mlx);
 }

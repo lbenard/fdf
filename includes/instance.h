@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   instance.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 14:25:10 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/09 23:59:05 by freezee          ###   ########.fr       */
+/*   Updated: 2018/12/15 18:14:54 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef struct	s_window
 {
 	void	*handle;
+	void	*image;
 	t_usize	size;
 	char	*title;
 }				t_window;

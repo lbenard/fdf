@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 20:38:12 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/11 15:15:43 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/15 18:14:29 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 
 typedef struct	s_renderer
 {
+	t_instance	*instance;
 	t_mesh		*raw_mesh;
 	t_mesh		*model_mesh;
 	t_mesh		*projection_mesh;
-	t_instance	*instance;
 }				t_renderer;
 
 t_renderer		*new_renderer(t_instance *instance, t_mesh *mesh,

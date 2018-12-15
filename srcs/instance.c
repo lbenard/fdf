@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:28:24 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/11 15:05:24 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/15 18:17:00 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,20 @@ t_instance	*new_instance(t_usize size, char *window_title)
 		free(ret);
 		return (throw_error());
 	}
+	if (!(ret->window->image = mlx_new_image(ret->mlx,
+		ret->window->size.x, ret->window->size.y)))
+	{
+		free(ret->mlx);
+		free(ret->window);
+		free(ret);
+		return (throw_error());
+	}
 	if (!(ret->window->handle = mlx_new_window(ret->mlx, size.x, size.y,
 		window_title)))
 	{
 		free(ret->mlx);
 		free(ret->window);
+		free(ret->window->image);
 		free(ret);
 		return (throw_error());
 	}

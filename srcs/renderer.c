@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:35:03 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/11 15:18:29 by lbenard          ###   ########.fr       */
+/*   Updated: 2018/12/15 18:32:59 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "errors.h"
+#include "mlx.h"
 
 /*
 ** Creates a new `t_renderer` instance.
