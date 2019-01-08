@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mesh.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 20:40:13 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/08 19:18:30 by freezee          ###   ########.fr       */
+/*   Updated: 2019/01/04 18:04:16 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ typedef enum	e_mesh_type
 
 typedef struct	s_mesh
 {
-	t_vec3f		position;
-	t_vec3f		rotation;
-	t_vec3f		scale;
 	t_mesh_type	mesh_type;
 	size_t		vertices_count;
 	t_vec3f		*vertices;

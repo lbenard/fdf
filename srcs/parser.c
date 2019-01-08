@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:54:59 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/12 20:28:40 by freezee          ###   ########.fr       */
+/*   Updated: 2019/01/07 16:30:47 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,8 @@ t_mesh			*parse_map(const char *path)
 	t_mesh		*map;
 	t_isize		map_size;
 	int			fd;
+	size_t		i;
+	t_mat4		origin;
 
 	map_size = get_map_size(path);
 	if (map_size.x < 2 || map_size.y < 2)
@@ -175,6 +177,16 @@ t_mesh			*parse_map(const char *path)
 	{
 		free_mesh(&map);
 		return (throw_error());
+	}
+	i = 0;
+	origin = ft_mat4_translation(ft_vec3f(-(map_size.x * 10 - 10) / 2.0f, 0.0f,
+		-(map_size.y * 10 - 10) / 2.0f));
+	while (i < map->vertices_count)
+	{
+		map->vertices[i] =
+			ft_vec4f_to_vec3f(ft_mat4_x_vec4(origin,
+			ft_vec3f_to_vec4f(map->vertices[i])));
+		i++;
 	}
 	return (map);
 }

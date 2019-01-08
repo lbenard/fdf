@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/15 18:38:40 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/08 18:10:47 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	draw_mesh(t_instance *instance, t_mesh *mesh)
 		y.y += instance->window->size.y / 2;
 		draw_line(instance, ft_vec2i((int)x.x, (int)x.y),
 			ft_vec2i((int)y.x, (int)y.y),
-			int_to_color(0xFFFFFF), int_to_color(0xFFFFFF));
+			int_to_color(0xFFFFFF), int_to_color(0xFF0000));
 		i++;
 	}
 }

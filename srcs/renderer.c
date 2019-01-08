@@ -6,17 +6,16 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:35:03 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/15 18:32:59 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/08 17:40:28 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "renderer.h"
-#include "draw.h"
-#include "mesh.h"
-#include <stdlib.h>
-#include "libft.h"
+#include "instance.h"
 #include "errors.h"
-#include "mlx.h"
+#include <stdlib.h>
+#include "model.h"
+#include "draw.h"
 
 /*
 ** Creates a new `t_renderer` instance.
@@ -26,109 +25,37 @@
 ** which represents the final mesh projection onto the screen.
 */
 
-#include <stdio.h>
-
-t_renderer	*new_renderer(t_instance *instance, t_mesh *mesh, t_vec3f origin)
+t_renderer	*new_renderer(t_instance *instance)
 {
 	t_renderer	*ret;
 
-	if (!instance || !mesh)
+	if (!instance)
 		return (throw_error());
 	if (!(ret = (t_renderer*)malloc(sizeof(t_renderer))))
 		return (throw_error());
-	if (!(ret->raw_mesh = new_mesh_copy(mesh)) ||
-		!(ret->model_mesh = new_mesh_copy(mesh)) ||
-		!(ret->projection_mesh = new_mesh_copy(mesh)))
-		return (throw_error());
+	ret->batch = NULL;
 	ret->instance = instance;
-	ret->raw_mesh->position.x += origin.x;
-	ret->raw_mesh->position.y += origin.y;
-	ret->raw_mesh->position.z += origin.z;
-	init_raw_mesh(ret);
+	/*init_raw_mesh(ret);
 	update_model_mesh(ret);
-	update_projection_mesh(ret);
+	update_projection_mesh(ret);*/
 	return (ret);
-}
-
-/*
-** Initialize the `raw_mesh` by shifting it to its origin point.
-*/
-
-void			init_raw_mesh(t_renderer *self)
-{
-	size_t	i;
-	t_mat4	raw_matrix;
-
-	i = 0;
-	raw_matrix = ft_mat4_scaling(self->raw_mesh->scale);
-	raw_matrix = ft_mat4_x_mat4(ft_mat4_rotation(self->raw_mesh->rotation),
-		raw_matrix);
-	raw_matrix = ft_mat4_x_mat4(ft_mat4_translation(self->raw_mesh->position),
-		raw_matrix);
-	while (i < self->raw_mesh->vertices_count)
-	{
-		self->raw_mesh->vertices[i] =
-			ft_vec4f_to_vec3f(ft_mat4_x_vec4(raw_matrix,
-			ft_vec3f_to_vec4f(self->raw_mesh->vertices[i])));
-		i++;
-	}
-}
-
-/*
-** Updates the `model_mesh` by computing every applied transformation. This is
-** the only transformation process that should used by the user wanting to
-** regularly apply transformations to a mesh.
-*/
-
-void			update_model_mesh(t_renderer *self)
-{
-	size_t	i;
-	t_mat4	model_matrix;
-
-	i = 0;
-	model_matrix = ft_mat4_scaling(self->model_mesh->scale);
-	model_matrix = ft_mat4_x_mat4(ft_mat4_rotation(self->model_mesh->rotation),
-		model_matrix);
-	model_matrix = ft_mat4_x_mat4(ft_mat4_translation(self->model_mesh->position),
-		model_matrix);
-	while (i < self->model_mesh->vertices_count)
-	{
-		self->model_mesh->vertices[i] =
-			ft_vec4f_to_vec3f(ft_mat4_x_vec4(model_matrix,
-			ft_vec3f_to_vec4f(self->raw_mesh->vertices[i])));
-		i++;
-	}
-}
-
-/*
-** Updates the projection mesh. The projection matrix is specified when
-** creating the renderer instance and can be modified by accessing the
-** `projection_matrix` member.
-*/
-
-void			update_projection_mesh(t_renderer *self)
-{
-	(void)self;
-	/*size_t			i;
-	t_projection	projection_matrix;
-
-	i = 0;
-	projection_matrix = self->camera->projection;
-	while (i < self->model_mesh->vertices_count)
-	{
-		self->projection_mesh->vertices[i] =
-			ft_vec4f_to_vec3f(ft_mat4_x_vec4(projection_matrix.projection,
-			ft_vec3f_to_vec4f(self->model_mesh->vertices[i])));
-		i++;
-	}*/
 }
 
 /*
 ** Makes pixels go colorful!
 */
 
-void			render(t_renderer *self)
+void		render(t_renderer *self)
 {
+	t_list	*head;
+	t_model	*cast;
+
+	head = self->batch;
 	clear(self->instance);
-	draw_mesh(self->instance, self->model_mesh);
+	while (head)
+	{
+		cast = (t_model*)head->content;
+		draw_mesh(self->instance, cast->model_mesh);
+		head = head->next;
+	}
 }

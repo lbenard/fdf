@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstpushback.c                                   :+:      :+:    :+:   */
+/*   ft_vec3f_scalar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/14 09:45:59 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/07 13:45:04 by lbenard          ###   ########.fr       */
+/*   Created: 2019/01/08 17:32:53 by lbenard           #+#    #+#             */
+/*   Updated: 2019/01/08 17:33:13 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstpushback(t_list **list, t_list *new)
+t_vec3f	ft_vec3f_scalar(t_vec3f src, float a)
 {
-	t_list	*head;
-
-	if (!list)
-		return (NULL);
-	if (!*list)
-	{
-		*list = new;
-		return (new);
-	}
-	head = *list;
-	while (head->next)
-		head = head->next;
-	head->next = new;
-	return (head->next);
+	src.x *= a;
+	src.y *= a;
+	src.z *= a;
+	return (src);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 14:43:39 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/07 20:25:55 by freezee          ###   ########.fr       */
+/*   Updated: 2019/01/08 17:42:56 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct			s_vec4f
 
 typedef union			u_mat3
 {
-	struct s_mat3_data
+	struct				s_mat3_data
 	{
 		float	m00;
 		float	m01;
@@ -103,13 +103,13 @@ typedef union			u_mat3
 		float	m20;
 		float	m21;
 		float	m22;
-	}		d;
-	float	m[3][3];
+	}					d;
+	float				m[3][3];
 }						t_mat3;
 
 typedef union			u_mat4
 {
-	struct s_mat4_data
+	struct				s_mat4_data
 	{
 		float	m00;
 		float	m01;
@@ -127,8 +127,8 @@ typedef union			u_mat4
 		float	m31;
 		float	m32;
 		float	m33;
-	}		d;
-	float	m[4][4];
+	}					d;
+	float				m[4][4];
 }						t_mat4;
 
 /*
@@ -264,14 +264,17 @@ t_vec2i					ft_vec2i(int x, int y);
 
 t_vec2f					ft_vec2f(float x, float y);
 float					ft_vec2f_dot(t_vec2f a, t_vec2f b);
+t_vec2f					ft_vec2f_scalar(t_vec2f src, float a);
 
 t_vec3f					ft_vec3f(float x, float y, float z);
 float					ft_vec3f_dot(t_vec3f a, t_vec3f b);
+t_vec3f					ft_vec3f_scalar(t_vec3f src, float a);
 t_vec4f					ft_vec3f_to_vec4f(t_vec3f src);
 t_vec2f					ft_vec3f_to_vec2f(t_vec3f src);
 
 t_vec4f					ft_vec4f(float x, float y, float z, float w);
 float					ft_vec4f_dot(t_vec4f a, t_vec4f b);
+t_vec4f					ft_vec4f_scalar(t_vec4f src, float a);
 t_vec3f					ft_vec4f_to_vec3f(t_vec4f src);
 
 /*
@@ -293,6 +296,8 @@ t_vec4f					ft_mat4_x_vec4(t_mat4 a, t_vec4f b);
 t_mat4					ft_mat4_translation(t_vec3f translation);
 t_mat4					ft_mat4_scaling(t_vec3f scaling);
 t_mat4					ft_mat4_rotation(t_vec3f rotation);
-t_mat4					ft_mat4_view(t_vec3f position, t_vec2f rotation);
+
+t_mat4					ft_mat4_orthographic_projection(void);
+t_mat4					ft_mat4_perspective_projection(void);
 
 #endif

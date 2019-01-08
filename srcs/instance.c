@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:28:24 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/15 18:17:00 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/08 22:01:20 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ static void	add_hooks(t_instance *instance)
 		&instance->loop_callbacks);
 }
 
-#include <stdio.h>
-#include <errno.h>
-
 t_instance	*new_instance(t_usize size, char *window_title)
 {
 	t_instance	*ret;
@@ -42,79 +39,12 @@ t_instance	*new_instance(t_usize size, char *window_title)
 		free(ret);
 		return (throw_error());
 	}
-	if (!(ret->window = (t_window*)malloc(sizeof(t_window))))
+	if (!(ret->window = new_window(ret->mlx, size, window_title)))
 	{
 		free(ret->mlx);
 		free(ret);
 		return (throw_error());
 	}
-	if (!(ret->window->image = mlx_new_image(ret->mlx,
-		ret->window->size.x, ret->window->size.y)))
-	{
-		free(ret->mlx);
-		free(ret->window);
-		free(ret);
-		return (throw_error());
-	}
-	if (!(ret->window->handle = mlx_new_window(ret->mlx, size.x, size.y,
-		window_title)))
-	{
-		free(ret->mlx);
-		free(ret->window);
-		free(ret->window->image);
-		free(ret);
-		return (throw_error());
-	}
-	errno = 0;
-	ret->window->size = size;
-	ret->window->title = window_title;
 	add_hooks(ret);
 	return (ret);
-}
-
-void		instance_add_key_callback(t_instance *self, int (*callback)(),
-	void *params)
-{
-	t_callback	new;
-
-	new.callback = callback;
-	new.instance = self;
-	new.params = params;
-	ft_lstpushback(&self->key_callbacks,
-		ft_lstnew(&new, sizeof(t_callback)));
-}
-
-void		instance_add_mouse_callback(t_instance *self, int (*callback)(),
-	void *params)
-{
-	t_callback	new;
-
-	new.callback = callback;
-	new.instance = self;
-	new.params = params;
-	ft_lstpushback(&self->mouse_callbacks,
-		ft_lstnew(&new, sizeof(t_callback)));
-}
-
-void		instance_add_expose_callback(t_instance *self, int (*callback)(),
-	void *params)
-{
-	t_callback	new;
-
-	new.callback = callback;
-	new.instance = self;
-	new.params = params;
-	ft_lstpushback(&self->expose_callbacks,
-		ft_lstnew(&new, sizeof(t_callback)));
-}
-void		instance_add_loop_callback(t_instance *self, int (*callback)(),
-	void *params)
-{
-	t_callback	new;
-
-	new.callback = callback;
-	new.instance = self;
-	new.params = params;
-	ft_lstpushback(&self->loop_callbacks,
-		ft_lstnew(&new, sizeof(t_callback)));
 }

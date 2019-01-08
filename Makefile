@@ -3,26 +3,30 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: freezee <freezee@student.42.fr>            +#+  +:+       +#+         #
+#    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 19:33:38 by lbenard           #+#    #+#              #
-#    Updated: 2018/12/12 03:19:26 by freezee          ###   ########.fr        #
+#    Updated: 2019/01/08 17:03:46 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	fdf
 
 # Sources
-SRC				=	fdf.c						\
-					srcs/camera.c				\
-					srcs/colors.c				\
-					srcs/draw.c					\
-					srcs/errors.c				\
-					srcs/instance_handlers.c	\
-					srcs/instance.c				\
-					srcs/mesh.c					\
-					srcs/parser.c				\
-					srcs/renderer.c
+SRC				=	fdf.c								\
+					srcs/colors.c						\
+					srcs/control_press_callbacks.c		\
+					srcs/control_release_callbacks.c	\
+					srcs/draw.c							\
+					srcs/errors.c						\
+					srcs/instance_callbacks.c			\
+					srcs/instance_handlers.c			\
+					srcs/instance.c						\
+					srcs/mesh.c							\
+					srcs/model.c						\
+					srcs/parser.c						\
+					srcs/renderer.c						\
+					srcs/window.c
 
 UNAME			=	$(shell uname)
 
@@ -61,9 +65,9 @@ $(NAME): $(OBJ)
 
 .c.o: $(SRC)
 	@printf "$(GREEN)[cc]$(RESET): $< -> $@\n"
-	@echo -en "\e[1A"
+	@printf "\e[1A"
 	@gcc -c $< -o $@ $(INCLUDES) $(CFLAGS)
-	@echo -en "\e[0K"
+	@printf "\e[0K"
 
 run: all
 	@./$(NAME)
@@ -71,49 +75,49 @@ run: all
 libft:
 	@printf "$(GREEN)[mk]$(RESET): libft all\n";
 	@make -C libft >/dev/null
-	@echo -en "\e[1A\e[0K"
+	@printf "\e[1A\e[0K"
 	@printf "$(GREEN)[mk]$(RESET): done\n";
 
 libft-clean:
 	@printf "$(GREEN)[mk]$(RESET): libft clean\n";
 	@make -C $(LIBFT_FOLDER) clean >/dev/null
-	@echo -en "\e[1A\e[0K"
+	@printf "\e[1A\e[0K"
 	@printf "$(GREEN)[mk]$(RESET): done\n";
 
 libft-fclean:
 	@printf "$(GREEN)[mk]$(RESET): libft fclean\n";
 	@make -C $(LIBFT_FOLDER) fclean >/dev/null
-	@echo -en "\e[1A\e[0K"
+	@printf "\e[1A\e[0K"
 	@printf "$(GREEN)[mk]$(RESET): done\n";
 
 libft-re:
 	@printf "$(GREEN)[mk]$(RESET): libft re\n";
 	@make -C $(LIBFT_FOLDER) re >/dev/null
-	@echo -en "\e[1A\e[0K"
+	@printf "\e[1A\e[0K"
 	@printf "$(GREEN)[mk]$(RESET): done\n";
 
 mlx:
 	@printf "$(GREEN)[mk]$(RESET): mlx all\n";
 	@make -C $(MLX_FOLDER) >/dev/null
-	@echo -en "\e[1A\e[0K"
+	@printf "\e[1A\e[0K"
 	@printf "$(GREEN)[mk]$(RESET): done\n";
 
 mlx-clean:
 	@printf "$(GREEN)[mk]$(RESET): mlx clean\n";
 	@make -C $(MLX_FOLDER) clean >/dev/null
-	@echo -en "\e[1A\e[0K"
+	@printf "\e[1A\e[0K"
 	@printf "$(GREEN)[mk]$(RESET): done\n";
 
 mlx-fclean: mlx-clean
 	@printf "$(GREEN)[mk]$(RESET): mlx fclean\n";
 	@rm -rf $(MLX_FOLDER)/libmlx.a
-	@echo -en "\e[1A\e[0K"
+	@printf "\e[1A\e[0K"
 	@printf "$(GREEN)[mk]$(RESET): done\n";
 
 mlx-re:
 	@printf "$(GREEN)[mk]$(RESET): mlx re\n";
 	@make -C $(MLX_FOLDER) re >/dev/null
-	@echo -en "\e[1A\e[0K"
+	@printf "\e[1A\e[0K"
 	@printf "$(GREEN)[mk]$(RESET): done\n";
 
 clean: libft-clean mlx-clean

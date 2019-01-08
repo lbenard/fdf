@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mat4_rotation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 02:48:36 by freezee           #+#    #+#             */
-/*   Updated: 2018/12/07 21:23:37 by freezee          ###   ########.fr       */
+/*   Updated: 2019/01/07 12:43:08 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static t_mat4	ft_mat_zaxis_rotation(float z)
 	});
 }
 
-t_mat4	ft_mat4_rotation(t_vec3f rotation)
+t_mat4			ft_mat4_rotation(t_vec3f rotation)
 {
 	return (ft_mat4_x_mat4(ft_mat4_x_mat4(
 		ft_mat_zaxis_rotation(rotation.z),

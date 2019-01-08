@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mesh.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:20:46 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/08 19:19:14 by freezee          ###   ########.fr       */
+/*   Updated: 2019/01/07 14:57:01 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_mesh	*new_mesh(t_mesh_type mesh_type, size_t vertices_count,
 		free(mesh);
 		return (throw_error());
 	}
-	mesh->position = ft_vec3f(0.0f, 0.0f, 0.0f);
+	/*mesh->position = ft_vec3f(0.0f, 0.0f, 0.0f);
 	mesh->rotation = ft_vec3f(0.0f, 0.0f, 0.0f);
-	mesh->scale = ft_vec3f(1.0f, 1.0f, 1.0f);
+	mesh->scale = ft_vec3f(1.0f, 1.0f, 1.0f);*/
 	return (mesh);
 }
 
@@ -56,10 +56,18 @@ t_mesh	*new_mesh_copy(t_mesh *src)
 	if (!(ret = (t_mesh*)malloc(sizeof(t_mesh))))
 		return (throw_error());
 	if (!(ret->vertices = (t_vec3f*)malloc(sizeof(t_vec3f)
-		* src->vertices_count)) ||
-		!(ret->indices = (t_vec2i*)malloc(sizeof(t_vec2i)
-		* src->indices_count)))
+		* src->vertices_count)))
+	{
+		free(ret);
 		return (throw_error());
+	}
+	if (!(ret->indices = (t_vec2i*)malloc(sizeof(t_vec2i)
+		* src->indices_count)))
+	{
+		free(ret->vertices);
+		free(ret);
+		return (throw_error());
+	}
 	ft_memcpy(ret->vertices, src->vertices,
 		sizeof(t_vec3f) * src->vertices_count);
 	ft_memcpy(ret->indices, src->indices,
@@ -67,8 +75,8 @@ t_mesh	*new_mesh_copy(t_mesh *src)
 	ret->mesh_type = src->mesh_type;
 	ret->vertices_count = src->vertices_count;
 	ret->indices_count = src->indices_count;
-	ret->position = src->position;
+	/*ret->position = src->position;
 	ret->rotation = src->rotation;
-	ret->scale = src->scale;
+	ret->scale = src->scale;*/
 	return (ret);
 }

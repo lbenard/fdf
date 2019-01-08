@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 15:22:55 by freezee           #+#    #+#             */
-/*   Updated: 2018/12/03 17:34:18 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/07 18:47:33 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	loop_callback_handler(void *param)
 	while (list)
 	{
 		callback = (t_callback*)list->content;
-		callback->callback(callback->instance, *((void**)callback->params));
+		callback->callback(callback->params);
 		list = list->next;
 	}
 	return (0);

@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstpushback.c                                   :+:      :+:    :+:   */
+/*   window.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/14 09:45:59 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/07 13:45:04 by lbenard          ###   ########.fr       */
+/*   Created: 2019/01/07 16:54:46 by lbenard           #+#    #+#             */
+/*   Updated: 2019/01/07 17:02:22 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef WINDOW_H
+# define WINDOW_H
 
-t_list	*ft_lstpushback(t_list **list, t_list *new)
+# include "libft.h"
+# include "controls.h"
+
+typedef struct	s_window
 {
-	t_list	*head;
+	void	*handle;
+	void	*image;
+	t_u8	keys[control_last];
+	t_usize	size;
+	char	*title;
+}				t_window;
 
-	if (!list)
-		return (NULL);
-	if (!*list)
-	{
-		*list = new;
-		return (new);
-	}
-	head = *list;
-	while (head->next)
-		head = head->next;
-	head->next = new;
-	return (head->next);
-}
+t_window	*new_window(void *mlx, t_usize size, char *window_title);
+
+#endif

@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera.h                                           :+:      :+:    :+:   */
+/*   ft_mat4_orthographic_projection.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/29 21:45:20 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/05 18:41:30 by lbenard          ###   ########.fr       */
+/*   Created: 2019/01/08 17:44:49 by lbenard           #+#    #+#             */
+/*   Updated: 2019/01/08 17:45:36 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAMERA_H
-# define CAMERA_H
+#include "libft.h"
 
-# include "libft.h"
-
-typedef struct	s_projection
+t_mat4	ft_mat4_orthographic_projection(void)
 {
-	t_mat4	projection;
-}				t_projection;
-
-typedef struct	s_camera
-{
-	t_projection	projection;
-	t_vec3f			position;
-	t_vec2f			rotation;
-}				t_camera;
-
-t_camera	*new_camera(t_vec3f position, t_vec2f rotation,
-	t_projection projection);
-
-#endif
+	return ((t_mat4)(struct s_mat4_data) {
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 1
+	});
+}

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/15 18:34:45 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/08 17:39:12 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,98 +17,75 @@
 #include "keycodes.h"
 #include "parser.h"
 #include "errors.h"
+#include "model.h"
+#include "controls.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-int	camera_control_callback(t_instance *instance, int keycode, void *param)
+int	loop_hook(void *params)
 {
-	t_renderer	*renderer;
+	t_instance		*instance;
+	t_u8			*keys;
+	static size_t	focused_model = 0;
+	t_model			*model;
 
-	(void)instance;
-	renderer = (t_renderer*)param;
-	if (keycode == KEY_W)
-		renderer->model_mesh->position.z += 10.0f;
-	if (keycode == KEY_S)
-		renderer->model_mesh->position.z -= 10.0f;
-	if (keycode == KEY_A)
-		renderer->model_mesh->position.x -= 10.0f;
-	if (keycode == KEY_D)
-		renderer->model_mesh->position.x += 10.0f;
-	if (keycode == KEY_SPACEBAR)
-		renderer->model_mesh->position.y -= 10.0f;
-	if (keycode == KEY_SHIFT_LEFT)
-		renderer->model_mesh->position.y += 10.0f;
-	if (keycode == KEY_PAD_4)
-		renderer->model_mesh->rotation.y -= 0.1f;
-	if (keycode == KEY_PAD_6)
-		renderer->model_mesh->rotation.y += 0.1f;
-	if (keycode == KEY_PAD_8)
-		renderer->model_mesh->rotation.x -= 0.1f;
-	if (keycode == KEY_PAD_5)
-		renderer->model_mesh->rotation.x += 0.1f;
-	if (keycode == KEY_PAD_ADD)
-	{
-		renderer->model_mesh->scale.x *= 1.1f;
-		renderer->model_mesh->scale.y *= 1.1f;
-		renderer->model_mesh->scale.z *= 1.1f;
-	}
-	if (keycode == KEY_PAD_SUB)
-	{
-		renderer->model_mesh->scale.x /= 1.1f;
-		renderer->model_mesh->scale.y /= 1.1f;
-		renderer->model_mesh->scale.z /= 1.1f;
-	}
-	if (keycode == KEY_PAGE_UP)
-		renderer->model_mesh->scale.y *= 1.1f;
-	if (keycode == KEY_PAGE_DOWN)
-		renderer->model_mesh->scale.y /= 1.1f;
-	update_model_mesh(renderer);
-	update_projection_mesh(renderer);
-	render(renderer);
+	instance = (t_instance*)params;
+	keys = instance->window->keys;
+	model = get_model_by_id(instance->renderer->batch, focused_model);
+	if (keys[window_exit])
+		exit(0);
+	model->position.x -= 5.0f * keys[translation_nx];
+	model->position.x += 5.0f * keys[translation_px];
+	model->position.y -= 5.0f * keys[translation_ny];
+	model->position.y += 5.0f * keys[translation_py];
+	model->position.z -= 5.0f * keys[translation_nz];
+	model->position.z += 5.0f * keys[translation_pz];
+	model->rotation.x -= 0.02f * keys[rotation_nx];
+	model->rotation.x += 0.02f * keys[rotation_px];
+	model->rotation.y -= 0.02f * keys[rotation_ny];
+	model->rotation.y += 0.02f * keys[rotation_py];
+	model->scale = ft_vec3f_scalar(model->scale, 1.0f + .1f * keys[scale_zoom]);
+	model->scale = ft_vec3f_scalar(model->scale, 1.0f / (1.0f + .1f *
+		keys[scale_dezoom]));
+	model->scale.y *= 1.0f + (0.1f * keys[scale_stretch]);
+	model->scale.y /= 1.0f + (0.1f * keys[scale_flatten]);
+
+	update_model(model);
+	//update_projection_mesh(renderer);
+	render(instance->renderer);
 	return (1);
 }
 
-int	expose_callback(void *param)
-{
-	(void)param;
-	printf("Expose\n");
-	return (1);
-}
-
-int	main(int ac, char **av)
+int	main(int ac, const char **av)
 {
 	t_instance		*instance;
 	t_renderer		*renderer;
 	t_isize			map_size;
 
 	if (ac != 2)
-	{
-		throw_error_str("missing file operand");
-		return (-1);
-	}
+		return (!throw_error_str("Missing file operand"));
 	if (!(instance = new_instance(ft_usize(1280, 720), "fdf")))
-	{
-		throw_error();
-		return (-1);
-	}
+		return (!throw_error());
 	map_size = get_map_size(av[1]);
 	if (map_size.x == -1 || map_size.y == -1)
 	{
 		free(instance);
-		throw_error_str("Invalid map size");
-		return (-1);
+		return (!throw_error_str("Invalid map size"));
 	}
-	if (!(renderer = new_renderer(instance, parse_map(av[1]),
-		ft_vec3f(-(map_size.x * 10 - 10) / 2.0f, 0.0f,
-		-(map_size.y * 10 - 10) / 2.0f))))
+	if (!(renderer = new_renderer(instance)))
 	{
 		free(instance);
-		throw_error();
-		return (-1);
+		return (!throw_error());
 	}
-	renderer->model_mesh->rotation = ft_vec3f(0.5f, -0.4f, 0.0f);
-	renderer->model_mesh->scale = ft_vec3f(5.0f, 5.0f, 5.0f);
-	instance_add_key_callback(instance, camera_control_callback, &renderer);
-	instance_add_expose_callback(instance, expose_callback, &instance);
+	instance->renderer = renderer;
+	ft_lstpushback(&renderer->batch, ft_lstnew(new_model(parse_map(av[1]),
+		ft_vec3f(0.0f, 0.0f, 0.0f), ft_vec3f(0.5f, -0.4f, 0.f),
+		ft_vec3f(5.0f, 5.0f, 5.0f)), sizeof(t_model)));
+	instance_add_hook(instance, 1L << 0, 2, control_press_callback, instance);
+	instance_add_hook(instance, 1L << 1, 3, control_release_callback, instance);
+	instance_add_loop_callback(instance, loop_hook, instance);
+	/*update_model_mesh(renderer);
+	update_projection_mesh(renderer);*/
+	render(renderer);
 	mlx_loop(instance->mlx);
 }
