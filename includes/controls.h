@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 16:42:05 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/08 16:58:39 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/10 16:23:33 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ typedef enum	e_controls
 	scale_flatten,
 	scale_stretch,
 	transform_smooth,
+	model_1,
+	model_2,
+	model_3,
+	model_4,
+	model_5,
+	model_6,
+	model_7,
+	model_8,
+	model_9,
+	model_10,
+	model_previous,
+	model_next,
 	window_exit,
 	control_last
 }				t_controls;

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 16:33:20 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/08 17:11:00 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/10 16:24:18 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,11 @@ static void	translation_press_callback(t_u8 *keys, int keycode)
 			keys[translation_pz] : 0) + 1;
 }
 
-#include <stdio.h>
-
 static void	rotation_press_callback(t_u8 *keys, int keycode)
 {
 	if (keycode == KEY_PAD_8)
 		keys[rotation_nx] = (keys[transform_smooth] ?
 			keys[rotation_nx] : 0) + 1;
-	// printf("keycode -> %d, rotation_nx -> %d\n", keycode, keys[rotation_nx]);
 	if (keycode == KEY_PAD_5)
 		keys[rotation_px] = (keys[transform_smooth] ?
 			keys[rotation_px] : 0) + 1;

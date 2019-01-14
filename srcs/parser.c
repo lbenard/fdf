@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:54:59 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/07 16:30:47 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/14 17:53:33 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,10 @@ t_mesh			*parse_map(const char *path)
 		return (throw_error());
 	}
 	i = 0;
-	origin = ft_mat4_translation(ft_vec3f(-(map_size.x * 10 - 10) / 2.0f, 0.0f,
-		-(map_size.y * 10 - 10) / 2.0f));
+	origin = ft_mat4_translation(ft_vec3f(-(map_size.x * 10 - 10) / 2.0f,
+		0.0f, -(map_size.y * 10 - 10) / 2.0f));
+	/*origin = ft_mat4_translation(ft_vec3f(-(map_size.x - 1) / 2.0f,
+		0.0f, -(map_size.y - 1) / 2.0f));*/
 	while (i < map->vertices_count)
 	{
 		map->vertices[i] =

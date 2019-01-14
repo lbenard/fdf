@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 16:22:47 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/07 17:42:05 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/10 17:06:00 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static size_t	get_new_id(void)
 
 	return (i++);
 }
-
-#include <stdio.h>
 
 t_model			*new_model(t_mesh *raw_mesh, t_vec3f position,
 	t_vec3f rotation, t_vec3f scale)
