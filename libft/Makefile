@@ -6,7 +6,7 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 18:02:14 by lbenard           #+#    #+#              #
-#    Updated: 2019/01/08 18:57:20 by lbenard          ###   ########.fr        #
+#    Updated: 2019/01/15 19:36:45 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRC			=	srcs/ft_memset.c						\
 				srcs/ft_strsplit.c						\
 				srcs/ft_strcount.c						\
 				srcs/get_next_line.c					\
+				srcs/ft_getline.c						\
 				srcs/ft_isalpha.c						\
 				srcs/ft_isdigit.c						\
 				srcs/ft_isalnum.c						\
@@ -61,6 +62,7 @@ SRC			=	srcs/ft_memset.c						\
 				srcs/ft_toupper.c						\
 				srcs/ft_tolower.c						\
 				srcs/ft_atoi.c							\
+				srcs/ft_atof.c							\
 				srcs/ft_itoa.c							\
 				srcs/ft_abs.c							\
 				srcs/ft_min.c							\

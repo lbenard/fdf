@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/14 21:14:16 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/15 19:39:41 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ int	main(int ac, const char **av)
 	}
 	instance->renderer = renderer;
 	printf("a\n");
-	renderer->batch = ft_lstnew(new_model(parse_map(av[1]),
+	renderer->batch = ft_lstnew(new_model(parse_fdf(av[1]), // todo: fix error
 		ft_vec3f(0.0f, 0.0f, 2.0f), ft_vec3f(1.5707963268f, 0.0f, 0.0f),
 		ft_vec3f(1.0f, 1.0f, 1.0f)), sizeof(t_model));
+	parse_ply("maps/ply/white_cube.ply");
 	/*ft_lstpushback(&renderer->batch, ft_lstnew(new_model(parse_map("fdf.fdf"),
 		ft_vec3f(0.0f, 0.0f, 0.0f), ft_vec3f(0.5f, -0.4f, 0.f),
 		ft_vec3f(5.0f, 5.0f, 5.0f)), sizeof(t_model)));*/

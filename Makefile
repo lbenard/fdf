@@ -6,7 +6,7 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 19:33:38 by lbenard           #+#    #+#              #
-#    Updated: 2019/01/14 21:14:03 by lbenard          ###   ########.fr        #
+#    Updated: 2019/01/15 18:54:02 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,9 @@ NAME		=	fdf
 SRC				=	fdf.c										\
 					srcs/callbacks/control_press_callbacks.c	\
 					srcs/callbacks/control_release_callbacks.c	\
+					srcs/parsers/fdf_parser.c					\
+					srcs/parsers/file_reader.c					\
+					srcs/parsers/ply_parser.c					\
 					srcs/colors.c								\
 					srcs/draw.c									\
 					srcs/errors.c								\
@@ -24,7 +27,6 @@ SRC				=	fdf.c										\
 					srcs/instance.c								\
 					srcs/mesh.c									\
 					srcs/model.c								\
-					srcs/parser.c								\
 					srcs/renderer.c								\
 					srcs/window.c
 

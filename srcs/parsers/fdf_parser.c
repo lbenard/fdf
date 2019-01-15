@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   fdf_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:54:59 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/14 17:53:33 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/15 19:08:20 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,9 +152,7 @@ static t_mesh	*fill_mesh(const int fd, t_mesh *mesh, const t_isize map_size)
 ** informations can be added for a specific vertex.
 */
 
-#include <errno.h>
-
-t_mesh			*parse_map(const char *path)
+t_mesh			*parse_fdf(const char *path)
 {
 	t_mesh		*map;
 	t_isize		map_size;
@@ -165,7 +163,7 @@ t_mesh			*parse_map(const char *path)
 	map_size = get_map_size(path);
 	if (map_size.x < 2 || map_size.y < 2)
 		return (throw_error_str("Incorrect fdf map."));
-	if (!(map = new_mesh(SQUARE, map_size.x * map_size.y,
+	if (!(map = new_mesh(map_size.x * map_size.y,
 		(map_size.x - 1) * map_size.y + (map_size.y - 1) * map_size.x)))
 		return (throw_error());
 	if ((fd = open(path, O_RDONLY)) < 0)
@@ -181,8 +179,6 @@ t_mesh			*parse_map(const char *path)
 	i = 0;
 	origin = ft_mat4_translation(ft_vec3f(-(map_size.x * 10 - 10) / 2.0f,
 		0.0f, -(map_size.y * 10 - 10) / 2.0f));
-	/*origin = ft_mat4_translation(ft_vec3f(-(map_size.x - 1) / 2.0f,
-		0.0f, -(map_size.y - 1) / 2.0f));*/
 	while (i < map->vertices_count)
 	{
 		map->vertices[i] =
