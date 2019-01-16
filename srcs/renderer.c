@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:35:03 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 17:31:23 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:28:06 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "errors.h"
 #include <stdlib.h>
 #include "batch.h"
+#include "colors.h"
 #include "libft.h"
 #include "model.h"
 #include "window.h"
@@ -38,8 +39,20 @@ t_renderer	*new_renderer(t_instance *instance)
 	if (!(ret = (t_renderer*)malloc(sizeof(t_renderer))))
 		return (throw_error());
 	ret->batch = new_batch();
+	ret->clear = ft_color(0.2f, 0.0f, 0.0f);
 	ret->instance = instance;
 	return (ret);
+}
+
+static void	clear_buffer(int *framebuffer, t_color color, size_t size)
+{
+	size_t	i;
+	int		color_cast;;
+
+	i = 0;
+	color_cast = color_to_int(color);
+	while (i < size)
+		framebuffer[i++] = color_cast;
 }
 
 /*
@@ -55,8 +68,10 @@ void		render(t_renderer *self)
 	head = self->batch->batch;
 	window = self->instance->window;
 	clear(self->instance);
-	ft_bzero(window->framebuffer, sizeof(int) * window->size.x
+	clear_buffer(window->framebuffer, self->clear, window->size.x
 		* window->size.y);
+	/*ft_bzero(window->framebuffer, sizeof(int) * window->size.x
+		* window->size.y);*/
 	while (head)
 	{
 		cast = (t_model*)head->content;
