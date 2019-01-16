@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:54:59 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 19:14:47 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:44:09 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static ssize_t	numbers_count(const char *line)
 	}
 	return (count);
 }
-
 
 /*
 ** Open the file at `map_path` path and determines the map size. If the file

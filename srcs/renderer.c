@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:35:03 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 19:28:06 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:43:05 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_renderer	*new_renderer(t_instance *instance)
 static void	clear_buffer(int *framebuffer, t_color color, size_t size)
 {
 	size_t	i;
-	int		color_cast;;
+	int		color_cast;
 
 	i = 0;
 	color_cast = color_to_int(color);
@@ -70,8 +70,6 @@ void		render(t_renderer *self)
 	clear(self->instance);
 	clear_buffer(window->framebuffer, self->clear, window->size.x
 		* window->size.y);
-	/*ft_bzero(window->framebuffer, sizeof(int) * window->size.x
-		* window->size.y);*/
 	while (head)
 	{
 		cast = (t_model*)head->content;

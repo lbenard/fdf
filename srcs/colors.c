@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 03:16:39 by freezee           #+#    #+#             */
-/*   Updated: 2018/12/13 15:45:42 by freezee          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:36:49 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		color_to_int(t_color color)
 {
 	int	result;
 	int	cast;
-	
+
 	cast = (int)(color.r * 255.0f);
 	result = (cast > 255) ? 0 : (t_u8)cast;
 	result <<= 8;
@@ -38,8 +38,6 @@ int		color_to_int(t_color color)
 	result += (cast > 255) ? 0 : (t_u8)cast;
 	return (result);
 }
-
-#include <stdio.h>
 
 t_color	int_to_color(int color)
 {

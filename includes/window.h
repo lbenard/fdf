@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 16:54:46 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/11 16:57:12 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:35:25 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ typedef struct	s_window
 	char	*title;
 }				t_window;
 
-t_window	*new_window(void *mlx, t_usize size, char *window_title);
+t_window		*new_window(void *mlx, t_usize size, char *window_title);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 20:38:12 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 19:22:45 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:35:14 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "instance.h"
 # include "batch.h"
 
-typedef struct s_instance t_instance;
+typedef struct s_instance	t_instance;
 
 typedef struct	s_renderer
 {

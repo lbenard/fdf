@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 16:59:14 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 16:46:19 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:36:15 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static void	rotation_release_callback(t_u8 *keys, int keycode)
 	if (keycode == KEY_PAD_6)
 		keys[rotation_py] = 0;
 }
-
 
 static void	scale_release_callback(t_u8 *keys, int keycode)
 {

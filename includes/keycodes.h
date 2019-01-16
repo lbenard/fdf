@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   keycodes.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 17:57:20 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/07 23:27:09 by freezee          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:34:21 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MLX_KEYS_MACOS_H
-# define MLX_KEYS_MACOS_H
+#ifndef KEYCODES_H
+# define KEYCODES_H
 
 # ifdef __linux__
 #  define KEY_ESCAPE         65307

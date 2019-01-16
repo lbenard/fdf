@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 15:42:01 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 18:25:23 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:37:18 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		instance_add_loop_callback(t_instance *self, int (*callback)(),
 		sizeof(t_callback)));
 }
 
-void	instance_add_hook(t_instance *self, int mask, int name,
+void		instance_add_hook(t_instance *self, int mask, int name,
 	int (*callback)(), void *params)
 {
 	mlx_hook(self->window->handle, name, mask, callback, params);

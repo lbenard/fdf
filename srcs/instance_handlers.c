@@ -6,14 +6,14 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 15:22:55 by freezee           #+#    #+#             */
-/*   Updated: 2019/01/07 18:47:33 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:37:46 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INSTANCE_HANDLERS_H
 # define INSTANCE_HANDLERS_H
 
-#include "instance.h"
+# include "instance.h"
 
 int	key_callback_handler(int keycode, void *param)
 {

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 18:50:55 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:29:48 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,5 @@ int	main(int ac, const char **av)
 	instance_add_hook(instance, 1L << 0, 2, control_press_callback, instance);
 	instance_add_hook(instance, 1L << 1, 3, control_release_callback, instance);
 	instance_add_loop_callback(instance, loop_hook, instance);
-	/*update_model_mesh(renderer);
-	update_projection_mesh(renderer);*/
-	//render(renderer);
 	mlx_loop(instance->mlx);
 }

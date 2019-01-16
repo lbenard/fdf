@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:20:46 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 19:12:09 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:42:19 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,8 @@ t_mesh	*new_mesh_copy(t_mesh *src)
 {
 	t_mesh	*ret;
 
-	if (!(ret = (t_mesh*)malloc(sizeof(t_mesh))))
+	if (!(ret = new_mesh(src->vertices_count, src->indices_count)))
 		return (throw_error());
-	if (!(ret->vertices = (t_vec3f*)malloc(sizeof(t_vec3f)
-		* src->vertices_count)))
-	{
-		free(ret);
-		return (throw_error());
-	}
-	if (!(ret->colors = (t_color*)malloc(sizeof(t_color)
-		* src->vertices_count)))
-	{
-		free(ret->vertices);
-		free(ret);
-		return (throw_error());
-	}
-	if (!(ret->indices = (t_vec2i*)malloc(sizeof(t_vec2i)
-		* src->indices_count)))
-	{
-		free(ret->vertices);
-		free(ret->colors);
-		free(ret);
-		return (throw_error());
-	}
 	ft_memcpy(ret->vertices, src->vertices,
 		sizeof(t_vec3f) * src->vertices_count);
 	ft_memcpy(ret->colors, src->colors,

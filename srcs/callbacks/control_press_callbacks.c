@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 16:33:20 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 16:46:02 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:37:05 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void	rotation_press_callback(t_u8 *keys, int keycode)
 		keys[rotation_py] = (keys[transform_smooth] ?
 			keys[rotation_py] : 0) + 1;
 }
-
 
 static void	scale_press_callback(t_u8 *keys, int keycode)
 {
