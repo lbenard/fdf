@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   renderer.h                                         :+:      :+:    :+:   */
+/*   batch.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/29 20:38:12 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 17:34:32 by lbenard          ###   ########.fr       */
+/*   Created: 2019/01/16 16:56:40 by lbenard           #+#    #+#             */
+/*   Updated: 2019/01/16 17:32:41 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDERER_H
-# define RENDERER_H
+#ifndef BATCH_H
+# define BATCH_H
 
-# include "mesh.h"
-# include "instance.h"
-# include "batch.h"
+# include "libft.h"
 
-typedef struct s_instance t_instance;
-
-typedef struct	s_renderer
+typedef struct	s_batch
 {
-	t_instance	*instance;
-	t_batch		*batch;
-}				t_renderer;
+	t_list	*batch;
+	size_t	size;
+}				t_batch;
 
-t_renderer		*new_renderer(t_instance *instance);
-void			render(t_renderer *self);
-void			free_renderer(void);
+t_batch			*new_batch(void);
+int				batch_add(t_batch *self, const char *path, t_vec3f position,
+	t_vec3f rotation);
+void			free_batch(t_batch *self);
 
 #endif

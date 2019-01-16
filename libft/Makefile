@@ -6,7 +6,7 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 18:02:14 by lbenard           #+#    #+#              #
-#    Updated: 2019/01/15 19:36:45 by lbenard          ###   ########.fr        #
+#    Updated: 2019/01/16 17:23:56 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ SRC			=	srcs/ft_memset.c						\
 				srcs/ft_putendl_fd.c					\
 				srcs/ft_putnbr_fd.c						\
 				srcs/ft_lstnew.c						\
+				srcs/ft_lstnewcpy.c						\
 				srcs/ft_lstdelone.c						\
 				srcs/ft_lstdel.c						\
 				srcs/ft_lstadd.c						\

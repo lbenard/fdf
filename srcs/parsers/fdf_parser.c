@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:54:59 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/15 19:08:20 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 18:10:53 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,21 @@
 
 /*
 ** Determines the amount of numbers and additional data in the `line` string.
-** If the line ends with unused space(s), the function returns -1.
 */
 
 static ssize_t	numbers_count(const char *line)
 {
 	ssize_t	count;
 
-	while (*line && *line == ' ')
+	while (*line != '\n' && *line == ' ')
 		line++;
 	count = 0;
-	while (*line)
+	while (*line != '\n')
 	{
-		while (*line && *line != ' ')
+		while (*line != '\n' && *line != ' ')
 			line++;
 		count++;
-		while (*line && *line == ' ')
+		while (*line != '\n' && *line == ' ')
 			line++;
 	}
 	return (count);
@@ -47,48 +46,23 @@ static ssize_t	numbers_count(const char *line)
 ** is incorrect, the function return [-1, -1].
 */
 
-t_isize			get_map_size(const char *map_path)
+t_isize			get_map_size(const char *file)
 {
-	int		fd;
-	char	*line;
+	size_t	lines;
+	size_t	i;
 	t_isize	size;
-	int		ret;
 
-	size.x = -1;
-	size.y = -1;
-	if ((fd = open(map_path, O_RDONLY)) < 0)
-	{
-		throw_error();
-		return (size);
-	}
-	if (read(fd, NULL, 0) < 0)
-	{
-		throw_error();
-		return (size);
-	}
-	size.y = 0;
-	while ((ret = get_next_line(fd, &line) == LINE_READ))
+	lines = ft_strcount(file, '\n');
+	i = 0;
+	size = ft_isize(-1, lines);
+	while (i < lines)
 	{
 		if (size.x == -1)
-			size.x = numbers_count(line);
-		if (ret == READ_ERROR || (line && size.x > 0 && size.x != numbers_count(line)))
-		{
-			size.x = -1;
-			size.y = -1;
-			close(fd);
-			throw_error_errno(79);
-			return (size);
-		}
-		size.y++;
-		free(line);
+			size.x = numbers_count(ft_getline(file, i));
+		else if (numbers_count(ft_getline(file, i)) != size.x)
+			return (ft_isize(-1, -1));
+		i++;
 	}
-	if (ret == READ_ERROR)
-	{
-		size.x = -2;
-		size.y = -2;
-		throw_error_str("Read error");
-	}
-	close(fd);
 	return (size);
 }
 
@@ -100,13 +74,13 @@ t_isize			get_map_size(const char *map_path)
 ** undefined.
 */
 
-static t_mesh	*fill_mesh(const int fd, t_mesh *mesh, const t_isize map_size)
+static t_mesh	*fill_mesh(const char *file, t_mesh *mesh,
+	const t_isize map_size)
 {
-	t_isize	i;
-	size_t	j;
-	size_t	k;
-	char	*line;
-	char	*head;
+	t_isize		i;
+	size_t		j;
+	size_t		k;
+	const char	*line;
 
 	j = 0;
 	k = 0;
@@ -114,18 +88,17 @@ static t_mesh	*fill_mesh(const int fd, t_mesh *mesh, const t_isize map_size)
 	while (i.y < map_size.y)
 	{
 		i.x = 0;
-		if (get_next_line(fd, &line) == READ_ERROR)
+		if (!(line = ft_getline(file, (size_t)i.y)))
 			return (throw_error_str("Read error"));
-		head = line;
 		while (i.x < map_size.x)
 		{
-			while (*head == ' ')
-				head++;
-			mesh->vertices[j] = ft_vec3f(i.x * 10, ft_atoi(head), i.y * 10);
+			while (*line == ' ')
+				line++;
+			mesh->vertices[j] = ft_vec3f(i.x * 10, ft_atoi(line), i.y * 10);
 			if (i.x != map_size.x - 1)
 			{
-				while (*head != ' ')
-					head++;
+				while (*line != ' ')
+					line++;
 				mesh->indices[k++] = ft_vec2i(j, j + 1);
 			}
 			if (i.y != map_size.y - 1)
@@ -133,7 +106,6 @@ static t_mesh	*fill_mesh(const int fd, t_mesh *mesh, const t_isize map_size)
 			j++;
 			i.x++;
 		}
-		free(line);
 		i.y++;
 	}
 	return (mesh);
@@ -156,23 +128,26 @@ t_mesh			*parse_fdf(const char *path)
 {
 	t_mesh		*map;
 	t_isize		map_size;
-	int			fd;
+	char		*file;
 	size_t		i;
 	t_mat4		origin;
 
-	map_size = get_map_size(path);
-	if (map_size.x < 2 || map_size.y < 2)
+	file = get_file(path);
+	map_size = get_map_size(file);
+	if (map_size.x < 1 || map_size.y < 1)
+	{
+		free(file);
 		return (throw_error_str("Incorrect fdf map."));
+	}
 	if (!(map = new_mesh(map_size.x * map_size.y,
 		(map_size.x - 1) * map_size.y + (map_size.y - 1) * map_size.x)))
-		return (throw_error());
-	if ((fd = open(path, O_RDONLY)) < 0)
 	{
-		free_mesh(&map);
+		free(file);
 		return (throw_error());
 	}
-	if (!(map = fill_mesh(fd, map, map_size)))
+	if (!(map = fill_mesh(file, map, map_size)))
 	{
+		free(file);
 		free_mesh(&map);
 		return (throw_error());
 	}

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 16:59:14 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/08 17:11:29 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 16:46:19 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ static void	pre_release_callback(t_u8 *keys, int keycode)
 		keys[window_exit] = 0;
 	if (keycode == KEY_CTRL_LEFT)
 		keys[transform_smooth] = 0;
+	if (keycode == KEY_EQUAL)
+		keys[model_next] = 0;
+	if (keycode == KEY_MINUS)
+		keys[model_previous] = 0;
 }
 
 static void	translation_release_callback(t_u8 *keys, int keycode)

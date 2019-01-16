@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 16:22:47 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/10 17:06:00 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 17:35:42 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "errors.h"
+#include "batch.h"
 
 static size_t	get_new_id(void)
 {
@@ -93,12 +94,14 @@ void			update_projection(t_model *self, t_mat4 projection_matrix)
 	}
 }
 
-t_model			*get_model_by_id(const t_list *batch, size_t id)
+t_model			*get_model_by_id(const t_batch *batch, size_t id)
 {
 	t_list	*head;
 	t_model	*cast;
 
-	head = (t_list*)batch;
+	if (!batch)
+		return (NULL);
+	head = batch->batch;
 	while (head)
 	{
 		cast = (t_model*)head->content;

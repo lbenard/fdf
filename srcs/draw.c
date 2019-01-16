@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/15 17:39:08 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 14:43:29 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	draw_line(t_instance *instance, t_vec2i a, t_vec2i b, t_color a_color,
 	t_color	color_step;
 	int		err;
 	int		e;
+	t_vec3f	color2;
 
 	d = ft_vec2f(ft_abs(b.x - a.x), ft_abs(b.y - a.y));
 	s = ft_vec2f(a.x < b.x ? 1 : -1, a.y < b.y ? 1 : -1);
@@ -33,12 +34,13 @@ void	draw_line(t_instance *instance, t_vec2i a, t_vec2i b, t_color a_color,
 		(b_color.g - a_color.g) / step,
 		(b_color.b - a_color.b) / step);
 	err = (d.x > d.y ? d.x : -d.y) / 2;
+	color2 = ft_vec3f(1.0f, 1.0f, 1.0f);
 	while (42)
 	{
 		if (a.x > 0 && a.x <= (int)instance->window->size.x
 			&& a.y > 0 && a.y <= (int)instance->window->size.y)
-			instance->window->framebuffer[(instance->window->size.y - a.y)
-				* instance->window->size.x + a.x - 1] = color_to_int(a_color);
+			instance->window->framebuffer[(a.y - 1) * instance->window->size.x
+				+ a.x - 1]  = color_to_int(*((t_color*)(&color2)));//color_to_int(a_color);
 		else
 			break ;
 		if (a.x == b.x && a.y == b.y)

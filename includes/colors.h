@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: freezee <freezee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:39:52 by lbenard           #+#    #+#             */
-/*   Updated: 2018/12/13 02:41:11 by freezee          ###   ########.fr       */
+/*   Updated: 2019/01/16 17:34:46 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLORS_H
 # define COLORS_H
 
-# define COLOR_BLACK	0x00000000
-# define COLOR_WHITE	0x00FFFFFF
-# define COLOR_RED		0x00FF0000
-# define COLOR_GREEN	0x0000FF00
-# define COLOR_BLUE		0x000000FF
+# define COLOR_BLACK	0x000000
+# define COLOR_WHITE	0xFFFFFF
+# define COLOR_RED		0xFF0000
+# define COLOR_GREEN	0x00FF00
+# define COLOR_BLUE		0x0000FF
 
 typedef struct	s_color
 {

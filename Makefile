@@ -6,7 +6,7 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 19:33:38 by lbenard           #+#    #+#              #
-#    Updated: 2019/01/15 18:54:02 by lbenard          ###   ########.fr        #
+#    Updated: 2019/01/16 17:06:11 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC				=	fdf.c										\
 					srcs/parsers/fdf_parser.c					\
 					srcs/parsers/file_reader.c					\
 					srcs/parsers/ply_parser.c					\
+					srcs/batch.c								\
 					srcs/colors.c								\
 					srcs/draw.c									\
 					srcs/errors.c								\

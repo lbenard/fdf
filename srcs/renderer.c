@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:35:03 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/14 18:10:02 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 17:31:23 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 #include "instance.h"
 #include "errors.h"
 #include <stdlib.h>
+#include "batch.h"
+#include "libft.h"
 #include "model.h"
+#include "window.h"
 #include "draw.h"
 #include "mlx.h"
 
@@ -34,7 +37,7 @@ t_renderer	*new_renderer(t_instance *instance)
 		return (throw_error());
 	if (!(ret = (t_renderer*)malloc(sizeof(t_renderer))))
 		return (throw_error());
-	ret->batch = NULL;
+	ret->batch = new_batch();
 	ret->instance = instance;
 	return (ret);
 }
@@ -49,7 +52,7 @@ void		render(t_renderer *self)
 	t_model		*cast;
 	t_window	*window;
 
-	head = self->batch;
+	head = self->batch->batch;
 	window = self->instance->window;
 	clear(self->instance);
 	ft_bzero(window->framebuffer, sizeof(int) * window->size.x
