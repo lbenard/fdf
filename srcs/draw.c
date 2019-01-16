@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 14:43:29 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:12:26 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	draw_line(t_instance *instance, t_vec2i a, t_vec2i b, t_color a_color,
 	t_color	color_step;
 	int		err;
 	int		e;
-	t_vec3f	color2;
 
 	d = ft_vec2f(ft_abs(b.x - a.x), ft_abs(b.y - a.y));
 	s = ft_vec2f(a.x < b.x ? 1 : -1, a.y < b.y ? 1 : -1);
@@ -34,13 +33,12 @@ void	draw_line(t_instance *instance, t_vec2i a, t_vec2i b, t_color a_color,
 		(b_color.g - a_color.g) / step,
 		(b_color.b - a_color.b) / step);
 	err = (d.x > d.y ? d.x : -d.y) / 2;
-	color2 = ft_vec3f(1.0f, 1.0f, 1.0f);
 	while (42)
 	{
 		if (a.x > 0 && a.x <= (int)instance->window->size.x
 			&& a.y > 0 && a.y <= (int)instance->window->size.y)
 			instance->window->framebuffer[(a.y - 1) * instance->window->size.x
-				+ a.x - 1]  = color_to_int(*((t_color*)(&color2)));//color_to_int(a_color);
+				+ a.x - 1] = color_to_int(a_color);
 		else
 			break ;
 		if (a.x == b.x && a.y == b.y)
@@ -78,8 +76,8 @@ void	draw_mesh(t_instance *instance, t_mesh *mesh)
 		b = mesh->vertices[mesh->indices[i].y];
 		if (a.z > 0.0f && b.z > 0.0f)
 		{
-			a = ft_vec3f_scalar(a, 1.0f / (a.z / 100.0f));
-			b = ft_vec3f_scalar(b, 1.0f / (b.z / 100.0f));
+			a = ft_vec3f_scalar(a, 1.0f / (a.z / 150.0f));
+			b = ft_vec3f_scalar(b, 1.0f / (b.z / 150.0f));
 			a.x += instance->window->size.x / 2;
 			b.x += instance->window->size.x / 2;
 			a.y += instance->window->size.y / 2;
@@ -88,12 +86,13 @@ void	draw_mesh(t_instance *instance, t_mesh *mesh)
 				&& (a.y > 0 && a.y <= (int)instance->window->size.y))
 				draw_line(instance, ft_vec2i((int)a.x, (int)a.y),
 					ft_vec2i((int)b.x, (int)b.y),
-					int_to_color(0xFF0000), int_to_color(0x0000FF));
+					mesh->colors[mesh->indices[i].x],
+					mesh->colors[mesh->indices[i].y]);
 			else
 				draw_line(instance, ft_vec2i((int)b.x, (int)b.y),
 					ft_vec2i((int)a.x, (int)a.y),
-					int_to_color(0x0000FF), int_to_color(0xFF0000));
-
+					mesh->colors[mesh->indices[i].y],
+					mesh->colors[mesh->indices[i].x]);
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 16:00:48 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 17:36:02 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 18:35:41 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include "libft.h"
 # include "mesh.h"
-#include "batch.h"
+# include "batch.h"
+
+typedef struct	s_batch t_batch;
 
 typedef struct	s_model
 {

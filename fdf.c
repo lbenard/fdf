@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 18:26:58 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 18:50:55 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	loop_hook(void *params)
 	keys = instance->window->keys;
 	if (keys[window_exit])
 		exit(0);
-	if (keys[model_next] && focused_model < 1)
+	if (keys[model_next] && focused_model + 1 < instance->renderer->batch->size)
 		focused_model++;
 	if (keys[model_previous] && focused_model != 0)
 		focused_model--;
@@ -60,12 +60,8 @@ int	loop_hook(void *params)
 	i = 0;
 	while (get_model_by_id(instance->renderer->batch, i))
 	{
-		if (i == focused_model)
-			mlx_string_put(instance->mlx, instance->window->handle, 0, 20 * i,
-				0xFFFFFF, "> ");
-		else
-			mlx_string_put(instance->mlx, instance->window->handle, 0, 20 * i,
-				0xFFFFFF, "  ");
+		mlx_string_put(instance->mlx, instance->window->handle, 0, 20 * i,
+			0xFFFFFF, (i == focused_model) ? "> " : "  ");
 		mlx_string_put(instance->mlx, instance->window->handle,
 			20, 20 * i, 0xFFFFFF,
 			(char*)get_model_by_id(instance->renderer->batch, i)->name);
@@ -81,9 +77,10 @@ int	main(int ac, const char **av)
 {
 	t_instance		*instance;
 	t_renderer		*renderer;
+	size_t			i;
 
 	(void)ac;
-	if (ac != 2)
+	if (ac < 2)
 		return (!throw_error_str("Missing file operand"));
 	if (!(instance = new_instance(ft_usize(1600, 900), "fdf")))
 		return (!throw_error());
@@ -93,15 +90,15 @@ int	main(int ac, const char **av)
 		return (!throw_error());
 	}
 	instance->renderer = renderer;
-	batch_add(renderer->batch, av[1], ft_vec3f(0.0f, 0.0f, 2.0f),
-		ft_vec3f(1.5707963268f, 0.0f, 0.0f));
-	/*renderer->batch = ft_lstnew(new_model(parse_fdf(av[1]), // todo: fix error
-		ft_vec3f(0.0f, 0.0f, 2.0f), ft_vec3f(1.5707963268f, 0.0f, 0.0f),
-		ft_vec3f(1.0f, 1.0f, 1.0f)), sizeof(t_model));*/
-	//parse_ply("maps/ply/white_cube.ply");
-	/*ft_lstpushback(&renderer->batch, ft_lstnew(new_model(parse_fdf(av[2]),
-		ft_vec3f(0.0f, 0.0f, 2.0f), ft_vec3f(1.5707963268f, 0.0f, 0.0f),
-		ft_vec3f(1.0f, 1.0f, 1.0f)), sizeof(t_model)));*/
+	i = 1;
+	while (i < (size_t)ac)
+	{
+		batch_add(renderer->batch, av[i], ft_vec3f(0.0f, 0.0f, 2.0f),
+			ft_vec3f(1.5707963268f, 0.0f, 0.0f))->name
+				= (ft_strrchr(av[i], '/')) ? ft_strdup(ft_strrchr(av[i], '/')
+					+ 1) : ft_strdup(av[i]);
+		i++;
+	}
 	instance_add_hook(instance, 1L << 0, 2, control_press_callback, instance);
 	instance_add_hook(instance, 1L << 1, 3, control_release_callback, instance);
 	instance_add_loop_callback(instance, loop_hook, instance);

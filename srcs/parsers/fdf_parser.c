@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:54:59 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 18:10:53 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 19:14:47 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ static t_mesh	*fill_mesh(const char *file, t_mesh *mesh,
 			while (*line == ' ')
 				line++;
 			mesh->vertices[j] = ft_vec3f(i.x * 10, ft_atoi(line), i.y * 10);
+			mesh->colors[j] = int_to_color(0xFFFFFF);
 			if (i.x != map_size.x - 1)
 			{
 				while (*line != ' ')
