@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:54:59 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 19:44:09 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/17 16:56:33 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ static ssize_t	numbers_count(const char *line)
 {
 	ssize_t	count;
 
-	while (*line != '\n' && *line == ' ')
+	while (*line && *line != '\n' && *line == ' ')
 		line++;
 	count = 0;
-	while (*line != '\n')
+	while (*line && *line != '\n')
 	{
-		while (*line != '\n' && *line != ' ')
+		while (*line && *line != '\n' && *line != ' ')
 			line++;
 		count++;
-		while (*line != '\n' && *line == ' ')
+		while (*line && *line != '\n' && *line == ' ')
 			line++;
 	}
 	return (count);
@@ -51,6 +51,7 @@ t_isize			get_map_size(const char *file)
 	size_t	i;
 	t_isize	size;
 
+	printf("a\n");
 	lines = ft_strcount(file, '\n');
 	i = 0;
 	size = ft_isize(-1, lines);
@@ -88,7 +89,7 @@ static t_mesh	*fill_mesh(const char *file, t_mesh *mesh,
 	{
 		i.x = 0;
 		if (!(line = ft_getline(file, (size_t)i.y)))
-			return (throw_error_str("Read error"));
+			return (throw_error_str("read error"));
 		while (i.x < map_size.x)
 		{
 			while (*line == ' ')
@@ -132,24 +133,26 @@ t_mesh			*parse_fdf(const char *path)
 	size_t		i;
 	t_mat4		origin;
 
-	file = get_file(path);
+	if (!(file = get_file(path)))
+		return (throw_error_str("incorrect file"));
 	map_size = get_map_size(file);
+	printf("x: %ld y: %ld\n", map_size.x, map_size.y);
 	if (map_size.x < 1 || map_size.y < 1)
 	{
 		free(file);
-		return (throw_error_str("Incorrect fdf map."));
+		return (throw_error_str("incorrect fdf map"));
 	}
 	if (!(map = new_mesh(map_size.x * map_size.y,
 		(map_size.x - 1) * map_size.y + (map_size.y - 1) * map_size.x)))
 	{
 		free(file);
-		return (throw_error());
+		return (throw_error_str("error while creating mesh"));
 	}
 	if (!(map = fill_mesh(file, map, map_size)))
 	{
 		free(file);
 		free_mesh(&map);
-		return (throw_error());
+		return (throw_error_str("error while filling mesh"));
 	}
 	i = 0;
 	origin = ft_mat4_translation(ft_vec3f(-(map_size.x * 10 - 10) / 2.0f,

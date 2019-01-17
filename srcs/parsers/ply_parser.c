@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:50:47 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/17 00:51:35 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/17 16:16:54 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "libft.h"
 #include "errors.h"
 #include <stdlib.h>
-
-#include <stdio.h>
 
 static size_t	get_vertex_count(const char *file)
 {
@@ -26,9 +24,10 @@ static size_t	get_vertex_count(const char *file)
 
 static size_t	get_indices_count(const char *file)
 {
-	size_t	face_count;
-	size_t	indices_count;
-	size_t	i;
+	size_t		face_count;
+	size_t		indices_count;
+	size_t		i;
+	const char	*line;
 
 	if ((file = ft_strstr(file, "element face")))
 		face_count = (size_t)ft_atoi(file + ft_strlen("element face"));
@@ -36,9 +35,13 @@ static size_t	get_indices_count(const char *file)
 		return (0);
 	i = 0;
 	indices_count = 0;
+	line = ft_getline(file, ft_strcount(file, '\n') - face_count);
 	while (i < face_count)
-		indices_count += ft_atoi(ft_getline(file, ft_strcount(file, '\n')
-			- face_count + i++));
+	{
+		indices_count += ft_atoi(line);
+		line = ft_strchr(line, '\n') + 1;
+		i++;
+	}
 	return (indices_count);
 }
 
@@ -99,20 +102,15 @@ t_mesh		*parse_ply(const char *path)
 
 	if (!(file = get_file(path)))
 		return (throw_error());
-	//printf("%lu %lu\n", get_vertex_count(file), get_indices_count(file));
 	if (!ft_strstr(file, "property float x\nproperty float y\nproperty float "
 		"z\nproperty uchar red\nproperty uchar green\nproperty uchar blue")
 		|| !(vertex_count = get_vertex_count(file))
 		|| !(indices_count = get_indices_count(file)))
 		return (throw_error_str("incorrect ply format"));
-	printf("start parsing\n");
 	mesh = new_mesh(vertex_count, indices_count);
 	file = ft_strstr(file, "end_header") + ft_strlen("end_header") + 1;
-	printf("fill vertices\n");
 	fill_vertices(mesh, vertex_count, file);
 	file = (char*)ft_getline(file, vertex_count);
-	printf("fill indices\n");
 	fill_indices(mesh, indices_count, file);
-	printf("done\n");
 	return (mesh);
 }

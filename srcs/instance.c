@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:28:24 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/08 22:01:20 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/17 16:48:40 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ t_instance	*new_instance(t_usize size, char *window_title)
 	if (!(ret->mlx = mlx_init()))
 	{
 		free(ret);
-		return (throw_error());
+		return (throw_error_str("error while initializing mlx"));
 	}
 	if (!(ret->window = new_window(ret->mlx, size, window_title)))
 	{
 		free(ret->mlx);
 		free(ret);
-		return (throw_error());
+		return (throw_error_str("error while creating window"));
 	}
 	add_hooks(ret);
 	return (ret);

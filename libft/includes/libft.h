@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 14:43:39 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 17:31:58 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/17 19:49:51 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,8 +253,10 @@ void					ft_lstfree(t_list **list);
 void					ft_lstremove(t_list **list, t_list *to_remove);
 
 /*
-** CG functions
+** CG
 */
+
+# define PI 3.14159265359
 
 t_usize					ft_usize(size_t x, size_t y);
 t_isize					ft_isize(ssize_t x, ssize_t y);
