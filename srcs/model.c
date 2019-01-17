@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 16:22:47 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 19:39:00 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/17 00:54:36 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static size_t	get_new_id(void)
 	return (i++);
 }
 
+#include <stdio.h>
+
 t_model			*new_model(t_mesh *raw_mesh, t_vec3f position,
 	t_vec3f rotation, t_vec3f scale)
 {
@@ -31,12 +33,14 @@ t_model			*new_model(t_mesh *raw_mesh, t_vec3f position,
 		return (throw_error());
 	ft_bzero(ret, sizeof(t_model));
 	ret->raw_mesh = raw_mesh;
+	printf("1\n");
 	if (!(ret->model_mesh = new_mesh_copy(raw_mesh)))
 	{
 		free(ret->raw_mesh);
 		free(ret);
 		return (throw_error());
 	}
+	printf("2\n");
 	if (!(ret->projection_mesh = new_mesh_copy(raw_mesh)))
 	{
 		free(ret->raw_mesh);

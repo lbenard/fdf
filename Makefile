@@ -6,7 +6,7 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 19:33:38 by lbenard           #+#    #+#              #
-#    Updated: 2019/01/16 17:06:11 by lbenard          ###   ########.fr        #
+#    Updated: 2019/01/17 02:24:59 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ all: libft mlx $(NAME)
 $(NAME): $(OBJ)
 	@printf "$(GREEN)[cc]$(RESET): done\n"
 	@printf "$(GREEN)[ld]$(RESET): $(NAME)\n"
-	@$(CXX) -o $(NAME) $(OBJ) $(LIB_FOLDERS) $(LIBS) $(LDFLAGS) $(INCLUDES)
+	@$(CXX) -o $(NAME) $(OBJ) $(LIB_FOLDERS) $(LIBS) $(LDFLAGS) $(INCLUDES) -g -fsanitize=address
 
 .c.o: $(SRC)
 	@printf "$(GREEN)[cc]$(RESET): $< -> $@\n"

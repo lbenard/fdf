@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 19:23:58 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/15 19:36:16 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 22:03:33 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ double	ft_atof(const char *str)
 			result += decimal * (*str++ - '0');
 			decimal /= 10.0;
 		}
-	return (result);
+	return (sign * result);
 }

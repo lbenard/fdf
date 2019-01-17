@@ -6,15 +6,13 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 19:12:26 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/16 23:57:36 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "draw.h"
 #include "mlx.h"
 #include "colors.h"
-
-#include <stdio.h>
 
 void	draw_line(t_instance *instance, t_vec2i a, t_vec2i b, t_color a_color,
 	t_color b_color)

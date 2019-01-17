@@ -6,13 +6,16 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:50:47 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/15 20:08:45 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/17 00:51:35 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "libft.h"
 #include "errors.h"
+#include <stdlib.h>
+
+#include <stdio.h>
 
 static size_t	get_vertex_count(const char *file)
 {
@@ -39,51 +42,77 @@ static size_t	get_indices_count(const char *file)
 	return (indices_count);
 }
 
-#include <stdio.h>
+static void	fill_vertices(t_mesh *mesh, size_t vertex_count, const char *file)
+{
+	size_t	i;
 
-t_mesh	*parse_ply(const char *path)
+	i = 0;
+	while (i < vertex_count)
+	{
+		mesh->vertices[i].x = ft_atof(file);
+		file = ft_strchr(file, ' ') + 1;
+		mesh->vertices[i].y = ft_atof(file);
+		file = ft_strchr(file, ' ') + 1;
+		mesh->vertices[i].z = ft_atof(file);
+		file = ft_strchr(file, ' ') + 1;
+		mesh->colors[i].r = ft_atoi(file) / 255.0f;
+		file = ft_strchr(file, ' ') + 1;
+		mesh->colors[i].g = ft_atoi(file) / 255.0f;
+		file = ft_strchr(file, ' ') + 1;
+		mesh->colors[i].b = ft_atoi(file) / 255.0f;
+		file = ft_strchr(file, '\n') + 1;
+		i++;
+	}
+}
+
+static void	fill_indices(t_mesh *mesh, size_t indices_count, char *file)
+{
+	size_t	i;
+	size_t	j;
+	size_t	count;
+	int		first;
+
+	i = 0;
+	while (i < indices_count)
+	{
+		count = ft_atoi(file);
+		file = ft_strchr(file, ' ') + 1;
+		j = 0;
+		while (j < count)
+		{
+			mesh->indices[i].x = ft_atoi(file);
+			if (j == 0)
+				first = mesh->indices[i].x;
+			file = ft_strchr(file, (j != count - 1) ? ' ' : '\n') + 1;
+			mesh->indices[i].y = (j++ != count - 1) ? ft_atoi(file) : first;
+			i++;
+		}
+	}
+}
+
+t_mesh		*parse_ply(const char *path)
 {
 	char	*file;
 	t_mesh	*mesh;
 	size_t	vertex_count;
 	size_t	indices_count;
-	size_t	i;
 
 	if (!(file = get_file(path)))
 		return (throw_error());
+	//printf("%lu %lu\n", get_vertex_count(file), get_indices_count(file));
 	if (!ft_strstr(file, "property float x\nproperty float y\nproperty float "
 		"z\nproperty uchar red\nproperty uchar green\nproperty uchar blue")
 		|| !(vertex_count = get_vertex_count(file))
 		|| !(indices_count = get_indices_count(file)))
 		return (throw_error_str("incorrect ply format"));
-	printf("%lu %lu\n", vertex_count, indices_count);
+	printf("start parsing\n");
 	mesh = new_mesh(vertex_count, indices_count);
 	file = ft_strstr(file, "end_header") + ft_strlen("end_header") + 1;
-	i = 0;
-	while (i < vertex_count)
-	{
-		mesh->vertices[i].x = ft_atof(file);
-		while (!ft_isspace(*file))
-			file++;
-		mesh->vertices[i].y = ft_atof(++file);
-		while (!ft_isspace(*file))
-			file++;
-		mesh->vertices[i].z = ft_atof(++file);
-		while (!ft_isspace(*file))
-			file++;
-		printf("%s\n", file);
-		mesh->colors[i].r = ft_atoi(++file) / 255.0f;
-		while (!ft_isspace(*file))
-			file++;
-		printf("lol%s\n", file);
-		mesh->colors[i].g = ft_atoi(++file) / 255.0f;
-		while (!ft_isspace(*file))
-			file++;
-		mesh->colors[i].b = ft_atoi(++file) / 255.0f;
-		printf("%f %f %f %f %f %f\n", mesh->vertices[i].x, mesh->vertices[i].y,
-			mesh->vertices[i].z, mesh->colors[i].r, mesh->colors[i].g,
-			mesh->colors[i].b);
-		i++;
-	}
-	return (NULL);
+	printf("fill vertices\n");
+	fill_vertices(mesh, vertex_count, file);
+	file = (char*)ft_getline(file, vertex_count);
+	printf("fill indices\n");
+	fill_indices(mesh, indices_count, file);
+	printf("done\n");
+	return (mesh);
 }

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 19:29:48 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/17 02:19:13 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ int	loop_hook(void *params)
 	i = 0;
 	while (get_model_by_id(instance->renderer->batch, i))
 	{
-		mlx_string_put(instance->mlx, instance->window->handle, 0, 20 * i,
+		mlx_string_put(instance->mlx, instance->window->handle, 0, 20 * i + 10,
 			0xFFFFFF, (i == focused_model) ? "> " : "  ");
 		mlx_string_put(instance->mlx, instance->window->handle,
-			20, 20 * i, 0xFFFFFF,
+			20, 20 * i + 10, 0xFFFFFF,
 			(char*)get_model_by_id(instance->renderer->batch, i)->name);
 		i++;
 	}
@@ -72,6 +72,7 @@ int	loop_hook(void *params)
 }
 
 #include "batch.h"
+#include <stdio.h>
 
 int	main(int ac, const char **av)
 {
@@ -82,7 +83,7 @@ int	main(int ac, const char **av)
 	(void)ac;
 	if (ac < 2)
 		return (!throw_error_str("Missing file operand"));
-	if (!(instance = new_instance(ft_usize(1600, 900), "fdf")))
+	if (!(instance = new_instance(ft_usize(1280, 720), "fdf")))
 		return (!throw_error());
 	if (!(renderer = new_renderer(instance)))
 	{
@@ -99,6 +100,7 @@ int	main(int ac, const char **av)
 					+ 1) : ft_strdup(av[i]);
 		i++;
 	}
+	printf("batch done\n");
 	instance_add_hook(instance, 1L << 0, 2, control_press_callback, instance);
 	instance_add_hook(instance, 1L << 1, 3, control_release_callback, instance);
 	instance_add_loop_callback(instance, loop_hook, instance);
