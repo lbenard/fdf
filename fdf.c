@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/17 20:42:38 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 02:34:11 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,52 +23,89 @@
 #include <unistd.h>
 #include "batch.h"
 
-int	loop_hook(void *params)
+#include <stdio.h>
+
+int	loop_hook(t_instance *instance)
 {
-	t_instance		*instance;
+	t_renderer		*renderer;
 	t_u8			*keys;
 	static size_t	focused_model = 0;
 	size_t			i;
 	t_model			*model;
+	t_list			*model_list;
 
-	instance = (t_instance*)params;
+	renderer = instance->renderer;
 	keys = instance->window->keys;
 	if (keys[window_exit])
 		exit(0);
-	if (keys[model_next] && focused_model + 1 < instance->renderer->batch->size)
-		focused_model++;
 	if (keys[model_previous] && focused_model != 0)
+	{
 		focused_model--;
-	model = get_model_by_id(instance->renderer->batch, focused_model);
-	model->position.x -= 5.0f * keys[translation_nx];
-	model->position.x += 5.0f * keys[translation_px];
-	model->position.y -= 5.0f * keys[translation_ny];
-	model->position.y += 5.0f * keys[translation_py];
-	model->position.z -= 5.0f * keys[translation_nz];
-	model->position.z += 5.0f * keys[translation_pz];
-	model->rotation.x -= 0.02f * keys[rotation_nx];
-	model->rotation.x += 0.02f * keys[rotation_px];
-	model->rotation.y -= 0.02f * keys[rotation_ny];
-	model->rotation.y += 0.02f * keys[rotation_py];
-	model->scale = ft_vec3f_scalar(model->scale, 1.0f + .1f * keys[scale_zoom]);
-	model->scale = ft_vec3f_scalar(model->scale, 1.0f / (1.0f + .1f *
-		keys[scale_dezoom]));
-	model->scale.y *= 1.0f + (0.1f * keys[scale_stretch]);
-	model->scale.y /= 1.0f + (0.1f * keys[scale_flatten]);
-	update_model(model);
-	//update_projection_mesh(renderer);
-	render(instance->renderer);
+		keys[model_previous] = 0;
+	}
+	if (keys[model_next] && focused_model + 1 < instance->renderer->batch->size)
+	{
+		focused_model++;
+		keys[model_next] = 0;
+	}
+	model = batch_get_model_by_id(instance->renderer->batch, focused_model);
+	model->position.x -= 5.0f * keys[model_translation_nx];
+	model->position.x += 5.0f * keys[model_translation_px];
+	model->position.y -= 5.0f * keys[model_translation_ny];
+	model->position.y += 5.0f * keys[model_translation_py];
+	model->position.z -= 5.0f * keys[model_translation_nz];
+	model->position.z += 5.0f * keys[model_translation_pz];
+	model->rotation.x -= 0.02f * keys[model_rotation_nx];
+	model->rotation.x += 0.02f * keys[model_rotation_px];
+	model->rotation.y -= 0.02f * keys[model_rotation_ny];
+	model->rotation.y += 0.02f * keys[model_rotation_py];
+	model->scale = ft_vec3f_scalar(model->scale, 1.0f + 0.1f
+		* keys[model_scale_zoom]);
+	model->scale = ft_vec3f_scalar(model->scale, 1.0f / (1.0f + 0.1f *
+		keys[model_scale_dezoom]));
+	model->scale.y *= 1.0f + (0.1f * keys[model_scale_stretch]);
+	model->scale.y /= 1.0f + (0.1f * keys[model_scale_flatten]);
+
+	camera_rotate(renderer->camera, ft_vec2f(
+		-(0.02f * keys[camera_rotation_nx])
+		+ (0.02f * keys[camera_rotation_px]),
+		-(0.02f * keys[camera_rotation_ny])
+		+ (0.02f * keys[camera_rotation_py])));
+	camera_translate(renderer->camera, ft_vec3f(
+		-(5.0f * keys[camera_translation_nx])
+		+ (5.0f * keys[camera_translation_px]),
+		-(5.0f * keys[camera_translation_ny])
+		+ (5.0f * keys[camera_translation_py]),
+		-(5.0f * keys[camera_translation_nz])
+		+ (5.0f * keys[camera_translation_pz])));
+	model_list = renderer->batch->batch;
+	while (model_list)
+	{
+		model_update_model((t_model*)model_list->content);
+		model_update_view((t_model*)model_list->content,
+			instance->renderer->camera);
+		model_update_projection((t_model*)model_list->content,
+			(t_mat4)(struct s_mat4_data)
+		{
+			1, 0, 0, 0,
+			0, 1, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 0
+		});
+		model_list = model_list->next;
+	}
+	renderer_render(instance->renderer);
 	i = 0;
-	while (get_model_by_id(instance->renderer->batch, i))
+	while (batch_get_model_by_id(instance->renderer->batch, i))
 	{
 		mlx_string_put(instance->mlx, instance->window->handle, 0, 20 * i + 10,
 			0xFFFFFF, (i == focused_model) ? "> " : "  ");
 		mlx_string_put(instance->mlx, instance->window->handle,
 			20, 20 * i + 10, 0xFFFFFF,
-			(char*)get_model_by_id(instance->renderer->batch, i)->name);
+			(char*)batch_get_model_by_id(instance->renderer->batch, i)->name);
 		i++;
 	}
-	//usleep(1.0 / 120.0 * 1000000);
+	usleep(1.0 / 120.0 * 1000000);
 	return (1);
 }
 
@@ -103,15 +140,8 @@ int	main(int ac, const char **av)
 			: ft_strdup(av[i]);
 		i++;
 	}
-	instance_add_hook(instance, 1L << 0, 2, control_press_callback, instance);
-	instance_add_hook(instance, 1L << 1, 3, control_release_callback, instance);
+	instance_add_hook(instance, 1L << 0, 2, press_callback, instance);
+	instance_add_hook(instance, 1L << 1, 3, release_callback, instance);
 	instance_add_loop_callback(instance, loop_hook, instance);
-
-	t_camera *camera = new_camera();
-	camera_rotate(camera, ft_vec2f(0.0f, PI));
-	camera_translate(camera, ft_vec3f(1.0f, 0.0f, 0.0f));
-	printf("%f %f %f\n", camera->position.x, camera->position.y,
-		camera->position.z);
-
 	mlx_loop(instance->mlx);
 }

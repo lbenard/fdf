@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 20:40:13 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 19:34:34 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 00:39:20 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ typedef struct	s_mesh
 
 t_mesh			*new_mesh(size_t vertices_count, size_t indices_count);
 t_mesh			*new_mesh_copy(t_mesh *src);
-void			free_mesh(t_mesh **mesh);
+void			free_mesh(t_mesh *mesh);
 
 #endif

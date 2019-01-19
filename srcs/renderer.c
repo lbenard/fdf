@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:35:03 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/17 16:44:39 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 00:46:28 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,17 @@ t_renderer	*new_renderer(t_instance *instance)
 			"no instance provided"));
 	if (!(ret = (t_renderer*)malloc(sizeof(t_renderer))))
 		return (throw_error());
-	ret->batch = new_batch();
+	if (!(ret->batch = new_batch()))
+	{
+		free(ret);
+		return (throw_error_str("error while creating batch"));
+	}
+	if (!(ret->camera = new_camera()))
+	{
+		free(ret->batch);
+		free(ret);
+		return (throw_error_str("error while creating camera"));
+	}
 	ret->clear = ft_color(0.2f, 0.0f, 0.0f);
 	ret->instance = instance;
 	return (ret);
@@ -60,7 +70,7 @@ static void	clear_buffer(int *framebuffer, t_color color, size_t size)
 ** Makes pixels go colorful!
 */
 
-void		render(t_renderer *self)
+void		renderer_render(t_renderer *self)
 {
 	t_list		*head;
 	t_model		*cast;
@@ -74,9 +84,16 @@ void		render(t_renderer *self)
 	while (head)
 	{
 		cast = (t_model*)head->content;
-		draw_mesh(self->instance, cast->model_mesh);
+		draw_mesh(self->instance, cast->view_mesh);
 		head = head->next;
 	}
 	mlx_put_image_to_window(self->instance->mlx, window->handle, window->image,
 		0, 0);
+}
+
+void		free_renderer(t_renderer *self)
+{
+	free_camera(self->camera);
+	free_batch(self->batch);
+	free(self);
 }

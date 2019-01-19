@@ -6,14 +6,13 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:54:59 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/17 16:56:33 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 02:59:16 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "mesh.h"
 #include <fcntl.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "errors.h"
@@ -51,7 +50,6 @@ t_isize			get_map_size(const char *file)
 	size_t	i;
 	t_isize	size;
 
-	printf("a\n");
 	lines = ft_strcount(file, '\n');
 	i = 0;
 	size = ft_isize(-1, lines);
@@ -125,6 +123,8 @@ static t_mesh	*fill_mesh(const char *file, t_mesh *mesh,
 ** informations can be added for a specific vertex.
 */
 
+#include <stdio.h>
+
 t_mesh			*parse_fdf(const char *path)
 {
 	t_mesh		*map;
@@ -136,12 +136,12 @@ t_mesh			*parse_fdf(const char *path)
 	if (!(file = get_file(path)))
 		return (throw_error_str("incorrect file"));
 	map_size = get_map_size(file);
-	printf("x: %ld y: %ld\n", map_size.x, map_size.y);
 	if (map_size.x < 1 || map_size.y < 1)
 	{
 		free(file);
 		return (throw_error_str("incorrect fdf map"));
 	}
+	printf("%ld %ld\n", map_size.x, map_size.y);
 	if (!(map = new_mesh(map_size.x * map_size.y,
 		(map_size.x - 1) * map_size.y + (map_size.y - 1) * map_size.x)))
 	{
@@ -151,7 +151,7 @@ t_mesh			*parse_fdf(const char *path)
 	if (!(map = fill_mesh(file, map, map_size)))
 	{
 		free(file);
-		free_mesh(&map);
+		free_mesh(map);
 		return (throw_error_str("error while filling mesh"));
 	}
 	i = 0;

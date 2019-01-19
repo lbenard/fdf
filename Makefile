@@ -6,30 +6,35 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 19:33:38 by lbenard           #+#    #+#              #
-#    Updated: 2019/01/17 20:31:38 by lbenard          ###   ########.fr        #
+#    Updated: 2019/01/19 03:55:01 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	fdf
 
 # Sources
-SRC				=	fdf.c										\
-					srcs/callbacks/control_press_callbacks.c	\
-					srcs/callbacks/control_release_callbacks.c	\
-					srcs/parsers/fdf_parser.c					\
-					srcs/parsers/file_reader.c					\
-					srcs/parsers/ply_parser.c					\
-					srcs/batch.c								\
-					srcs/camera.c								\
-					srcs/colors.c								\
-					srcs/draw.c									\
-					srcs/errors.c								\
-					srcs/instance_callbacks.c					\
-					srcs/instance_handlers.c					\
-					srcs/instance.c								\
-					srcs/mesh.c									\
-					srcs/model.c								\
-					srcs/renderer.c								\
+SRC				=	fdf.c											\
+					srcs/callbacks/callbacks.c						\
+					srcs/callbacks/camera_translation_callbacks.c	\
+					srcs/callbacks/camera_rotation_callbacks.c		\
+					srcs/callbacks/model_translation_callbacks.c	\
+					srcs/callbacks/model_scale_callbacks.c			\
+					srcs/callbacks/model_rotation_callbacks.c		\
+					srcs/callbacks/model_list_callbacks.c			\
+					srcs/parsers/fdf_parser.c						\
+					srcs/parsers/file_reader.c						\
+					srcs/parsers/ply_parser.c						\
+					srcs/batch.c									\
+					srcs/camera.c									\
+					srcs/colors.c									\
+					srcs/draw.c										\
+					srcs/errors.c									\
+					srcs/instance_callbacks.c						\
+					srcs/instance_handlers.c						\
+					srcs/instance.c									\
+					srcs/mesh.c										\
+					srcs/model.c									\
+					srcs/renderer.c									\
 					srcs/window.c
 
 UNAME			=	$(shell uname)
@@ -125,7 +130,7 @@ mlx-re:
 	@printf "\e[1A\e[0K"
 	@printf "$(GREEN)[mk]$(RESET): mlx re done\n";
 
-clean: libft-clean mlx-clean
+clean:
 	@printf "$(GREEN)[rm]$(RESET): cleaned object files\n"
 	@rm -rf $(OBJ)
 

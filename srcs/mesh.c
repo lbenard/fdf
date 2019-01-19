@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:20:46 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/17 16:47:29 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 00:39:52 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,6 @@ t_mesh	*new_mesh(size_t vertices_count, size_t indices_count)
 	return (mesh);
 }
 
-void	free_mesh(t_mesh **mesh)
-{
-	free((*mesh)->vertices);
-	free((*mesh)->colors);
-	free((*mesh)->indices);
-	free(*mesh);
-	*mesh = NULL;
-}
-
 t_mesh	*new_mesh_copy(t_mesh *src)
 {
 	t_mesh	*ret;
@@ -66,4 +57,12 @@ t_mesh	*new_mesh_copy(t_mesh *src)
 	ret->vertices_count = src->vertices_count;
 	ret->indices_count = src->indices_count;
 	return (ret);
+}
+
+void	free_mesh(t_mesh *mesh)
+{
+	free(mesh->vertices);
+	free(mesh->colors);
+	free(mesh->indices);
+	free(mesh);
 }

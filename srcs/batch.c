@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 17:02:01 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/17 16:46:38 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 00:34:59 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,38 @@ t_model	*batch_add(t_batch *self, const char *path, t_vec3f position,
 		ft_lstpushback(&self->batch, ft_lstnew(model, sizeof(t_model)));
 	self->size++;
 	return (model);
+}
+
+t_model	*batch_get_model_by_id(t_batch *self, size_t id)
+{
+	t_list	*head;
+	t_model	*cast;
+
+	if (!self->batch)
+		return (NULL);
+	head = self->batch;
+	while (head)
+	{
+		cast = (t_model*)head->content;
+		if (cast->id == id)
+			return (cast);
+		head = head->next;
+	}
+	return (NULL);
+}
+
+void	free_batch(t_batch *self)
+{
+	t_list	*head;
+	t_list	*previous;
+
+	head = self->batch;
+	while (head)
+	{
+		free_model((t_model*)head->content);
+		previous = head;
+		head = head->next;
+		free(previous);
+	}
+	free(self);
 }

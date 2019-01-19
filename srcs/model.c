@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 16:22:47 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/17 17:08:14 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 01:54:13 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,36 @@ t_model			*new_model(t_mesh *raw_mesh, t_vec3f position,
 		free(ret);
 		return (throw_error());
 	}
+	if (!(ret->view_mesh = new_mesh_copy(raw_mesh)))
+	{
+		free(ret->model_mesh);
+		free(ret->raw_mesh);
+		free(ret);
+		return (throw_error());
+	}
 	if (!(ret->projection_mesh = new_mesh_copy(raw_mesh)))
 	{
 		free(ret->raw_mesh);
 		free(ret->model_mesh);
+		free(ret->view_mesh);
 		free(ret);
 		return (throw_error());
 	}
 	ret->id = get_new_id();
-	ret->name = "Unnamed model";
+	ret->name = ft_strdup("Unnamed model");
 	ret->position = position;
 	ret->rotation = rotation;
 	ret->scale = scale;
-	update_model(ret);
+	model_update_model(ret);
 	return (ret);
 }
 
-void			update_model(t_model *self)
+void			model_update_model(t_model *self)
 {
 	size_t	i;
 	t_mat4	model_matrix;
 
 	i = 0;
-	if (!self->model_mesh)
-		if (!(self->model_mesh = new_mesh_copy(self->raw_mesh)))
-			return ;
 	model_matrix = ft_mat4_scaling(self->scale);
 	model_matrix = ft_mat4_x_mat4(ft_mat4_rotation(self->rotation),
 		model_matrix);
@@ -75,37 +80,45 @@ void			update_model(t_model *self)
 	}
 }
 
-void			update_projection(t_model *self, t_mat4 projection_matrix)
+void			model_update_view(t_model *self, t_camera *camera)
 {
 	size_t	i;
+	t_mat4	view_matrix;
 
 	i = 0;
-	if (!self->projection_mesh)
-		if (!(self->projection_mesh = new_mesh_copy(self->model_mesh)))
-			return ;
-	while (i < self->projection_mesh->vertices_count)
+	view_matrix = ft_mat4_translation(ft_vec3f(-camera->position.x,
+		-camera->position.y, -camera->position.z));
+	view_matrix = ft_mat4_x_mat4(ft_mat4_rotation(ft_vec3f(-camera->rotation.x,
+		-camera->rotation.y, 0)), view_matrix);
+	while (i < self->view_mesh->vertices_count)
 	{
-		self->projection_mesh->vertices[i] =
-			ft_vec4f_to_vec3f(ft_mat4_x_vec4(projection_matrix,
+		self->view_mesh->vertices[i] =
+			ft_vec4f_to_vec3f(ft_mat4_x_vec4(view_matrix,
 			ft_vec3f_to_vec4f(self->model_mesh->vertices[i])));
 		i++;
 	}
 }
 
-t_model			*get_model_by_id(const t_batch *batch, size_t id)
+void			model_update_projection(t_model *self, t_mat4 projection_matrix)
 {
-	t_list	*head;
-	t_model	*cast;
+	size_t	i;
 
-	if (!batch)
-		return (NULL);
-	head = batch->batch;
-	while (head)
+	i = 0;
+	while (i < self->projection_mesh->vertices_count)
 	{
-		cast = (t_model*)head->content;
-		if (cast->id == id)
-			return (cast);
-		head = head->next;
+		self->projection_mesh->vertices[i] =
+			ft_vec4f_to_vec3f(ft_mat4_x_vec4(projection_matrix,
+			ft_vec3f_to_vec4f(self->view_mesh->vertices[i])));
+		i++;
 	}
-	return (NULL);
+}
+
+void			free_model(t_model *self)
+{
+	free(self->name);
+	free_mesh(self->raw_mesh);
+	free_mesh(self->model_mesh);
+	free_mesh(self->view_mesh);
+	free_mesh(self->projection_mesh);
+	free(self);
 }
