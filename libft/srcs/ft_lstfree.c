@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 04:33:38 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/15 04:38:01 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 16:59:23 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_lstfree(t_list **list)
 	t_list	*head;
 	t_list	*next;
 
-	if (list)
+	if (list && *list)
 	{
 		head = *list;
 		while (head)

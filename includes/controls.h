@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 16:42:05 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 01:25:46 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 18:57:45 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ typedef enum	e_controls
 	model_scale_dezoom,
 	model_scale_flatten,
 	model_scale_stretch,
-	model_transform_smooth,
+	speed_transform,
 	model_previous,
 	model_next,
+	switch_perspective,
+	switch_orthographic,
 	window_exit,
 	control_last
 }				t_controls;
@@ -81,6 +83,19 @@ int				model_scale_release_callback(int keycode,
 int				model_list_press_callback(int keycode,
 	t_u8 keys[control_last]);
 int				model_list_release_callback(int keycode,
+	t_u8 keys[control_last]);
+
+int				speed_transform_press_callback(int keycode,
+	t_u8 keys[control_last]);
+int				speed_transform_release_callback(int keycode,
+	t_u8 keys[control_last]);
+
+int				switch_projection_press_callback(int keycode,
+	t_u8 keys[control_last]);
+int				switch_projection_release_callback(int keycode,
+	t_u8 keys[control_last]);
+
+int				window_exit_release_callback(int keycode,
 	t_u8 keys[control_last]);
 
 #endif

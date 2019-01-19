@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 16:56:43 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/17 16:50:54 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 19:06:26 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,26 @@
 #include "errors.h"
 #include "mlx.h"
 
-t_window	*new_window(void *mlx, t_usize size, char *window_title)
+static t_window	*new_window_2(t_usize size, char *window_title)
 {
 	t_window	*ret;
-	int			trash;
 
 	if (!(ret = (t_window*)malloc(sizeof(t_window))))
 		return (throw_error());
 	ret->size = size;
-	ret->title = window_title;
-	if (!(ret->handle = mlx_new_window(mlx, size.x, size.y,
-		window_title)))
+	ret->title = ft_strdup(window_title);
+	ft_bzero(ret->keys, control_last);
+	return (ret);
+}
+
+t_window		*new_window(void *mlx, t_usize size, char *window_title)
+{
+	t_window	*ret;
+	int			trash;
+
+	if (!(ret = new_window_2(size, window_title)))
+		return (throw_error());
+	if (!(ret->handle = mlx_new_window(mlx, size.x, size.y, window_title)))
 	{
 		free(ret);
 		return (throw_error_str("error while creating mlx window"));
@@ -44,6 +53,14 @@ t_window	*new_window(void *mlx, t_usize size, char *window_title)
 		free(ret);
 		return (throw_error_str("error while getting mlx framebuffer"));
 	}
-	ft_bzero(ret->keys, control_last);
 	return (ret);
+}
+
+void			free_window(t_window *self, t_instance *instance)
+{
+	(void)instance;
+	mlx_destroy_image(instance->mlx, self->image);
+	mlx_destroy_window(instance->mlx, self->handle);
+	free(self->title);
+	free(self);
 }

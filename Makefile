@@ -6,7 +6,7 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 19:33:38 by lbenard           #+#    #+#              #
-#    Updated: 2019/01/19 03:55:01 by lbenard          ###   ########.fr        #
+#    Updated: 2019/01/19 18:58:18 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,9 @@ SRC				=	fdf.c											\
 					srcs/callbacks/model_scale_callbacks.c			\
 					srcs/callbacks/model_rotation_callbacks.c		\
 					srcs/callbacks/model_list_callbacks.c			\
+					srcs/callbacks/speed_transform_callbacks.c		\
+					srcs/callbacks/switch_projection_callbacks.c	\
+					srcs/callbacks/window_exit_callbacks.c			\
 					srcs/parsers/fdf_parser.c						\
 					srcs/parsers/file_reader.c						\
 					srcs/parsers/ply_parser.c						\
@@ -34,6 +37,7 @@ SRC				=	fdf.c											\
 					srcs/instance.c									\
 					srcs/mesh.c										\
 					srcs/model.c									\
+					srcs/model_id.c									\
 					srcs/renderer.c									\
 					srcs/window.c
 

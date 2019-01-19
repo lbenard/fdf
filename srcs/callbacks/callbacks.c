@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 01:19:23 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 02:11:40 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 18:57:50 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	press_callback(int keycode, void *params)
 	model_rotation_press_callback(keycode, keys);
 	model_scale_press_callback(keycode, keys);
 	model_list_press_callback(keycode, keys);
+	speed_transform_press_callback(keycode, keys);
+	switch_projection_press_callback(keycode, keys);
 	return (1);
 }
 
@@ -38,5 +40,8 @@ int	release_callback(int keycode, void *params)
 	model_rotation_release_callback(keycode, keys);
 	model_scale_release_callback(keycode, keys);
 	model_list_release_callback(keycode, keys);
+	speed_transform_release_callback(keycode, keys);
+	switch_projection_release_callback(keycode, keys);
+	window_exit_release_callback(keycode, keys);
 	return (1);
 }

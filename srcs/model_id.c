@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.h                                             :+:      :+:    :+:   */
+/*   model_id.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/27 17:11:00 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 18:47:27 by lbenard          ###   ########.fr       */
+/*   Created: 2019/01/19 15:56:42 by lbenard           #+#    #+#             */
+/*   Updated: 2019/01/19 17:09:46 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DRAW_H
-# define DRAW_H
+#include "model.h"
 
-# include "libft.h"
-# include "instance.h"
-# include "mesh.h"
-# include "colors.h"
+size_t	model_get_new_id(void)
+{
+	static size_t	i = 0;
 
-void	draw_line(t_instance *instance, t_vec2i x, t_vec2i y, t_color a_color,
-	t_color b_color);
-void	clear(t_instance *instance);
-void	draw_mesh(t_instance *instance, t_mesh *mesh, int perspective);
-
-#endif
+	return (i++);
+}

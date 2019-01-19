@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 14:25:10 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 19:35:33 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 17:11:59 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "renderer.h"
 
 typedef struct s_renderer	t_renderer;
+typedef struct s_window		t_window;
 
 typedef struct	s_instance
 {
@@ -47,6 +48,7 @@ void			instance_add_loop_callback(t_instance *self,
 	int (*callback)(), void *params);
 void			instance_add_hook(t_instance *self, int mask, int name,
 	int (*callback)(), void *params);
+void			free_instance(t_instance *self);
 
 int				key_callback_handler(int keycode, void *param);
 int				mouse_callback_handler(int button, int x, int y, void *param);

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/16 23:57:36 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 18:47:38 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	clear(t_instance *instance)
 	mlx_clear_window(instance->mlx, instance->window->handle);
 }
 
-void	draw_mesh(t_instance *instance, t_mesh *mesh)
+void	draw_mesh(t_instance *instance, t_mesh *mesh, int perspective)
 {
 	size_t	i;
 	t_vec3f	a;
@@ -74,14 +74,17 @@ void	draw_mesh(t_instance *instance, t_mesh *mesh)
 		b = mesh->vertices[mesh->indices[i].y];
 		if (a.z > 0.0f && b.z > 0.0f)
 		{
-			a = ft_vec3f_scalar(a, 1.0f / (a.z / 150.0f));
-			b = ft_vec3f_scalar(b, 1.0f / (b.z / 150.0f));
+			if (perspective)
+			{
+				a = ft_vec3f_scalar(a, 1.0f / (a.z / 500.0f));
+				b = ft_vec3f_scalar(b, 1.0f / (b.z / 500.0f));
+			}
 			a.x += instance->window->size.x / 2;
 			b.x += instance->window->size.x / 2;
 			a.y += instance->window->size.y / 2;
 			b.y += instance->window->size.y / 2;
-			if ((a.x > 0 && a.x <= (int)instance->window->size.x)
-				&& (a.y > 0 && a.y <= (int)instance->window->size.y))
+			if ((a.x >= -1.0f && a.x <= (int)instance->window->size.x)
+				&& (a.y >= -1.0f && a.y <= (int)instance->window->size.y))
 				draw_line(instance, ft_vec2i((int)a.x, (int)a.y),
 					ft_vec2i((int)b.x, (int)b.y),
 					mesh->colors[mesh->indices[i].x],

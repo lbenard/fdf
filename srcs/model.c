@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 16:22:47 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 01:54:13 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 17:10:57 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "errors.h"
-
-static size_t	get_new_id(void)
-{
-	static size_t	i = 0;
-
-	return (i++);
-}
 
 t_model			*new_model(t_mesh *raw_mesh, t_vec3f position,
 	t_vec3f rotation, t_vec3f scale)
@@ -51,7 +44,7 @@ t_model			*new_model(t_mesh *raw_mesh, t_vec3f position,
 		free(ret);
 		return (throw_error());
 	}
-	ret->id = get_new_id();
+	ret->id = model_get_new_id();
 	ret->name = ft_strdup("Unnamed model");
 	ret->position = position;
 	ret->rotation = rotation;

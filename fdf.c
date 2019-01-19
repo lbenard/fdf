@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 02:34:11 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 18:59:40 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ int	loop_hook(t_instance *instance)
 	renderer = instance->renderer;
 	keys = instance->window->keys;
 	if (keys[window_exit])
+	{
+		free_instance(instance);
 		exit(0);
+	}
 	if (keys[model_previous] && focused_model != 0)
 	{
 		focused_model--;
@@ -94,7 +97,7 @@ int	loop_hook(t_instance *instance)
 		});
 		model_list = model_list->next;
 	}
-	renderer_render(instance->renderer);
+	renderer_render(instance->renderer, 1);
 	i = 0;
 	while (batch_get_model_by_id(instance->renderer->batch, i))
 	{
@@ -135,6 +138,7 @@ int	main(int ac, const char **av)
 		if (!(added_model = batch_add(renderer->batch, av[i],
 			ft_vec3f(0.0f, 0.0f, 50.0f), ft_vec3f(-1.5707963268f, 0.0f, 0.0f))))
 			return (!throw_error_str("error while adding to batch"));
+		free(added_model->name);
 		added_model->name = (ft_strrchr(av[i], '/'))
 			? ft_strdup(ft_strrchr(av[i], '/') + 1)
 			: ft_strdup(av[i]);

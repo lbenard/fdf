@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.h                                             :+:      :+:    :+:   */
+/*   window_exit_callbacks.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/27 17:11:00 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 18:47:27 by lbenard          ###   ########.fr       */
+/*   Created: 2019/01/19 18:52:37 by lbenard           #+#    #+#             */
+/*   Updated: 2019/01/19 18:58:28 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DRAW_H
-# define DRAW_H
+#include "controls.h"
+#include "keycodes.h"
 
-# include "libft.h"
-# include "instance.h"
-# include "mesh.h"
-# include "colors.h"
-
-void	draw_line(t_instance *instance, t_vec2i x, t_vec2i y, t_color a_color,
-	t_color b_color);
-void	clear(t_instance *instance);
-void	draw_mesh(t_instance *instance, t_mesh *mesh, int perspective);
-
-#endif
+int	window_exit_release_callback(int keycode, t_u8 keys[control_last])
+{
+	if (keycode == KEY_ESCAPE)
+		keys[window_exit] = 1;
+	return (1);
+}

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:28:24 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/17 16:48:40 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 19:04:43 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,16 @@ t_instance	*new_instance(t_usize size, char *window_title)
 	}
 	add_hooks(ret);
 	return (ret);
+}
+
+void		free_instance(t_instance *self)
+{
+	free_window(self->window, self);
+	free_renderer(self->renderer);
+	ft_lstfree(&self->key_callbacks);
+	ft_lstfree(&self->mouse_callbacks);
+	ft_lstfree(&self->expose_callbacks);
+	ft_lstfree(&self->loop_callbacks);
+	free(self->mlx);
+	free(self);
 }
