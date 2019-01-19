@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 18:59:40 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 19:44:38 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,10 @@ int	loop_hook(t_instance *instance)
 		model_update_view((t_model*)model_list->content,
 			instance->renderer->camera);
 		model_update_projection((t_model*)model_list->content,
-			(t_mat4)(struct s_mat4_data)
-		{
-			1, 0, 0, 0,
-			0, 1, 0, 0,
-			0, 0, 0, 0,
-			0, 0, 0, 0
-		});
+			ft_mat4_perspective_projection());
 		model_list = model_list->next;
 	}
-	renderer_render(instance->renderer, 1);
+	renderer_render(instance->renderer);
 	i = 0;
 	while (batch_get_model_by_id(instance->renderer->batch, i))
 	{

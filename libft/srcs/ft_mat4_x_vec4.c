@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 23:03:24 by lbenard           #+#    #+#             */
-/*   Updated: 2018/11/29 23:39:18 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 19:59:19 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,8 @@ t_vec4f	ft_mat4_x_vec4(t_mat4 a, t_vec4f b)
 		a.m[3][1] * b.y +
 		a.m[3][2] * b.z +
 		a.m[3][3] * b.w;
+	result.x /= result.w;
+	result.y /= result.w;
+	result.z /= result.w;
 	return (result);
 }

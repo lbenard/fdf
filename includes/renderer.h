@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 20:38:12 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 18:52:13 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 19:15:58 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct	s_renderer
 }				t_renderer;
 
 t_renderer		*new_renderer(t_instance *instance);
-void			renderer_render(t_renderer *self, int perspective);
+void			renderer_render(t_renderer *self);
 void			free_renderer(t_renderer *self);
 
 #endif

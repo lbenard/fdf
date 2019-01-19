@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 19:33:00 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 18:37:23 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 19:10:41 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct	s_camera
 {
 	t_vec3f	position;
 	t_vec2f	rotation;
-	t_mat4	projection;
 }				t_camera;
 
 t_camera		*new_camera(void);

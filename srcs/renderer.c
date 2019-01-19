@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:35:03 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 18:52:06 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/19 19:35:17 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	clear_buffer(int *framebuffer, t_color color, size_t size)
 ** Makes pixels go colorful!
 */
 
-void		renderer_render(t_renderer *self, int perspective)
+void		renderer_render(t_renderer *self)
 {
 	t_list		*head;
 	t_model		*cast;
@@ -84,7 +84,7 @@ void		renderer_render(t_renderer *self, int perspective)
 	while (head)
 	{
 		cast = (t_model*)head->content;
-		draw_mesh(self->instance, cast->view_mesh, perspective);
+		draw_mesh(self->instance, cast->projection_mesh);
 		head = head->next;
 	}
 	mlx_put_image_to_window(self->instance->mlx, window->handle, window->image,
