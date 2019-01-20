@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 11:58:33 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 19:44:38 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/20 18:07:22 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ int	loop_hook(t_instance *instance)
 	model->scale.y /= 1.0f + (0.1f * keys[model_scale_flatten]);
 
 	camera_rotate(renderer->camera, ft_vec2f(
-		-(0.02f * keys[camera_rotation_nx])
-		+ (0.02f * keys[camera_rotation_px]),
-		-(0.02f * keys[camera_rotation_ny])
-		+ (0.02f * keys[camera_rotation_py])));
+		-(0.04f * keys[camera_rotation_nx])
+		+ (0.04f * keys[camera_rotation_px]),
+		-(0.04f * keys[camera_rotation_ny])
+		+ (0.04f * keys[camera_rotation_py])));
 	camera_translate(renderer->camera, ft_vec3f(
 		-(5.0f * keys[camera_translation_nx])
 		+ (5.0f * keys[camera_translation_px]),
@@ -87,8 +87,6 @@ int	loop_hook(t_instance *instance)
 		model_update_model((t_model*)model_list->content);
 		model_update_view((t_model*)model_list->content,
 			instance->renderer->camera);
-		model_update_projection((t_model*)model_list->content,
-			ft_mat4_perspective_projection());
 		model_list = model_list->next;
 	}
 	renderer_render(instance->renderer);
@@ -106,9 +104,6 @@ int	loop_hook(t_instance *instance)
 	return (1);
 }
 
-#include "camera.h"
-#include <stdio.h>
-
 int	main(int ac, const char **av)
 {
 	t_instance		*instance;
@@ -118,7 +113,7 @@ int	main(int ac, const char **av)
 
 	if (ac < 2)
 		return (!throw_error_str("Missing file operand"));
-	if (!(instance = new_instance(ft_usize(1280, 720), "fdf")))
+	if (!(instance = new_instance(ft_usize(1920, 1080), "fdf")))
 		return (!throw_error_str("error while creating instance"));
 	if (!(renderer = new_renderer(instance)))
 	{
@@ -130,7 +125,7 @@ int	main(int ac, const char **av)
 	while (i < (size_t)ac)
 	{
 		if (!(added_model = batch_add(renderer->batch, av[i],
-			ft_vec3f(0.0f, 0.0f, 50.0f), ft_vec3f(-1.5707963268f, 0.0f, 0.0f))))
+			ft_vec3f(0.0f, 0.0f, 50.0f), ft_vec3f(-PI, 0.0f, 0.0f))))
 			return (!throw_error_str("error while adding to batch"));
 		free(added_model->name);
 		added_model->name = (ft_strrchr(av[i], '/'))

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:31:14 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 19:43:36 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/20 16:43:55 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,26 @@ void	clear(t_instance *instance)
 	mlx_clear_window(instance->mlx, instance->window->handle);
 }
 
-void	draw_mesh(t_instance *instance, t_mesh *mesh)
+#include <stdio.h>
+
+void	draw_mesh(t_instance *instance, t_model *model)
 {
 	size_t	i;
 	t_vec3f	a;
 	t_vec3f	b;
+	t_mesh	*view_mesh;
 
 	i = 0;
-	while (i < mesh->indices_count)
+	view_mesh = model->view_mesh;
+	while (i < view_mesh->indices_count)
 	{
-		a = mesh->vertices[mesh->indices[i].x];
-		b = mesh->vertices[mesh->indices[i].y];
-		if (a.z >= 0.0f && b.z >= 0.0f)
+		a = view_mesh->vertices[view_mesh->indices[i].x];
+		b = view_mesh->vertices[view_mesh->indices[i].y];
+		if (view_mesh->vertices[view_mesh->indices[i].x].z > 0.0f
+			&& view_mesh->vertices[view_mesh->indices[i].y].z > 0.0f)
 		{
-			/*a = ft_vec3f_scalar(a, 1.0f / (a.z / 500.0f));
-			b = ft_vec3f_scalar(b, 1.0f / (b.z / 500.0f));*/
+			a = ft_vec3f_scalar(a, 1.0f / (a.z / 500.0f));
+			b = ft_vec3f_scalar(b, 1.0f / (b.z / 500.0f));
 			a.x += instance->window->size.x / 2;
 			b.x += instance->window->size.x / 2;
 			a.y += instance->window->size.y / 2;
@@ -84,13 +89,13 @@ void	draw_mesh(t_instance *instance, t_mesh *mesh)
 				&& (a.y >= -1.0f && a.y <= (int)instance->window->size.y))
 				draw_line(instance, ft_vec2i((int)a.x, (int)a.y),
 					ft_vec2i((int)b.x, (int)b.y),
-					mesh->colors[mesh->indices[i].x],
-					mesh->colors[mesh->indices[i].y]);
+					view_mesh->colors[view_mesh->indices[i].x],
+					view_mesh->colors[view_mesh->indices[i].y]);
 			else
 				draw_line(instance, ft_vec2i((int)b.x, (int)b.y),
 					ft_vec2i((int)a.x, (int)a.y),
-					mesh->colors[mesh->indices[i].y],
-					mesh->colors[mesh->indices[i].x]);
+					view_mesh->colors[view_mesh->indices[i].y],
+					view_mesh->colors[view_mesh->indices[i].x]);
 		}
 		i++;
 	}

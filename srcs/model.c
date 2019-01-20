@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 16:22:47 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 19:43:48 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/20 18:07:10 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,6 @@ t_model			*new_model(t_mesh *raw_mesh, t_vec3f position,
 	{
 		free(ret->model_mesh);
 		free(ret->raw_mesh);
-		free(ret);
-		return (throw_error());
-	}
-	if (!(ret->projection_mesh = new_mesh_copy(raw_mesh)))
-	{
-		free(ret->raw_mesh);
-		free(ret->model_mesh);
-		free(ret->view_mesh);
 		free(ret);
 		return (throw_error());
 	}
@@ -92,26 +84,11 @@ void			model_update_view(t_model *self, t_camera *camera)
 	}
 }
 
-void			model_update_projection(t_model *self, t_mat4 projection_matrix)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < self->projection_mesh->vertices_count)
-	{
-		self->projection_mesh->vertices[i] =
-			ft_vec4f_to_vec3f(ft_mat4_x_vec4(projection_matrix,
-			ft_vec3f_to_vec4f(self->view_mesh->vertices[i])));
-		i++;
-	}
-}
-
 void			free_model(t_model *self)
 {
 	free(self->name);
 	free_mesh(self->raw_mesh);
 	free_mesh(self->model_mesh);
 	free_mesh(self->view_mesh);
-	free_mesh(self->projection_mesh);
 	free(self);
 }

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 16:00:48 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 17:09:03 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/20 16:42:36 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct	s_model
 	t_mesh	*raw_mesh;
 	t_mesh	*model_mesh;
 	t_mesh	*view_mesh;
-	t_mesh	*projection_mesh;
 }				t_model;
 
 t_model			*new_model(t_mesh *raw_mesh, t_vec3f position,
@@ -38,8 +37,6 @@ t_model			*new_model(t_mesh *raw_mesh, t_vec3f position,
 size_t			model_get_new_id(void);
 void			model_update_model(t_model *self);
 void			model_update_view(t_model *self, t_camera *camera);
-void			model_update_projection(t_model *self,
-	t_mat4 projection_matrix);
 void			free_model(t_model *self);
 
 #endif
