@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 16:56:43 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/19 19:06:26 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/22 15:00:27 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ t_window		*new_window(void *mlx, t_usize size, char *window_title)
 
 void			free_window(t_window *self, t_instance *instance)
 {
-	(void)instance;
 	mlx_destroy_image(instance->mlx, self->image);
 	mlx_destroy_window(instance->mlx, self->handle);
 	free(self->title);

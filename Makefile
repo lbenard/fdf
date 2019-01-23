@@ -6,7 +6,7 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 19:33:38 by lbenard           #+#    #+#              #
-#    Updated: 2019/01/19 18:58:18 by lbenard          ###   ########.fr        #
+#    Updated: 2019/01/23 17:37:23 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME		=	fdf
 # Sources
 SRC				=	fdf.c											\
 					srcs/callbacks/callbacks.c						\
+					srcs/callbacks/gameloop.c						\
 					srcs/callbacks/camera_translation_callbacks.c	\
 					srcs/callbacks/camera_rotation_callbacks.c		\
 					srcs/callbacks/model_translation_callbacks.c	\
@@ -27,6 +28,8 @@ SRC				=	fdf.c											\
 					srcs/parsers/fdf_parser.c						\
 					srcs/parsers/file_reader.c						\
 					srcs/parsers/ply_parser.c						\
+					srcs/shaders/no_shader.c						\
+					srcs/shaders/water_shader.c						\
 					srcs/batch.c									\
 					srcs/camera.c									\
 					srcs/colors.c									\
@@ -75,7 +78,7 @@ $(NAME): $(OBJ)
 	@printf "$(GREEN)[cc]$(RESET): done\n"
 	@printf "$(GREEN)[ld]$(RESET): $(NAME)\n"
 	@$(CXX) -o $(NAME) $(OBJ) $(LIB_FOLDERS) $(LIBS) $(LDFLAGS) $(INCLUDES) \
-		# -g -fsanitize=address
+		#-g -fsanitize=address
 
 .c.o: $(SRC)
 	@printf "$(GREEN)[cc]$(RESET): $< -> $@\n"

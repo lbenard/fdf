@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:35:03 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/20 15:25:59 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/23 16:45:53 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "window.h"
 #include "draw.h"
 #include "mlx.h"
+#include "shaders.h"
 
 /*
 ** Creates a new `t_renderer` instance.
@@ -36,7 +37,7 @@ t_renderer	*new_renderer(t_instance *instance)
 
 	if (!instance)
 		return (throw_error_str("error while creating renderer, "
-			"no instance provided"));
+		"no instance provided"));
 	if (!(ret = (t_renderer*)malloc(sizeof(t_renderer))))
 		return (throw_error());
 	if (!(ret->batch = new_batch()))
@@ -78,13 +79,12 @@ void		renderer_render(t_renderer *self)
 
 	head = self->batch->batch;
 	window = self->instance->window;
-	clear(self->instance);
 	clear_buffer(window->framebuffer, self->clear, window->size.x
 		* window->size.y);
 	while (head)
 	{
 		cast = (t_model*)head->content;
-		draw_mesh(self->instance, cast);
+		draw_mesh(self->instance, cast, water_shader);
 		head = head->next;
 	}
 	mlx_put_image_to_window(self->instance->mlx, window->handle, window->image,

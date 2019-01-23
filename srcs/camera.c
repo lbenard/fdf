@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 19:46:48 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/20 17:06:01 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/23 14:27:25 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_camera	*new_camera(void)
 		return (throw_error());
 	ret->position = ft_vec3f(0.0f, 0.0f, 0.0f);
 	ret->rotation = ft_vec2f(0.0f, 0.0f);
+	ret->perspective = 0;
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 14:43:39 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/17 19:49:51 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/23 14:02:43 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 # define LIBFT_H
 
 # include <string.h>
+# include <stdint.h>
 # ifdef __linux__
 #  include <sys/types.h>
 # endif
 
-typedef unsigned char	t_u8;
-typedef char			t_i8;
+typedef uint8_t		t_u8;
+typedef int8_t		t_i8;
+typedef uint16_t	t_u16;
+typedef int16_t		t_i16;
+typedef uint32_t	t_u32;
+typedef int32_t		t_i32;
+typedef uint64_t	t_u64;
+typedef int64_t		t_i64;
 
 /*
 ** List struct

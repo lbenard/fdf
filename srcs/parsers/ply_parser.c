@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:50:47 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/17 16:16:54 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/22 15:52:16 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static size_t	get_indices_count(const char *file)
 	return (indices_count);
 }
 
-static void	fill_vertices(t_mesh *mesh, size_t vertex_count, const char *file)
+static void		fill_vertices(t_mesh *mesh, size_t vertex_count,
+	const char *file)
 {
 	size_t	i;
 
@@ -68,7 +69,7 @@ static void	fill_vertices(t_mesh *mesh, size_t vertex_count, const char *file)
 	}
 }
 
-static void	fill_indices(t_mesh *mesh, size_t indices_count, char *file)
+static void		fill_indices(t_mesh *mesh, size_t indices_count, char *file)
 {
 	size_t	i;
 	size_t	j;
@@ -93,7 +94,7 @@ static void	fill_indices(t_mesh *mesh, size_t indices_count, char *file)
 	}
 }
 
-t_mesh		*parse_ply(const char *path)
+t_mesh			*parse_ply(const char *path)
 {
 	char	*file;
 	t_mesh	*mesh;
@@ -103,10 +104,12 @@ t_mesh		*parse_ply(const char *path)
 	if (!(file = get_file(path)))
 		return (throw_error());
 	if (!ft_strstr(file, "property float x\nproperty float y\nproperty float "
-		"z\nproperty uchar red\nproperty uchar green\nproperty uchar blue")
-		|| !(vertex_count = get_vertex_count(file))
-		|| !(indices_count = get_indices_count(file)))
+		"z\nproperty uchar red\nproperty uchar green\nproperty uchar blue"))
 		return (throw_error_str("incorrect ply format"));
+	if (!(vertex_count = get_vertex_count(file)))
+		return (throw_error_str("incorrect ply vertex count"));
+	if (!(indices_count = get_indices_count(file)))
+		return (throw_error_str("incorrect ply indices count"));
 	mesh = new_mesh(vertex_count, indices_count);
 	file = ft_strstr(file, "end_header") + ft_strlen("end_header") + 1;
 	fill_vertices(mesh, vertex_count, file);
