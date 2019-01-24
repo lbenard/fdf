@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:54:59 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/23 14:08:05 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/24 17:10:18 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ static t_mesh	*fill_mesh(const char *file, t_mesh *mesh,
 	t_isize		i;
 	size_t		j;
 	size_t		k;
-	const char	*line;
 
 	j = 0;
 	k = 0;
@@ -86,25 +85,18 @@ static t_mesh	*fill_mesh(const char *file, t_mesh *mesh,
 	while (i.y < map_size.y)
 	{
 		i.x = 0;
-		if (!(line = ft_getline(file, (size_t)i.y)))
-			return (throw_error_str("read error"));
-		while (i.x < map_size.x)
+		while (i.x < map_size.x && (file = ft_skipchr(file, ' ')))
 		{
-			while (*line == ' ')
-				line++;
-			mesh->vertices[j] = ft_vec3f(i.x * 10, ft_atoi(line), i.y * 10);
+			mesh->vertices[j] = ft_vec3f(i.x * 10, ft_atoi(file), i.y * 10);
 			mesh->colors[j] = int_to_color(0xFFFFFF);
-			if (i.x != map_size.x - 1)
-			{
-				while (*line != ' ')
-					line++;
+			if (i.x != map_size.x - 1 && (file = ft_strchr(file, ' ')))
 				mesh->indices[k++] = ft_vec2i(j, j + 1);
-			}
 			if (i.y != map_size.y - 1)
 				mesh->indices[k++] = ft_vec2i(j, j + map_size.x);
 			j++;
 			i.x++;
 		}
+		file = ft_strchr(file, '\n') + 1;
 		i.y++;
 	}
 	return (mesh);
@@ -123,6 +115,23 @@ static t_mesh	*fill_mesh(const char *file, t_mesh *mesh,
 ** informations can be added for a specific vertex.
 */
 
+static t_mesh	*create_mesh(const char *file, t_isize map_size)
+{
+	t_mesh	*map;
+
+	if (map_size.x < 1 || map_size.y < 1)
+		return (throw_error_str("incorrect fdf map"));
+	if (!(map = new_mesh(map_size.x * map_size.y,
+		(map_size.x - 1) * map_size.y + (map_size.y - 1) * map_size.x)))
+		return (throw_error_str("error while creating mesh"));
+	if (!(map = fill_mesh(file, map, map_size)))
+	{
+		free_mesh(map);
+		return (throw_error_str("error while filling mesh"));
+	}
+	return (map);
+}
+
 t_mesh			*parse_fdf(const char *path)
 {
 	t_mesh		*map;
@@ -134,30 +143,17 @@ t_mesh			*parse_fdf(const char *path)
 	if (!(file = get_file(path)))
 		return (throw_error_str("incorrect file"));
 	map_size = get_map_size(file);
-	if (map_size.x < 1 || map_size.y < 1)
+	if (!(map = create_mesh(file, map_size)))
 	{
 		free(file);
-		return (throw_error_str("incorrect fdf map"));
-	}
-	if (!(map = new_mesh(map_size.x * map_size.y,
-		(map_size.x - 1) * map_size.y + (map_size.y - 1) * map_size.x)))
-	{
-		free(file);
-		return (throw_error_str("error while creating mesh"));
-	}
-	if (!(map = fill_mesh(file, map, map_size)))
-	{
-		free(file);
-		free_mesh(map);
-		return (throw_error_str("error while filling mesh"));
+		return (throw_error_str("error while creating fdf mesh"));
 	}
 	i = 0;
 	origin = ft_mat4_translation(ft_vec3f(-(map_size.x * 10 - 10) / 2.0f,
 		0.0f, -(map_size.y * 10 - 10) / 2.0f));
 	while (i < map->vertices_count)
 	{
-		map->vertices[i] =
-			ft_vec4f_to_vec3f(ft_mat4_x_vec4(origin,
+		map->vertices[i] = ft_vec4f_to_vec3f(ft_mat4_x_vec4(origin,
 			ft_vec3f_to_vec4f(map->vertices[i])));
 		i++;
 	}

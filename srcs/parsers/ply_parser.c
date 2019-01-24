@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:50:47 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/22 15:52:16 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/24 15:02:35 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,14 @@ static void		fill_indices(t_mesh *mesh, size_t indices_count, char *file)
 t_mesh			*parse_ply(const char *path)
 {
 	char	*file;
+	char	*tmp;
 	t_mesh	*mesh;
 	size_t	vertex_count;
 	size_t	indices_count;
 
 	if (!(file = get_file(path)))
 		return (throw_error());
+	tmp = file;
 	if (!ft_strstr(file, "property float x\nproperty float y\nproperty float "
 		"z\nproperty uchar red\nproperty uchar green\nproperty uchar blue"))
 		return (throw_error_str("incorrect ply format"));
@@ -115,5 +117,6 @@ t_mesh			*parse_ply(const char *path)
 	fill_vertices(mesh, vertex_count, file);
 	file = (char*)ft_getline(file, vertex_count);
 	fill_indices(mesh, indices_count, file);
+	free(tmp);
 	return (mesh);
 }

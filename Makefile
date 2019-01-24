@@ -6,7 +6,7 @@
 #    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 19:33:38 by lbenard           #+#    #+#              #
-#    Updated: 2019/01/23 17:37:23 by lbenard          ###   ########.fr        #
+#    Updated: 2019/01/24 15:46:35 by lbenard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC				=	fdf.c											\
 					srcs/shaders/no_shader.c						\
 					srcs/shaders/water_shader.c						\
 					srcs/batch.c									\
+					srcs/bresenham.c								\
 					srcs/camera.c									\
 					srcs/colors.c									\
 					srcs/draw.c										\
@@ -77,8 +78,7 @@ all: libft mlx $(NAME)
 $(NAME): $(OBJ)
 	@printf "$(GREEN)[cc]$(RESET): done\n"
 	@printf "$(GREEN)[ld]$(RESET): $(NAME)\n"
-	@$(CXX) -o $(NAME) $(OBJ) $(LIB_FOLDERS) $(LIBS) $(LDFLAGS) $(INCLUDES) \
-		#-g -fsanitize=address
+	@$(CXX) -o $(NAME) $(OBJ) $(LIB_FOLDERS) $(LIBS) $(LDFLAGS) $(INCLUDES)
 
 .c.o: $(SRC)
 	@printf "$(GREEN)[cc]$(RESET): $< -> $@\n"

@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 22:35:03 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/23 16:45:53 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/24 15:48:13 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void		renderer_render(t_renderer *self)
 	while (head)
 	{
 		cast = (t_model*)head->content;
-		draw_mesh(self->instance, cast, water_shader);
+		draw_mesh(self->instance, cast, no_shader);
 		head = head->next;
 	}
 	mlx_put_image_to_window(self->instance->mlx, window->handle, window->image,

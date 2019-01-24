@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 14:43:39 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/23 14:02:43 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/24 16:57:14 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ char					**ft_strsplit(const char *s, char c);
 size_t					ft_strcount(const char *s, char c);
 int						get_next_line(int fd, char **line);
 const char				*ft_getline(const char *file, size_t line);
+const char				*ft_skipchr(const char *str, char skip);
 
 /*
 ** is*

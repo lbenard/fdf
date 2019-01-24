@@ -6,7 +6,7 @@
 /*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 15:05:06 by lbenard           #+#    #+#             */
-/*   Updated: 2019/01/23 17:38:55 by lbenard          ###   ########.fr       */
+/*   Updated: 2019/01/24 17:18:08 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ int			gameloop(t_instance *instance)
 	if (keys[window_exit])
 	{
 		free_instance(instance);
-		// while (42);
 		exit(0);
 	}
 	camera_transform(instance->renderer->camera, keys);
